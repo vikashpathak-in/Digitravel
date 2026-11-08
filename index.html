@@ -1865,15 +1865,57 @@ function sectionAir(){
       </div>`).join('')}
   </div>`;
 }
+function prepareRailPlan(){
+  const from=document.getElementById('rail-from')?.value.trim();
+  const to=document.getElementById('rail-to')?.value.trim();
+  const date=document.getElementById('rail-date')?.value;
+  const travelClass=document.getElementById('rail-class')?.value;
+  const quota=document.getElementById('rail-quota')?.value;
+  const passengers=document.getElementById('rail-passengers')?.value;
+  const result=document.getElementById('rail-plan-result');
+  if(!from||!to||!date){toast('Enter From, To and journey date first.');return;}
+  if(from.toLowerCase()===to.toLowerCase()){toast('From and To stations must be different.');return;}
+  const prettyDate=new Date(date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const summary={from,to,date:prettyDate,travelClass,quota,passengers};
+  const message='Hello DigiTravel! Please help me plan this train journey.\nFrom: '+from+'\nTo: '+to+'\nDate: '+prettyDate+'\nClass: '+travelClass+'\nQuota: '+quota+'\nPassengers: '+passengers+'\nPlease guide me on direct/connecting trains and nearby station alternatives.';
+  result.innerHTML=`<div style="background:var(--ice);border:1.5px solid var(--steel);border-radius:12px;padding:16px;margin-top:16px">
+    <div style="font-weight:900;font-size:15px;margin-bottom:8px">Your rail journey request</div>
+    <div style="font-size:13px;line-height:1.9;color:var(--slate)"><strong>${from}</strong> → <strong>${to}</strong><br>Journey: ${prettyDate} · Class: ${travelClass}<br>Quota: ${quota} · Passengers: ${passengers}</div>
+    <div style="font-size:12px;color:var(--slate);margin:10px 0 14px">This is a planning request only. Live train schedules, fares and seat availability are not retrieved by DigiTravel yet. Verify all details on the official railway platform before payment.</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="https://www.irctc.co.in/nget" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary btn-sm">Continue to IRCTC →</button></a>
+      <button type="button" class="btn-wa btn-sm" onclick="window.open('https://wa.me/918539979271?text='+encodeURIComponent(${JSON.stringify(message)}),'_blank')">Send request on WhatsApp</button>
+    </div>
+  </div>`;
+  result.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function railAssistantHTML(){
+  const today=new Date();
+  const minDate=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  return `<div class="card" style="padding:20px;margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><span style="font-size:26px">🧭</span><div><div style="font-size:18px;font-weight:900">Smart Rail Journey Planner</div><div style="font-size:12px;color:var(--muted)">Prepare your journey details before opening the official booking portal.</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px">
+      <label><span class="field-lbl">From station / city</span><input id="rail-from" class="field" type="text" placeholder="e.g. Bengaluru" autocomplete="off"></label>
+      <label><span class="field-lbl">To station / city</span><input id="rail-to" class="field" type="text" placeholder="e.g. Ranchi" autocomplete="off"></label>
+      <label><span class="field-lbl">Journey date</span><input id="rail-date" class="field" type="date" min="${minDate}"></label>
+      <label><span class="field-lbl">Preferred class</span><select id="rail-class" class="field"><option>Sleeper (SL)</option><option>Third AC (3A)</option><option>Second AC (2A)</option><option>First AC (1A)</option><option>Second Sitting (2S)</option><option>AC Chair Car (CC)</option><option>Third AC Economy (3E)</option></select></label>
+      <label><span class="field-lbl">Quota</span><select id="rail-quota" class="field"><option>General</option><option>Tatkal</option><option>Premium Tatkal</option><option>Ladies (if eligible)</option><option>Senior Citizen / eligible concession</option></select></label>
+      <label><span class="field-lbl">Passengers</span><select id="rail-passengers" class="field"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+    </div>
+    <button type="button" class="btn-primary" style="margin-top:16px" onclick="prepareRailPlan()">Prepare my rail plan</button>
+    <div id="rail-plan-result" aria-live="polite"></div>
+  </div>`;
+}
 function sectionRail(){
-  return sectionHeader('cmp-rail','🚄','Rail','Always book tickets on the official IRCTC site; other platforms are for tracking only.')
+  return sectionHeader('cmp-rail','🚄','Rail','Plan your journey here, then verify live schedules and availability on official railway services.')
+    + railAssistantHTML()
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
     ${BKPLAT.trains.map(p=>`
       <div style="background:var(--white);border:1.5px solid var(--steel);border-radius:14px;padding:20px;box-shadow:var(--shadow)">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:28px">${p.lo}</span><div><div style="font-weight:900;font-size:16px">${p.n}</div><div style="font-size:12px;color:var(--muted)">${p.ft}</div></div></div>
         <div style="font-size:13px;color:var(--slate);margin-bottom:14px">${p.nt}</div>
-        <a href="${p.u}" target="_blank" rel="noopener">
-          <button style="width:100%;background:${p.n.includes('IRCTC')?'var(--jade)':'var(--ice)'};color:${p.n.includes('IRCTC')?'#fff':'var(--ink)'};border:1.5px solid ${p.n.includes('IRCTC')?'var(--jade)':'var(--steel)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.n.includes('IRCTC')?'Book Tickets →':'Visit Platform →'}</button>
+        <a href="${p.u}" target="_blank" rel="noopener noreferrer">
+          <button type="button" style="width:100%;background:${p.n.includes('IRCTC')?'var(--jade)':'var(--ice)'};color:${p.n.includes('IRCTC')?'#fff':'var(--ink)'};border:1.5px solid ${p.n.includes('IRCTC')?'var(--jade)':'var(--steel)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.n.includes('IRCTC')?'Book Tickets →':'Visit Platform →'}</button>
         </a>
       </div>`).join('')}
   </div>`;
