@@ -1876,8 +1876,8 @@ function prepareRailPlan(){
   if(!from||!to||!date){toast('Enter From, To and journey date first.');return;}
   if(from.toLowerCase()===to.toLowerCase()){toast('From and To stations must be different.');return;}
   const prettyDate=new Date(date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  window.DIGITRAVEL_RAIL_MESSAGE=message;
   const message='Hello DigiTravel! Please help me plan this train journey.\nFrom: '+from+'\nTo: '+to+'\nDate: '+prettyDate+'\nClass: '+travelClass+'\nQuota: '+quota+'\nPassengers: '+passengers+'\nPlease guide me on direct/connecting trains and nearby station alternatives.';
+  window.DIGITRAVEL_RAIL_MESSAGE=message;
   result.innerHTML=`<div style="background:var(--ice);border:1.5px solid var(--steel);border-radius:12px;padding:16px;margin-top:16px">
     <div style="font-weight:900;font-size:15px;margin-bottom:8px">Your rail journey request</div>
     <div style="font-size:13px;line-height:1.9;color:var(--slate)"><strong>${from}</strong> → <strong>${to}</strong><br>Journey: ${prettyDate} · Class: ${travelClass}<br>Quota: ${quota} · Passengers: ${passengers}</div>
