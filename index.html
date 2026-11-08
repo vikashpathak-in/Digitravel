@@ -1876,7 +1876,7 @@ function prepareRailPlan(){
   if(!from||!to||!date){toast('Enter From, To and journey date first.');return;}
   if(from.toLowerCase()===to.toLowerCase()){toast('From and To stations must be different.');return;}
   const prettyDate=new Date(date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  const summary={from,to,date:prettyDate,travelClass,quota,passengers};
+  window.DIGITRAVEL_RAIL_MESSAGE=message;
   const message='Hello DigiTravel! Please help me plan this train journey.\nFrom: '+from+'\nTo: '+to+'\nDate: '+prettyDate+'\nClass: '+travelClass+'\nQuota: '+quota+'\nPassengers: '+passengers+'\nPlease guide me on direct/connecting trains and nearby station alternatives.';
   result.innerHTML=`<div style="background:var(--ice);border:1.5px solid var(--steel);border-radius:12px;padding:16px;margin-top:16px">
     <div style="font-weight:900;font-size:15px;margin-bottom:8px">Your rail journey request</div>
@@ -1884,7 +1884,7 @@ function prepareRailPlan(){
     <div style="font-size:12px;color:var(--slate);margin:10px 0 14px">This is a planning request only. Live train schedules, fares and seat availability are not retrieved by DigiTravel yet. Verify all details on the official railway platform before payment.</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <a href="https://www.irctc.co.in/nget" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary btn-sm">Continue to IRCTC →</button></a>
-      <button type="button" class="btn-wa btn-sm" onclick="window.open('https://wa.me/918539979271?text='+encodeURIComponent(${JSON.stringify(message)}),'_blank')">Send request on WhatsApp</button>
+      <button type="button" class="btn-wa btn-sm" onclick="window.open('https://wa.me/918539979271?text='+encodeURIComponent(window.DIGITRAVEL_RAIL_MESSAGE),'_blank')">Send request on WhatsApp</button>
     </div>
   </div>`;
   result.scrollIntoView({behavior:'smooth',block:'nearest'});
