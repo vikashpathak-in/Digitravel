@@ -1913,7 +1913,7 @@ function lookupRailLiveStatus(){
   }
   result.innerHTML='<div style="margin-top:12px;font-size:13px;color:var(--slate)">Checking live train information…</div>';
   const query=date?'?date='+encodeURIComponent(date):'';
-  fetch(DIGITRAVEL_RAIL_API_BASE.replace(/\\/$/,'')+'/api/rail/train/'+encodeURIComponent(number)+'/live'+query,{method:'GET',headers:{'Accept':'application/json'}})
+  fetch(DIGITRAVEL_RAIL_API_BASE.replace(/\/$/,'')+'/api/rail/train/'+encodeURIComponent(number)+'/live'+query,{method:'GET',headers:{'Accept':'application/json'}})
     .then(async response=>({response,payload:await response.json().catch(()=>({}))}))
     .then(({response,payload})=>{
       if(!response.ok||payload.success===false){
