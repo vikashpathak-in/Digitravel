@@ -31,3 +31,9 @@ To enable Firebase Authentication and Firestore synchronization:
 Edit `json/destinations.json`:
 * Add new entries to `states` to update the **India Explorer** grid.
 * Add complete travel profiles under `featuredDestinations` including `checkpoints`, `foodStops`, and `faqs`.
+
+## 🚆 Railway API (non-commercial test)
+
+A secure Cloudflare Worker proxy template and setup guide are available in [RAIL_API_SETUP.md](RAIL_API_SETUP.md). The API key must be stored as a Cloudflare Worker secret, never in the GitHub Pages front-end.
+
+**Free-tier restriction:** RailRadar currently lists its free API tier for personal, non-commercial use only, with 100 requests/month and 10 requests/minute. Do not use it for a monetised service without written provider permission. The proxy is a setup scaffold; it is not active until a Worker is deployed and the front-end is configured with its URL.
