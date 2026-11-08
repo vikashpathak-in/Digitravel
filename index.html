@@ -330,6 +330,26 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 .ai-step.done { background:var(--jadeLt,#D1FAE5); color:var(--jade); }
 .ai-step.active { background:rgba(249,115,22,.1); color:var(--saffron2); }
 .ai-step.idle { background:var(--ice); color:var(--muted); }
+
+/* ── DAILY GREETING / FESTIVAL POPUP ── */
+#dt-popup-backdrop{position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(4,15,30,.72);backdrop-filter:blur(7px)}
+#dt-popup-backdrop.show{display:flex}
+.dt-popup{position:relative;width:min(100%,460px);overflow:hidden;border-radius:22px;background:var(--white);color:var(--ink);box-shadow:0 24px 90px rgba(0,0,0,.38);animation:dtPopupIn .24s ease}
+.dt-popup-top{padding:30px 28px 22px;background:linear-gradient(135deg,#0F3460,#0d7377);color:#fff;text-align:center}
+.dt-popup-festival .dt-popup-top{background:linear-gradient(135deg,#7c2d12,#9a3412,#78350f)}
+.dt-popup-icon{font-size:42px;margin-bottom:8px}
+.dt-popup-title{font-family:var(--font-d);font-size:29px;font-weight:900;line-height:1.15;margin-bottom:8px}
+.dt-popup-sub{font-size:13px;opacity:.88;line-height:1.6}
+.dt-popup-body{padding:22px 26px 26px}
+.dt-popup-body p{font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:14px}
+.dt-popup-actions{display:flex;gap:9px;flex-wrap:wrap}
+.dt-popup-actions button{flex:1;min-width:130px}
+.dt-popup-close{position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:20px;line-height:1}
+.dt-popup-list{display:grid;gap:9px;margin:12px 0 18px}
+.dt-popup-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--steel);border-radius:11px;background:var(--ice);font-size:12px;line-height:1.5}
+@keyframes dtPopupIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:420px){.dt-popup-title{font-size:25px}.dt-popup-body{padding:18px}}
+
 </style>
 <link rel="canonical" href="https://vikashp23.github.io/Digitravel/">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -340,6 +360,16 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 <meta name="twitter:card" content="summary">
 </head>
 <body>
+
+<!-- Daily greeting and festival popup -->
+<div id="dt-popup-backdrop" role="dialog" aria-modal="true" aria-labelledby="dt-popup-title" onclick="if(event.target===this)closeTravelPopup()">
+  <div class="dt-popup" id="dt-popup-card">
+    <button class="dt-popup-close" type="button" aria-label="Close popup" onclick="closeTravelPopup()">×</button>
+    <div class="dt-popup-top"><div class="dt-popup-icon" id="dt-popup-icon">🧭</div><div class="dt-popup-title" id="dt-popup-title">Welcome to DigiTravel</div><div class="dt-popup-sub" id="dt-popup-sub">Explore India. Plan better. Travel smarter.</div></div>
+    <div class="dt-popup-body"><p id="dt-popup-message"></p><div class="dt-popup-list" id="dt-popup-list"></div><div class="dt-popup-actions"><button type="button" class="btn-primary" onclick="travelPopupNavigate('destinations')">Explore India</button><button type="button" class="btn-ghost" onclick="travelPopupNavigate('group')">Plan a Trip</button></div></div>
+  </div>
+</div>
+
 
 <!-- ════════════ TOP NAV ════════════ -->
 <nav id="topnav">
@@ -1974,6 +2004,52 @@ nav = function(id){
   _origNav(id);
   if(id==='compare') setTimeout(nav_compare_init, 50);
 };
+
+
+/* ═══════════════════════ DAILY TRAVEL POPUPS ═══════════════════════ */
+function travelLocalDateKey(date=new Date()){
+  return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+}
+function travelPopupShow({festival=false,icon='🧭',title='',subtitle='',message='',items=[]}){
+  const card=document.getElementById('dt-popup-card');
+  if(!card)return;
+  card.classList.toggle('dt-popup-festival',festival);
+  document.getElementById('dt-popup-icon').textContent=icon;
+  document.getElementById('dt-popup-title').textContent=title;
+  document.getElementById('dt-popup-sub').textContent=subtitle;
+  document.getElementById('dt-popup-message').textContent=message;
+  document.getElementById('dt-popup-list').innerHTML=items.map(item=>'<div class="dt-popup-item"><span>'+item.icon+'</span><span>'+item.text+'</span></div>').join('');
+  document.getElementById('dt-popup-backdrop').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function travelPopupStorageGet(key){try{return localStorage.getItem(key)}catch(e){return null}}
+function travelPopupStorageSet(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+function showDailyTravelGreeting(){
+  const now=new Date(),hour=now.getHours(),dateKey=travelLocalDateKey(now);
+  const greeting=hour>=5&&hour<12?'Good Morning':hour>=12&&hour<17?'Good Afternoon':'Good Evening';
+  travelPopupStorageSet('digitravel_daily_popup_seen',dateKey);
+  travelPopupShow({icon:hour>=17||hour<5?'🌙':'🧭',title:greeting+', Traveller!',subtitle:'Your daily travel desk · '+now.toLocaleDateString('en-IN',{weekday:'long',day:'2-digit',month:'short',year:'numeric'}),message:'Make your next Indian journey easier with DigiTravel. Here are a few useful things to explore today:',items:[{icon:'🗺️',text:'Explore destinations, states and hidden gems across India.'},{icon:'🚆',text:'Prepare your rail journey and verify schedules on official railway sources.'},{icon:'💰',text:'Estimate your trip budget and split group expenses.'}]});
+}
+function initDailyTravelPopup(){
+  const today=travelLocalDateKey();
+  const diwaliKey='digitravel_diwali_2026_seen';
+  if(today==='2026-11-08'&&!travelPopupStorageGet(diwaliKey)){
+    travelPopupStorageSet(diwaliKey,'yes');
+    travelPopupShow({festival:true,icon:'🪔',title:'Happy Diwali!',subtitle:'Wishing you light, joy and safe journeys',message:'May this Diwali bring happiness to your home and wonderful destinations to your travel map. Thank you for exploring India with DigiTravel.',items:[{icon:'✨',text:'Discover a new place and make a memorable plan.'},{icon:'🛣️',text:'Travel safely, check official updates and plan ahead.'}]});
+    return;
+  }
+  if(travelPopupStorageGet('digitravel_daily_popup_seen')!==today)showDailyTravelGreeting();
+}
+function closeTravelPopup(){
+  document.getElementById('dt-popup-backdrop')?.classList.remove('show');
+  document.body.style.overflow='';
+  const today=travelLocalDateKey();
+  if(travelPopupStorageGet('digitravel_daily_popup_seen')!==today)setTimeout(showDailyTravelGreeting,180);
+}
+function travelPopupNavigate(page){
+  closeTravelPopup();
+  nav(page);
+}
 
 </script>
 </body>
