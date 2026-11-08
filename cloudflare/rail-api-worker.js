@@ -23,6 +23,7 @@ function corsHeaders(origin, allowedOrigin) {
     "Access-Control-Allow-Origin": allowed ? origin : allowedOrigin,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Expose-Headers": "X-Rail-Provider, X-Rail-Quota-Month, X-Rail-Remaining-Month, X-Rail-Remaining-Min",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin"
   };
