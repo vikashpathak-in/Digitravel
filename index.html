@@ -1866,8 +1866,8 @@ function sectionAir(){
   </div>`;
 }
 function escapeRailHTML(value){
-  const entities={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
-  return String(value).replace(/[&<>"']/g,ch=>entities[ch]);
+  const entities={38:'&amp;',60:'&lt;',62:'&gt;',34:'&quot;',39:'&#39;'};
+  return String(value).replace(/[&<>"']/g,ch=>entities[ch.charCodeAt(0)]);
 }
 function prepareRailPlan(){
   const from=document.getElementById('rail-from')?.value.trim();
