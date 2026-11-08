@@ -1866,7 +1866,8 @@ function sectionAir(){
   </div>`;
 }
 function escapeRailHTML(value){
-  return String(value).replace(/[&<>\"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[ch]));
+  const entities={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+  return String(value).replace(/[&<>"']/g,ch=>entities[ch]);
 }
 function prepareRailPlan(){
   const from=document.getElementById('rail-from')?.value.trim();
