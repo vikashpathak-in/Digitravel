@@ -77,3 +77,23 @@ The Worker does not intentionally store or cache PNR responses. Responses are ma
 - The free tier has a 100-request monthly quota and a 10-request-per-minute limit. Do not poll live status automatically. A single manual refresh should be used during testing.
 - The proxy is prepared, but DigiTravel's existing front-end is not yet connected. The front-end can be safely connected only after the Worker has been deployed and its URL is known.
 - If DigiTravel becomes monetised, stop using the free tier until RailRadar confirms commercial permission or a suitable paid plan is selected.
+
+## Step 5 — Connect the DigiTravel live-status panel
+
+The DigiTravel front end now includes a **manual live train status** lookup. It does not poll in the background. The API key remains in the Worker secret and is never placed in the website JavaScript.
+
+1. After deploying the Worker, copy its full URL from Cloudflare (for example, `https://digitravel-rail-api.<your-subdomain>.workers.dev`).
+2. Open `index.html` in GitHub and find `DIGITRAVEL_RAIL_API_BASE` near the start of the JavaScript section.
+3. Replace the empty string with your Worker URL, keeping the quotes. Do not add the API key here.
+4. Commit the change and wait for GitHub Pages to publish it.
+5. Open DigiTravel → Compare → Rail and test one train number manually.
+
+If you share the Worker URL after deployment, the front-end configuration can be completed for you. Never share the RailRadar API key.
+
+## Current quota interpretation
+
+RailRadar's current [Rate Limits documentation](https://railradar.in/docs/rate-limits) and [Quickstart](https://railradar.in/docs/quickstart) state **100 requests per month and 10 requests per minute** for Free. Its [Pricing page](https://railradar.in/pricing) currently displays 1,000 requests per month, which conflicts with those technical documents. Until RailRadar confirms the discrepancy in writing, DigiTravel uses the conservative 100-request monthly limit. Do not run automated refreshes.
+
+The free plan is marked personal / non-commercial. Keep this integration for non-commercial testing only. If DigiTravel is monetised or used commercially, stop using this free key until RailRadar confirms the appropriate licence in writing.
+
+The live-status panel displays third-party information only. It is not an official railway source and must not be used as the sole basis for travel decisions. Verify critical updates through NTES, IRCTC and station announcements.
