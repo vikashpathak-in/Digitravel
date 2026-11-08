@@ -782,6 +782,8 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
      JAVASCRIPT
 ════════════════════════════════════════════════════════ -->
 <script>
+const DIGITRAVEL_RAIL_API_BASE = ''; // Add the deployed Cloudflare Worker URL after setup; never put the provider key here.
+
 /* ═══════════════════════ DATA ═══════════════════════ */
 const STATES=[
   {name:"Andhra Pradesh", emoji:"🏛️",tag:"Spices & Temples",places:48,best:"Oct–Mar",capital:"Amaravati"},
@@ -1899,6 +1901,39 @@ function escapeRailHTML(value){
   const entities={38:'&amp;',60:'&lt;',62:'&gt;',34:'&quot;',39:'&#39;'};
   return String(value).replace(/[&<>"']/g,ch=>entities[ch.charCodeAt(0)]);
 }
+function lookupRailLiveStatus(){
+  const number=document.getElementById('rail-live-number')?.value.trim();
+  const date=document.getElementById('rail-live-date')?.value;
+  const result=document.getElementById('rail-live-result');
+  if(!number||!/^[0-9A-Za-z _/-]{1,20}$/.test(number)){toast('Enter a valid train number.');return;}
+  if(!result)return;
+  if(!DIGITRAVEL_RAIL_API_BASE){
+    result.innerHTML='<div style="margin-top:12px;padding:13px;border:1px solid var(--steel);border-radius:10px;background:var(--ice);font-size:12px;color:var(--slate)">Rail API setup is pending. Deploy the Cloudflare Worker and add its URL to <code>DIGITRAVEL_RAIL_API_BASE</code>. <a href="RAIL_API_SETUP.md" target="_blank" rel="noopener" style="color:var(--saffron);font-weight:800;text-decoration:underline">Open setup guide</a>.</div>';
+    return;
+  }
+  result.innerHTML='<div style="margin-top:12px;font-size:13px;color:var(--slate)">Checking live train information…</div>';
+  const query=date?'?date='+encodeURIComponent(date):'';
+  fetch(DIGITRAVEL_RAIL_API_BASE.replace(/\\/$/,'')+'/api/rail/train/'+encodeURIComponent(number)+'/live'+query,{method:'GET',headers:{'Accept':'application/json'}})
+    .then(async response=>({response,payload:await response.json().catch(()=>({}))}))
+    .then(({response,payload})=>{
+      if(!response.ok||payload.success===false){
+        const message=payload?.error?.message||('Provider returned HTTP '+response.status+'.');
+        result.innerHTML='<div style="margin-top:12px;padding:13px;border:1px solid #fecaca;border-radius:10px;background:#fff7f7;color:#991b1b;font-size:12px">'+escapeRailHTML(message)+'</div>';
+        return;
+      }
+      const d=payload.data||payload;
+      const current=d.currentLocation||{};
+      const next=d.nextHalt||{};
+      const trainName=d.trainName||d.train?.name||('Train '+(d.trainNumber||number));
+      const state=d.status||'Status received';
+      const location=current.stationName||current.stationCode||'Not reported';
+      const delay=Number.isFinite(Number(d.delayMinutes))?Number(d.delayMinutes):null;
+      const updated=d.lastUpdatedAt?new Date(d.lastUpdatedAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'Not supplied';
+      result.innerHTML='<div style="margin-top:12px;padding:15px;border:1.5px solid var(--steel);border-radius:12px;background:var(--ice)"><div style="font-weight:900;font-size:15px">'+escapeRailHTML(trainName)+'</div><div style="font-size:12px;color:var(--slate);margin:5px 0 10px">Train '+escapeRailHTML(d.trainNumber||number)+' · '+escapeRailHTML(state)+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;font-size:12px"><div><span style="color:var(--muted)">Current location</span><br><strong>'+escapeRailHTML(location)+'</strong></div><div><span style="color:var(--muted)">Next halt</span><br><strong>'+escapeRailHTML(next.stationName||next.stationCode||'Not reported')+'</strong></div><div><span style="color:var(--muted)">Delay</span><br><strong>'+(delay===null?'Not reported':escapeRailHTML(String(delay))+' min')+'</strong></div><div><span style="color:var(--muted)">Last updated</span><br><strong>'+escapeRailHTML(updated)+'</strong></div></div><div style="font-size:11px;color:var(--muted);margin-top:12px">Third-party information, not an official railway feed. Verify on NTES / station announcements. Data freshness may vary.</div></div>';
+    })
+    .catch(()=>{result.innerHTML='<div style="margin-top:12px;padding:13px;border:1px solid #fecaca;border-radius:10px;background:#fff7f7;color:#991b1b;font-size:12px">Could not connect to the rail service. Check the Worker URL and try again later.</div>';});
+}
+
 function prepareRailPlan(){
   const from=document.getElementById('rail-from')?.value.trim();
   const to=document.getElementById('rail-to')?.value.trim();
@@ -1927,6 +1962,15 @@ function railAssistantHTML(){
   const today=new Date();
   const minDate=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
   return `<div class="card" style="padding:20px;margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><span style="font-size:26px">🚆</span><div><div style="font-size:18px;font-weight:900">Live Train Status</div><div style="font-size:12px;color:var(--muted)">Check one train manually. No background polling.</div></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px;align-items:end">
+      <label><span class="field-lbl">Train number</span><input id="rail-live-number" class="field" inputmode="numeric" maxlength="20" placeholder="e.g. 12919"></label>
+      <label><span class="field-lbl">Journey date</span><input id="rail-live-date" class="field" type="date" value="${minDate}"></label>
+      <button type="button" class="btn-primary" onclick="lookupRailLiveStatus()">Check live status</button>
+    </div>
+    <div id="rail-live-result" aria-live="polite"></div>
+    <div style="font-size:10px;color:var(--muted);margin:10px 0 22px">Provider: RailRadar · Free sandbox: 100 requests per month, 10 per minute · Non-commercial testing only.</div>
+    <div style="border-top:1px solid var(--steel);padding-top:18px;margin-top:4px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><span style="font-size:26px">🧭</span><div><div style="font-size:18px;font-weight:900">Smart Rail Journey Planner</div><div style="font-size:12px;color:var(--muted)">Prepare your journey details before opening the official booking portal.</div></div></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:16px">
       <label><span class="field-lbl">From station / city</span><input id="rail-from" class="field" type="text" placeholder="e.g. Bengaluru" autocomplete="off"></label>
@@ -1938,6 +1982,7 @@ function railAssistantHTML(){
     </div>
     <button type="button" class="btn-primary" style="margin-top:16px" onclick="prepareRailPlan()">Prepare my rail plan</button>
     <div id="rail-plan-result" aria-live="polite"></div>
+    </div>
   </div>`;
 }
 function sectionRail(){
