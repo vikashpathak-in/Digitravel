@@ -90,10 +90,12 @@ The DigiTravel front end now includes a **manual live train status** lookup. It 
 
 If you share the Worker URL after deployment, the front-end configuration can be completed for you. Never share the RailRadar API key.
 
-## Current quota interpretation
+## Current quota and data-use interpretation
 
-RailRadar's current [Rate Limits documentation](https://railradar.in/docs/rate-limits) and [Quickstart](https://railradar.in/docs/quickstart) state **100 requests per month and 10 requests per minute** for Free. Its [Pricing page](https://railradar.in/pricing) currently displays 1,000 requests per month, which conflicts with those technical documents. Until RailRadar confirms the discrepancy in writing, DigiTravel uses the conservative 100-request monthly limit. Do not run automated refreshes.
+RailRadar's current [Pricing](https://railradar.in/pricing), [Rate Limits](https://railradar.in/docs/rate-limits) and [Quickstart](https://railradar.in/docs/quickstart) pages agree: Free is **100 requests per month and 10 requests per minute**. The earlier note about a 1,000-request pricing figure is obsolete. Every request made with an active key counts, including provider errors. Do not run automated refreshes.
 
-The free plan is marked personal / non-commercial. Keep this integration for non-commercial testing only. If DigiTravel is monetised or used commercially, stop using this free key until RailRadar confirms the appropriate licence in writing.
+RailRadar's [Terms of Service](https://railradar.in/terms), updated 1 November 2026, allow API data to be displayed in your own apps and websites but prohibit resale, bulk redistribution and competing data services. The Free plan remains limited to personal, non-commercial use. If DigiTravel becomes monetised or commercial, use an appropriate paid plan and confirm the intended use with the provider.
 
-The live-status panel displays third-party information only. It is not an official railway source and must not be used as the sole basis for travel decisions. Verify critical updates through NTES, IRCTC and station announcements.
+**PNR privacy:** RailRadar's [Privacy Policy](https://railradar.in/privacy) says PNRs are sent to the railway enquiry system and may appear in the provider's request logs, even though they are not saved to the user's account. The Worker does not intentionally store or cache PNR responses, but cannot prevent provider-side logging. Any future PNR form must disclose this before submission, require a user-initiated lookup, and must not store PNRs or responses.
+
+The live-status panel displays independent third-party information, not an official railway feed. Verify critical details through [NTES](https://enquiry.indianrail.gov.in/mntes/), [Indian Railways PNR enquiry](https://www.indianrail.gov.in/enquiry/PNR/PnrEnquiry.html?locale=en), IRCTC and station announcements. See [RAIL_API_RESEARCH.md](RAIL_API_RESEARCH.md) for the official IRCTC TIES option, provider comparison, endpoint map and remaining code work.
