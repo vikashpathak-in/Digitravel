@@ -765,10 +765,28 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
   <div class="wrap" style="padding:36px 22px" id="compare-content"></div>
 </div>
 
+<div id="page-rail" class="page">
+<section style="background:linear-gradient(135deg,#092f4f,#087e8b);padding:44px 22px;color:#fff;text-align:center">
+<p style="letter-spacing:2px;font-size:11px">DIGITRAVEL · SMART RAIL</p><h1 style="font-size:clamp(27px,4vw,44px);font-weight:900">Plan a Railway Journey</h1>
+<p style="max-width:650px;margin:10px auto">Plan direct or connecting train journeys between Indian stations.</p></section>
+<div class="wrap" style="padding:28px 22px;max-width:900px">
+<div class="card" style="padding:22px"><h2>Your journey</h2><p style="font-size:13px;color:var(--muted)">Enter official station codes, e.g. SBC (Bengaluru City) to MAO (Madgaon).</p>
+<form id="rail-plan-form" onsubmit="submitRailPlan(event)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px">
+<label>From station code<input id="rail-from" required maxlength="6" pattern="[A-Za-z0-9]{2,6}" placeholder="SBC" style="display:block;width:100%;padding:12px;margin-top:6px"></label>
+<label>To station code<input id="rail-to" required maxlength="6" pattern="[A-Za-z0-9]{2,6}" placeholder="MAO" style="display:block;width:100%;padding:12px;margin-top:6px"></label>
+<label>Date<input id="rail-date" type="date" required style="display:block;width:100%;padding:12px;margin-top:6px"></label>
+<label>Passengers<select id="rail-passengers" style="display:block;width:100%;padding:12px;margin-top:6px"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
+<label>Class<select id="rail-class" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="Any">Any class</option><option value="SL">Sleeper</option><option value="3A">AC 3 Tier</option><option value="2A">AC 2 Tier</option><option value="CC">Chair Car</option><option value="2S">Second Sitting</option><option value="1A">AC First Class</option></select></label>
+<label>Max transfers<select id="rail-transfers" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="0">Direct only</option><option value="1" selected>Up to 1</option><option value="2">Up to 2</option><option value="3">Up to 3</option></select></label></div>
+<div style="display:flex;gap:10px;margin-top:18px"><button class="btn btn-primary" type="submit">Find journey options</button><button class="btn btn-outline" type="button" onclick="railReset()">Clear</button></div></form></div>
+<div id="rail-plan-status" role="status" style="margin:14px 0;color:var(--muted)"></div><div id="rail-plan-results"></div>
+<p style="font-size:12px;color:var(--muted);margin-top:20px">Route results require the DigiTravel railway API Worker. Verify train timings, fares, and booking availability through IRCTC/NTES before booking.</p></div></div>
 <!-- ════════════ BOTTOM NAV ════════════ -->
 <div id="bnav">
   <button class="bnav-btn act" onclick="nav('home')" data-p="home"><span class="bi">🏠</span>Home</button>
   <button class="bnav-btn" onclick="nav('states')" data-p="states"><span class="bi">🗺️</span>States</button>
+  <button class="bnav-btn" onclick="nav('rail')" data-p="rail"><span class="bi">🚆</span>Rail Planner</button>
   <button class="bnav-btn" onclick="nav('templates')" data-p="templates"><span class="bi">📋</span>Templates</button>
   <button class="bnav-btn" onclick="nav('group')" data-p="group"><span class="bi">👥</span>Group</button>
   <button class="bnav-btn" onclick="nav('budget')" data-p="budget"><span class="bi">💰</span>Budget</button>
@@ -2097,6 +2115,22 @@ function travelPopupNavigate(page){
 }
 
 initDailyTravelPopup();
+function railReset(){document.getElementById('rail-plan-form').reset();document.getElementById('rail-plan-status').textContent='';document.getElementById('rail-plan-results').innerHTML='';}
+function submitRailPlan(e){
+ e.preventDefault();
+ const from=document.getElementById('rail-from').value.trim().toUpperCase(),to=document.getElementById('rail-to').value.trim().toUpperCase();
+ const date=document.getElementById('rail-date').value,passengers=Number(document.getElementById('rail-passengers').value),travelClass=document.getElementById('rail-class').value,maxTransfers=Number(document.getElementById('rail-transfers').value);
+ const status=document.getElementById('rail-plan-status'),results=document.getElementById('rail-plan-results');
+ results.innerHTML='';
+ if(from===to){status.textContent='From and To station codes must differ.';return;}
+ if(!/^[A-Z0-9]{2,6}$/.test(from)||!/^[A-Z0-9]{2,6}$/.test(to)){status.textContent='Please enter valid station codes.';return;}
+ if(!DIGITRAVEL_RAIL_API_BASE){status.textContent='Rail API is not connected yet. This planner is ready, but live route results require the Cloudflare Worker URL.';results.innerHTML='<div class="card" style="padding:18px"><b>Setup required</b><p>Configure DIGITRAVEL_RAIL_API_BASE with your deployed Worker URL. Keep the provider API key in Cloudflare Worker secrets only.</p><p><a href="https://www.irctc.co.in/" target="_blank" rel="noopener">IRCTC official booking</a> · <a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener">Indian Railways</a></p></div>';return;}
+ status.textContent='Searching for train routes…';
+ fetch(DIGITRAVEL_RAIL_API_BASE.replace(/\/$/,'')+'/api/rail/journeys/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stops:[from,to],date,passengers,travelClass,maxTransfers})})
+ .then(async r=>{const d=await r.json();if(!r.ok||d.success===false)throw new Error(d?.error?.message||'Provider search failed');status.textContent='Results returned. Check schedules and booking details before travel.';const pre=document.createElement('pre');pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px';pre.textContent=JSON.stringify(d,null,2);const card=document.createElement('div');card.className='card';card.style.padding='18px';card.appendChild(pre);results.appendChild(card);})
+ .catch(err=>{status.textContent='Route search failed: '+(err.message||'temporary error');});
+}
+
 </script>
 </body>
 </html>
