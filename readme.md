@@ -1,6 +1,6 @@
 # 🧭 DigiTravel – India's Smart Travel Knowledge Platform
 
-DigiTravel is a static-first travel planning platform designed to simplify Indian itineraries, highway stopover discoveries, group expense tracking, and non-biased platform comparisons.
+DigiTravel is a static-first travel planning platform designed to simplify Indian itineraries, highway stopover discoveries, group expense tracking, and non-biased platform comparisons.\n\n**Live site:** https://vikashpathak-in.github.io/Digitravel/
 
 ## 🚀 Key Features
 * **100% GitHub Pages Compatible**: Constructed using pure HTML5, CSS3 (Glassmorphism design), and Vanilla Javascript (ES6).
@@ -34,7 +34,7 @@ Edit `json/destinations.json`:
 
 ## 🚆 Railway API (non-commercial test)
 
-A secure Cloudflare Worker proxy template and setup guide are available in [RAIL_API_SETUP.md](RAIL_API_SETUP.md). The API key must be stored as a Cloudflare Worker secret, never in the GitHub Pages front-end.
+A secure Cloudflare Worker proxy template and setup guide are available in [RAIL_API_SETUP.md](RAIL_API_SETUP.md). The API key must be stored as a Cloudflare Worker secret, never in the GitHub Pages front-end. See [RAIL_API_RESEARCH.md](RAIL_API_RESEARCH.md) for the current official/third-party provider comparison, verified costs, terms and exact integration plan.
 
 **Free-tier restriction:** RailRadar currently lists its free API tier for personal, non-commercial use only, with 100 requests/month and 10 requests/minute. Do not use it for a monetised service without written provider permission. The proxy is a setup scaffold; it is not active until a Worker is deployed and the front-end is configured with its URL.
 
