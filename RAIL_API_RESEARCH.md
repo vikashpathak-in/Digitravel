@@ -10,6 +10,8 @@
 - The separate Railway Search page has a prepared direct/connecting search UI, but it cannot return provider data until the Worker is deployed and `DIGITRAVEL_RAIL_API_BASE` is configured.
 - `cloudflare/rail-api-worker.js` is a proxy scaffold. It has no working provider credential until `RAILRADAR_API_KEY` is added as a Cloudflare secret.
 - No API key, deployed Worker URL or live API response was available in this review. No booking, PNR lookup or personal-data submission was made.
+- The active GitHub Pages URL is now `https://vikashpathak-in.github.io/Digitravel/`; the former `vikashp23.github.io` URL currently returns 404. The canonical metadata was corrected.
+- The Smart Planner input IDs were scoped separately from the legacy Railway Search form to prevent the two forms reading each other's fields.
 
 ## Provider assessment
 
