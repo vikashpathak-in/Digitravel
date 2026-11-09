@@ -15,7 +15,7 @@
  */
 
 const UPSTREAM = "https://api.railradar.in";
-const DEFAULT_ORIGIN = "https://vikashp23.github.io";
+const DEFAULT_ORIGIN = "https://vikashpathak-in.github.io";
 
 function corsHeaders(origin, allowedOrigin) {
   const allowed = origin === allowedOrigin;
