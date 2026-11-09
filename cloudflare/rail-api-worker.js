@@ -5,7 +5,7 @@
  *   RAILRADAR_API_KEY
  *
  * Optional variable:
- *   ALLOWED_ORIGIN = https://vikashp23.github.io
+ *   ALLOWED_ORIGIN = https://vikashpathak-in.github.io
  *
  * IMPORTANT:
  * RailRadar Free is listed as non-commercial (100 requests/month, 10/min).
