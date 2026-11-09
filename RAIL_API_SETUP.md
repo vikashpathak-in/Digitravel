@@ -37,7 +37,7 @@ In the Worker settings, open **Settings** → **Variables and Secrets** → **Ad
 Add a text variable:
 
 - Name: `ALLOWED_ORIGIN`
-- Value: `https://vikashp23.github.io`
+- Value: `https://vikashpathak-in.github.io`
 
 Save and redeploy if Cloudflare requests it. Never add the API key as a plain text variable.
 
