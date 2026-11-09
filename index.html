@@ -766,27 +766,28 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 </div>
 
 <div id="page-rail" class="page">
-<section style="background:linear-gradient(135deg,#092f4f,#087e8b);padding:44px 22px;color:#fff;text-align:center">
-<p style="letter-spacing:2px;font-size:11px">DIGITRAVEL · SMART RAIL</p><h1 style="font-size:clamp(27px,4vw,44px);font-weight:900">Plan a Railway Journey</h1>
-<p style="max-width:650px;margin:10px auto">Plan direct or connecting train journeys between Indian stations.</p></section>
-<div class="wrap" style="padding:28px 22px;max-width:900px">
-<div class="card" style="padding:22px"><h2>Your journey</h2><p style="font-size:13px;color:var(--muted)">Enter official station codes, e.g. SBC (Bengaluru City) to MAO (Madgaon).</p>
+<section style="background:linear-gradient(135deg,#092f4f,#087e8b);padding:42px 22px;color:#fff;text-align:center">
+<p style="letter-spacing:2px;font-size:11px;font-weight:800">DIGITRAVEL · RAILWAY</p><h1 style="font-size:clamp(27px,4vw,44px);font-weight:900">Train Search, Journey Plan & Booking</h1>
+<p style="max-width:680px;margin:10px auto;opacity:.9">Search trains between stations, explore connecting routes, and continue to official booking.</p></section>
+<div class="wrap" style="padding:26px 22px;max-width:960px">
+<div class="card" style="padding:22px"><h2 style="margin-bottom:6px">Search your journey</h2><p style="font-size:13px;color:var(--muted)">Use Indian Railways station codes, for example SBC (KSR Bengaluru) and MAO (Madgaon).</p>
 <form id="rail-plan-form" onsubmit="submitRailPlan(event)">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:16px">
 <label>From station code<input id="rail-from" required maxlength="6" pattern="[A-Za-z0-9]{2,6}" placeholder="SBC" style="display:block;width:100%;padding:12px;margin-top:6px"></label>
 <label>To station code<input id="rail-to" required maxlength="6" pattern="[A-Za-z0-9]{2,6}" placeholder="MAO" style="display:block;width:100%;padding:12px;margin-top:6px"></label>
-<label>Date<input id="rail-date" type="date" required style="display:block;width:100%;padding:12px;margin-top:6px"></label>
+<label>Journey date<input id="rail-date" type="date" required style="display:block;width:100%;padding:12px;margin-top:6px"></label>
 <label>Passengers<select id="rail-passengers" style="display:block;width:100%;padding:12px;margin-top:6px"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select></label>
-<label>Class<select id="rail-class" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="Any">Any class</option><option value="SL">Sleeper</option><option value="3A">AC 3 Tier</option><option value="2A">AC 2 Tier</option><option value="CC">Chair Car</option><option value="2S">Second Sitting</option><option value="1A">AC First Class</option></select></label>
-<label>Max transfers<select id="rail-transfers" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="0">Direct only</option><option value="1" selected>Up to 1</option><option value="2">Up to 2</option><option value="3">Up to 3</option></select></label></div>
-<div style="display:flex;gap:10px;margin-top:18px"><button class="btn btn-primary" type="submit">Find journey options</button><button class="btn btn-outline" type="button" onclick="railReset()">Clear</button></div></form></div>
-<div id="rail-plan-status" role="status" style="margin:14px 0;color:var(--muted)"></div><div id="rail-plan-results"></div>
-<p style="font-size:12px;color:var(--muted);margin-top:20px">Route results require the DigiTravel railway API Worker. Verify train timings, fares, and booking availability through IRCTC/NTES before booking.</p></div></div>
+<label>Travel class<select id="rail-class" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="Any">Any class</option><option value="SL">Sleeper (SL)</option><option value="3A">AC 3 Tier (3A)</option><option value="2A">AC 2 Tier (2A)</option><option value="CC">Chair Car (CC)</option><option value="2S">Second Sitting (2S)</option><option value="1A">AC First Class (1A)</option></select></label>
+<label>Connecting trains<select id="rail-transfers" style="display:block;width:100%;padding:12px;margin-top:6px"><option value="0">Direct trains only</option><option value="1" selected>Direct + up to 1 change</option><option value="2">Direct + up to 2 changes</option><option value="3">Direct + up to 3 changes</option></select></label>
+</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="btn btn-primary" type="submit">Search trains & plan route</button><button class="btn btn-outline" type="button" onclick="railReset()">Reset</button></div></form></div>
+<div id="rail-plan-status" role="status" style="margin:16px 0;color:var(--muted)"></div><div id="rail-plan-results"></div>
+<div class="card" style="padding:18px;margin-top:18px"><h3>Book your ticket</h3><p style="font-size:13px;color:var(--muted);margin:6px 0 14px">DigiTravel helps plan the route. Complete passenger details, check final fare and seat availability, and book through IRCTC.</p><a class="btn btn-primary" href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener">Open IRCTC train booking ↗</a> <a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener" style="margin-left:10px">Indian Railways enquiry</a></div>
+<p style="font-size:12px;color:var(--muted);margin-top:18px;line-height:1.6">Railway search is powered by a third-party data provider when configured. Results may be delayed or incomplete and do not guarantee seats, fares or reservations. Verify all details on IRCTC/NTES before booking.</p></div></div>
 <!-- ════════════ BOTTOM NAV ════════════ -->
 <div id="bnav">
   <button class="bnav-btn act" onclick="nav('home')" data-p="home"><span class="bi">🏠</span>Home</button>
   <button class="bnav-btn" onclick="nav('states')" data-p="states"><span class="bi">🗺️</span>States</button>
-  <button class="bnav-btn" onclick="nav('rail')" data-p="rail"><span class="bi">🚆</span>Rail Planner</button>
+  <button class="bnav-btn" onclick="nav('rail')" data-p="rail"><span class="bi">🚆</span>Railway</button>
   <button class="bnav-btn" onclick="nav('templates')" data-p="templates"><span class="bi">📋</span>Templates</button>
   <button class="bnav-btn" onclick="nav('group')" data-p="group"><span class="bi">👥</span>Group</button>
   <button class="bnav-btn" onclick="nav('budget')" data-p="budget"><span class="bi">💰</span>Budget</button>
@@ -2115,20 +2116,45 @@ function travelPopupNavigate(page){
 }
 
 initDailyTravelPopup();
-function railReset(){document.getElementById('rail-plan-form').reset();document.getElementById('rail-plan-status').textContent='';document.getElementById('rail-plan-results').innerHTML='';}
-function submitRailPlan(e){
+function railReset(){
+ document.getElementById('rail-plan-form').reset();
+ document.getElementById('rail-plan-status').textContent='';
+ document.getElementById('rail-plan-results').innerHTML='';
+}
+function railShowData(title,data){
+ const root=document.getElementById('rail-plan-results');
+ const card=document.createElement('section');card.className='card';card.style.cssText='padding:18px;margin:14px 0';
+ const h=document.createElement('h3');h.textContent=title;h.style.marginBottom='10px';card.appendChild(h);
+ const pre=document.createElement('pre');pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;max-height:520px;overflow:auto';pre.textContent=JSON.stringify(data,null,2);card.appendChild(pre);root.appendChild(card);
+}
+async function submitRailPlan(e){
  e.preventDefault();
- const from=document.getElementById('rail-from').value.trim().toUpperCase(),to=document.getElementById('rail-to').value.trim().toUpperCase();
- const date=document.getElementById('rail-date').value,passengers=Number(document.getElementById('rail-passengers').value),travelClass=document.getElementById('rail-class').value,maxTransfers=Number(document.getElementById('rail-transfers').value);
+ const from=document.getElementById('rail-from').value.trim().toUpperCase();
+ const to=document.getElementById('rail-to').value.trim().toUpperCase();
+ const date=document.getElementById('rail-date').value;
+ const passengers=Number(document.getElementById('rail-passengers').value);
+ const travelClass=document.getElementById('rail-class').value;
+ const maxTransfers=Number(document.getElementById('rail-transfers').value);
  const status=document.getElementById('rail-plan-status'),results=document.getElementById('rail-plan-results');
  results.innerHTML='';
- if(from===to){status.textContent='From and To station codes must differ.';return;}
- if(!/^[A-Z0-9]{2,6}$/.test(from)||!/^[A-Z0-9]{2,6}$/.test(to)){status.textContent='Please enter valid station codes.';return;}
- if(!DIGITRAVEL_RAIL_API_BASE){status.textContent='Rail API is not connected yet. This planner is ready, but live route results require the Cloudflare Worker URL.';results.innerHTML='<div class="card" style="padding:18px"><b>Setup required</b><p>Configure DIGITRAVEL_RAIL_API_BASE with your deployed Worker URL. Keep the provider API key in Cloudflare Worker secrets only.</p><p><a href="https://www.irctc.co.in/" target="_blank" rel="noopener">IRCTC official booking</a> · <a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener">Indian Railways</a></p></div>';return;}
- status.textContent='Searching for train routes…';
- fetch(DIGITRAVEL_RAIL_API_BASE.replace(/\/$/,'')+'/api/rail/journeys/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stops:[from,to],date,passengers,travelClass,maxTransfers})})
- .then(async r=>{const d=await r.json();if(!r.ok||d.success===false)throw new Error(d?.error?.message||'Provider search failed');status.textContent='Results returned. Check schedules and booking details before travel.';const pre=document.createElement('pre');pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px';pre.textContent=JSON.stringify(d,null,2);const card=document.createElement('div');card.className='card';card.style.padding='18px';card.appendChild(pre);results.appendChild(card);})
- .catch(err=>{status.textContent='Route search failed: '+(err.message||'temporary error');});
+ if(from===to){status.textContent='Origin and destination station codes must be different.';return;}
+ if(!/^[A-Z0-9]{2,6}$/.test(from)||!/^[A-Z0-9]{2,6}$/.test(to)){status.textContent='Enter valid station codes (2–6 letters or numbers).';return;}
+ if(!date){status.textContent='Select your journey date.';return;}
+ if(!DIGITRAVEL_RAIL_API_BASE){
+  status.textContent='Railway search is not connected yet. The search and booking tab is ready, but live train results need the Cloudflare Worker URL.';
+  const note=document.createElement('div');note.className='card';note.style.padding='18px';
+  note.innerHTML='<strong>One-time connection required</strong><p style="margin-top:8px">After the railway Worker is deployed, its URL must be added to DIGITRAVEL_RAIL_API_BASE in the website. The RailRadar key must remain only in Cloudflare Worker secrets.</p><p style="margin-top:8px"><a href="https://www.irctc.co.in/nget/train-search" target="_blank" rel="noopener">Continue to official IRCTC booking ↗</a></p>';results.appendChild(note);return;
+ }
+ status.textContent='Searching direct trains and possible connecting routes…';
+ const base=DIGITRAVEL_RAIL_API_BASE.replace(/\/$/,'');
+ const jobs=[fetch(base+'/api/rail/trains/between/'+encodeURIComponent(from)+'/'+encodeURIComponent(to)).then(async r=>{const d=await r.json();if(!r.ok||d.success===false)throw new Error(d?.error?.message||'Direct train search failed');return d;})];
+ if(maxTransfers>0)jobs.push(fetch(base+'/api/rail/journeys/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stops:[from,to],maxTransfers})}).then(async r=>{const d=await r.json();if(!r.ok||d.success===false)throw new Error(d?.error?.message||'Connecting route search failed');return d;}));
+ const outcomes=await Promise.allSettled(jobs);
+ let shown=0;
+ if(outcomes[0].status==='fulfilled'){railShowData('Direct trains',outcomes[0].value);shown++;}else{status.textContent='Direct train search: '+outcomes[0].reason.message;}
+ if(maxTransfers>0){if(outcomes[1].status==='fulfilled'){railShowData('Journey planner results',outcomes[1].value);shown++;}else{const p=document.createElement('p');p.textContent='Connecting route search: '+outcomes[1].reason.message;results.appendChild(p);}}
+ if(shown){status.textContent='Search completed. Review the returned train data, then verify date, class, fare and seat availability on IRCTC before booking.';}
+ if(!shown&&outcomes[0].status==='rejected')status.textContent='No route data received. '+outcomes[0].reason.message;
 }
 
 </script>
