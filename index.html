@@ -386,7 +386,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
       <button class="nav-btn" onclick="nav('group')">Group Planner</button>
       <button class="nav-btn" onclick="nav('budget')">Budget</button>
       <button class="nav-btn" onclick="nav('pilgrimage')">Pilgrimage</button>
-      <button class="nav-btn" onclick="nav('tips')">Travel Tips</button>
+      <button class="nav-btn" onclick="nav('tips')">Travel Tips</button><button class="nav-btn" onclick="nav('flights')">Flights</button><button class="nav-btn" onclick="nav('trains')">Railway</button><button class="nav-btn" onclick="nav('buses')">Bus</button><button class="nav-btn" onclick="nav('hotels')">Hotels</button><button class="nav-btn" onclick="nav('holidays')">Holidays</button>
       <button class="nav-btn" onclick="nav('compare')">🔗 Compare</button>
       <button class="btn-dark" onclick="toggleDark()" id="dkBtn">🌙</button>
       <button class="nav-btn-cta" onclick="openSearch()">🔍 Search</button>
@@ -404,7 +404,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
     <button onclick="nav('daytrips');closeMob()">🌅 Day Trips</button>
     <button onclick="nav('hidden');closeMob()">💎 Hidden Gems</button>
     <button onclick="nav('festivals');closeMob()">🎉 Festivals</button>
-    <button onclick="nav('tips');closeMob()">💡 Travel Tips</button>
+    <button onclick="nav('tips');closeMob()">💡 Travel Tips</button><button onclick="nav('flights');closeMob()">Flights & Offers</button><button onclick="nav('trains');closeMob()">Railway & Offers</button><button onclick="nav('buses');closeMob()">Bus & Offers</button><button onclick="nav('hotels');closeMob()">Hotels & Offers</button><button onclick="nav('holidays');closeMob()">Holiday Packages</button><button onclick="nav('visa');closeMob()">Visa Services</button>
     <button onclick="nav('compare');closeMob()">🔗 Compare Booking</button>
     <button onclick="openSearch();closeMob()">🔍 Search India</button>
     <button onclick="toggleDark();closeMob()">🌙 Dark/Light Mode</button>
@@ -756,7 +756,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 </div>
 
 <!-- ════════════ PAGE: COMPARE ════════════ -->
-<div id="page-compare" class="page">
+<div id="page-flights" class="page"><div class="wrap" style="padding:30px 22px"><div id="flights-content"></div></div></div><div id="page-trains" class="page"><div class="wrap" style="padding:30px 22px"><div id="trains-content"></div></div></div><div id="page-buses" class="page"><div class="wrap" style="padding:30px 22px"><div id="buses-content"></div></div></div><div id="page-hotels" class="page"><div class="wrap" style="padding:30px 22px"><div id="hotels-content"></div></div></div><div id="page-holidays" class="page"><div class="wrap" style="padding:30px 22px"><div id="holidays-content"></div></div></div><div id="page-visa" class="page"><div class="wrap" style="padding:30px 22px"><div id="visa-content"></div></div></div><div id="page-compare" class="page">
   <div style="background:linear-gradient(135deg,var(--navy2),#0a3d2e);padding:48px 24px;color:#fff;text-align:center">
     <div style="font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#86EFAC;margin-bottom:7px">No Fake Prices · No Fake Availability</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(26px,4vw,44px);font-weight:900;margin-bottom:10px">🔗 Compare Before Booking</h1>
@@ -966,7 +966,14 @@ function nav(id){
   window.scrollTo(0,0);
   const inits={states:renderStates,destinations:renderDests,templates:renderTemplates,
     group:renderGroup,budget:renderBudget,pilgrimage:renderPilgrimage,
-    daytrips:renderDaytrips,hidden:renderHidden,festivals:renderFestivals,tips:renderTips};
+    daytrips:renderDaytrips,hidden:renderHidden,festivals:renderFestivals,tips:renderTips,
+    compare:nav_compare_init,
+    flights:()=>{document.getElementById("flights-content").innerHTML=sectionAir();},
+    trains:()=>{document.getElementById("trains-content").innerHTML=sectionRail();},
+    buses:()=>{document.getElementById("buses-content").innerHTML=sectionBus();},
+    hotels:()=>{document.getElementById("hotels-content").innerHTML=sectionHotels();},
+    holidays:()=>{document.getElementById("holidays-content").innerHTML=sectionHoliday();},
+    visa:()=>{document.getElementById("visa-content").innerHTML="<div class=card style=padding:22px><h2>Visa & e-Visa Services</h2><p>Check current visa requirements and fees with the relevant government authority or authorised provider before payment.</p><a href=https://www.viaworld.in/ target=_blank rel=noopener>Via visa services</a></div>";}};
   if(inits[id]) inits[id]();
 }
 function toggleMenu(){const m=document.getElementById('mob-menu');m.style.display=m.style.display==='block'?'none':'block';}
