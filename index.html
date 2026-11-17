@@ -1934,7 +1934,7 @@ function sectionAir(){
     {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/',note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
     {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale coverage includes 35 airlines and participating banks. Check flight-specific daily Lightning Drops and bank offers.',url:'https://www.makemytrip.com/flights/'}
   ]);
-  return sectionHeader('cmp-air','✈️','Air','Compare official airline sites and trusted aggregators.')
+  return sectionHeader('cmp-air','✈️','Flights','Search flights, compare airlines and booking platforms.')
     + currentAirOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
     ${BKPLAT.flights.map(p=>`
@@ -2051,7 +2051,8 @@ function sectionRail(){
     {tag:'redBus Train',valid:'Till 30 Jun (year shown on offer page)',title:'₹100 OFF train tickets',detail:'Festive train booking discount listed on redBus.',code:'FESTIVE',url:'https://www.redbus.in/offers'},
     {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'Zero convenience fee',detail:'No convenience fee offer listed for eligible train bookings.',code:'NOFEE',url:'https://www.redbus.in/offers'}
   ]);
-  return sectionHeader('cmp-rail','🚄','Rail','Plan your journey here, then verify live schedules and availability on official railway services.')
+  return sectionHeader('cmp-rail','🚄','Railway','Find train tools, compare booking services and check current railway offers.')
+    + '<div style="margin:12px 0 18px"><button class="btn-primary" onclick="nav(\'rail\')">Open Train Route Search & Journey Planner</button></div>'
     + railAssistantHTML()
     + currentRailOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
