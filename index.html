@@ -1911,7 +1911,7 @@ function travelOfferCard(o){
     <div style="display:flex;gap:7px;flex-wrap:wrap">${o.best?'<span class="badge" style="background:var(--saffron);color:#fff">⭐ BEST PICK · IF ELIGIBLE</span>':''}<span class="badge" style="background:var(--ice);color:var(--navy)">${o.tag}</span><span style="font-size:11px;color:var(--muted);font-weight:800">${o.valid}</span></div>
     <div style="font-size:17px;font-weight:900;color:var(--ink)">${o.title}</div>
     <div style="font-size:13px;color:var(--slate);line-height:1.6">${o.detail}</div>
-    ${o.code?`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span>Coupon: <strong>${o.code}</strong></span><button type="button" class="btn-outline" style="padding:5px 9px;font-size:11px" onclick=copyTravelCoupon(${o.code})>Copy Coupon</button></div>`:''}
+    ${o.code?`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span>Coupon: <strong>${o.code}</strong></span><button type="button" class="btn-outline" style="padding:5px 9px;font-size:11px" onclick="copyTravelCoupon('${o.code}')">Copy Coupon</button></div>`:''}
     <div style="font-size:11px;color:var(--muted);line-height:1.5;margin-top:auto">${o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.'}</div>
     <a href="${o.url}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-outline" style="width:100%">View offer / Book ↗</button></a>
   </article>`;
