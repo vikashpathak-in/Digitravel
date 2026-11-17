@@ -2135,8 +2135,38 @@ function sectionHoliday(){
         <div style="font-size:10px;color:var(--muted);margin-top:12px">Package details displayed by DigiTravel from supplier information. Booking, payment, final price, availability and confirmation should be handled directly with Via.com (Via Holidays) and are subject to the supplier's terms.</div>
       </div>
     </article>`;
+  const viaVisaCard = `
+    <article class="card" style="overflow:hidden;margin:24px 0;border:1.5px solid rgba(13,115,119,.35)">
+      <div style="background:linear-gradient(120deg,#0F3460,#0D7377);color:#fff;padding:22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <span class="badge" style="background:#F97316;color:#fff">Digital visa service</span>
+          <span class="badge" style="background:rgba(255,255,255,.16);color:#fff">Powered by Via</span>
+        </div>
+        <div style="font-family:var(--font-d);font-size:clamp(22px,4vw,32px);font-weight:900">Via Digital E-Visa Service</div>
+        <div style="font-size:14px;opacity:.9;margin-top:6px">Online visa application support for travel agents · 30+ destinations, as stated in Via's promotional information</div>
+      </div>
+      <div style="padding:20px">
+        <p style="font-size:14px;color:var(--slate);line-height:1.7;margin-bottom:14px">Via's announced digital process allows travel agents to upload applicant documents online, submit applications for expert review, and track application status through the Travel Agent Dashboard. Applications can be made online, with multi-country applications supported according to Via's email.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:16px">
+          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:20px;margin-bottom:5px">📄</div><strong style="font-size:13px">1. Upload documents</strong><div style="font-size:12px;color:var(--slate);margin-top:4px">Submit applicant documents online through Via.</div></div>
+          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:20px;margin-bottom:5px">🔎</div><strong style="font-size:13px">2. Review & submission</strong><div style="font-size:12px;color:var(--slate);margin-top:4px">Via's team reviews, verifies and submits the application, with updates.</div></div>
+          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:20px;margin-bottom:5px">📲</div><strong style="font-size:13px">3. Track status</strong><div style="font-size:12px;color:var(--slate);margin-top:4px">Follow application progress and receive status updates.</div></div>
+        </div>
+        <div style="font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:15px"><strong style="color:var(--ink)">Destinations mentioned by Via:</strong> Singapore, Dubai, Thailand and Vietnam. Via states that 30+ destinations are supported; confirm the current country list and visa category directly with Via.</div>
+        <div style="background:rgba(217,119,6,.09);border:1px solid rgba(217,119,6,.28);border-radius:10px;padding:13px 15px;margin-bottom:14px">
+          <strong style="font-size:13px;color:var(--ink)">For travel agents</strong>
+          <div style="font-size:12px;color:var(--slate);margin-top:5px">The announcement is addressed to travel agents. Contact Via to confirm agent onboarding, dashboard access, eligible applicants and destinations, service fees, document requirements and processing timelines before offering this service to customers.</div>
+        </div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap">
+          <a href="https://www.viaworld.in/" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:170px"><button class="btn-wa" style="width:100%">Visit ViaWorld ↗</button></a>
+          <a href="mailto:visagroup@via.com" style="flex:1;min-width:170px"><button class="btn-outline" style="width:100%">Email Via Visa Team</button></a>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:12px">Information displayed from Via's promotional email dated 13 Nov 2026. DigiTravel does not process visa applications or guarantee visa approval. Visa decisions are made by the relevant government authorities. Confirm all terms and current service details directly with Via.</div>
+      </div>
+    </article>`;
   return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
     + featuredKerala
+    + viaVisaCard
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
     ${BKPLAT.packages.map(p=>`
       <div style="background:var(--white);border:1.5px solid ${p.wa?'#25D366':'var(--steel)'};border-radius:14px;padding:20px;box-shadow:var(--shadow)">
