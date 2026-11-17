@@ -1898,8 +1898,35 @@ function sectionHeader(id,icon,title,sub){
     <div style="font-size:13px;color:var(--muted);margin-bottom:18px">${sub}</div>
   </div>`;
 }
+
+function travelOfferCard(o){
+  return `<article class="card" style="padding:16px;border:1.5px solid var(--steel);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px">
+    <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="badge" style="background:var(--ice);color:var(--navy)">${o.tag}</span><span style="font-size:11px;color:var(--muted);font-weight:800">${o.valid}</span></div>
+    <div style="font-size:17px;font-weight:900;color:var(--ink)">${o.title}</div>
+    <div style="font-size:13px;color:var(--slate);line-height:1.6">${o.detail}</div>
+    ${o.code?`<div style="background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span style="color:var(--muted)">Promo code:</span> <strong>${o.code}</strong></div>`:''}
+    <div style="font-size:11px;color:var(--muted);line-height:1.5;margin-top:auto">${o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.'}</div>
+    <a href="${o.url}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-outline" style="width:100%">View offer / Book ↗</button></a>
+  </article>`;
+}
+function travelOffersBlock(title, subtitle, offers){
+  return `<section style="margin:8px 0 28px">
+    <div style="display:flex;align-items:end;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <div><h3 style="font-family:var(--font-d);font-size:20px;font-weight:900;margin:0">${title}</h3><div style="font-size:12px;color:var(--muted);margin-top:4px">${subtitle}</div></div>
+      <span class="badge" style="background:rgba(13,115,119,.1);color:var(--jade)">Offers checked 17 Nov 2026</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px">${offers.map(travelOfferCard).join('')}</div>
+  </section>`;
+}
+
 function sectionAir(){
+  const currentAirOffers = travelOffersBlock('✈️ Current Flight Offers','Promotions from airline and booking platforms; confirm route, fare and card eligibility.',[
+    {tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
+    {tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/'),note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
+    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale coverage includes 35 airlines and participating banks. Check flight-specific daily Lightning Drops and bank offers.',url:'https://www.makemytrip.com/flights/'}
+  ]);
   return sectionHeader('cmp-air','✈️','Air','Compare official airline sites and trusted aggregators.')
+    + currentAirOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
     ${BKPLAT.flights.map(p=>`
       <div style="background:var(--white);border:1.5px solid var(--steel);border-radius:14px;padding:20px;transition:all .2s;box-shadow:var(--shadow)" onmouseenter="this.style.borderColor='var(--saffron)';this.style.boxShadow='var(--shadow-lg)'" onmouseleave="this.style.borderColor='var(--steel)';this.style.boxShadow='var(--shadow)'">
@@ -2009,8 +2036,15 @@ function railAssistantHTML(){
   </div>`;
 }
 function sectionRail(){
+  const currentRailOffers = travelOffersBlock('🚄 Current Railway Booking Offers','Partner booking promotions; check whether the offer applies to your train, class and passenger type.',[
+    {tag:'redBus Train',valid:'Till 22 Nov 2026',title:'₹350 OFF train tickets',detail:'Chhath offer listed on redBus train offers.',code:'CHHATH',url:'https://www.redbus.in/offers'},
+    {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'₹300 OFF AC ticket bookings',detail:'AC ticket booking discount listed on the redBus train offers page.',code:'ACRAIL',url:'https://www.redbus.in/offers'},
+    {tag:'redBus Train',valid:'Till 30 Jun (year shown on offer page)',title:'₹100 OFF train tickets',detail:'Festive train booking discount listed on redBus.',code:'FESTIVE',url:'https://www.redbus.in/offers'},
+    {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'Zero convenience fee',detail:'No convenience fee offer listed for eligible train bookings.',code:'NOFEE',url:'https://www.redbus.in/offers'}
+  ]);
   return sectionHeader('cmp-rail','🚄','Rail','Plan your journey here, then verify live schedules and availability on official railway services.')
     + railAssistantHTML()
+    + currentRailOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
     ${BKPLAT.trains.map(p=>`
       <div style="background:var(--white);border:1.5px solid var(--steel);border-radius:14px;padding:20px;box-shadow:var(--shadow)">
@@ -2023,9 +2057,16 @@ function sectionRail(){
   </div>`;
 }
 function sectionBus(){
+  const currentBusOffers = travelOffersBlock('🚌 Current Bus Booking Offers','redBus promotions listed for November 2026; codes may be route-, bank- or user-specific.',[
+    {tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'General bus booking offer shown on the redBus offers page.',code:'FIRST',url:'https://www.redbus.in/offers'},
+    {tag:'Karnataka / TN / Kerala',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF selected routes',detail:'Regional route offer covering Karnataka, Tamil Nadu and Kerala routes.',code:'CASH300',url:'https://www.redbus.in/offers'},
+    {tag:'KSRTC',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF KSRTC bus tickets',detail:'Listed for eligible KSRTC bus bookings.',code:'KSRTC',url:'https://www.redbus.in/offers'},
+    {tag:'Bank offer',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with Axis Bank cards',detail:'Credit-card offer on eligible redBus bus bookings.',code:'AXIS500',url:'https://www.redbus.in/offers'}
+  ]);
   const govBuses=BKPLAT.buses.filter(p=>p.ty==='Govt');
   const pvtBuses=BKPLAT.buses.filter(p=>p.ty==='Private');
   return sectionHeader('cmp-bus','🚌','Bus','Government operators for official routes; private platforms for wider selection.')
+    + currentBusOffers
     + `<h4 style="font-family:var(--font-d);font-size:17px;margin-bottom:12px">🏛️ Government Operators</h4>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:22px">
       ${govBuses.map(p=>`<div style="background:var(--white);border:1.5px solid var(--steel);border-radius:14px;padding:18px;box-shadow:var(--shadow)">
@@ -2042,7 +2083,13 @@ function sectionBus(){
     </div>`;
 }
 function sectionHotels(){
+  const currentHotelOffers = travelOffersBlock('🏨 Current Hotel Offers','Hotel discounts from booking platforms; compare total price, taxes and cancellation terms.',[
+    {tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 65% OFF hotels',detail:'Amazon Pay advertises up to 45% instant discount, extra 5% for Prime members, cashback up to ₹10,000 and eligible card benefits.',url:'https://www.amazon.in/',note:'From 14 Nov, flight and hotel cashback offers are stated to be for first-time Amazon Pay travel customers. Hotel, account and payment eligibility applies.'},
+    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Deals across 33,500+ hotels and homestays',detail:'Reported coverage includes 30,000+ domestic and 3,500 international properties, participating hotel brands and bank offers.',url:'https://www.makemytrip.com/hotels/'},
+    {tag:'Thomas Cook',valid:'Till 30 Nov 2026',title:'Taj hotel additional 10% OFF',detail:'Thomas Cook lists an online stay offer for eligible Taj bookings.',code:'TCTAJ10',url:'https://www.thomascook.in/offers-and-deals'}
+  ]);
   return sectionHeader('cmp-hotels','🏨','Hotels','Compare across major hotel booking platforms.')
+    + currentHotelOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
     ${BKPLAT.hotels.map(p=>`
       <div style="background:var(--white);border:1.5px solid var(--steel);border-radius:14px;padding:20px;box-shadow:var(--shadow)" onmouseenter="this.style.borderColor='var(--saffron)'" onmouseleave="this.style.borderColor='var(--steel)'">
@@ -2053,6 +2100,11 @@ function sectionHotels(){
   </div>`;
 }
 function sectionHoliday(){
+  const currentHolidayOffers = travelOffersBlock('🎒 Current Holiday Package Offers','Published tour-operator offers. Check departure dates, inclusions, group size and cancellation rules.',[
+    {tag:'Thomas Cook',valid:'Till 31 Dec 2026',title:'Asia Buy 1 Get 1 offer',detail:'Pay for one traveller and a companion travels free on selected eligible departures.',url:'https://www.thomascook.in/offers-and-deals',note:'Selected departures and package-specific terms apply. Confirm inclusions, taxes and availability with Thomas Cook.'},
+    {tag:'Thomas Cook',valid:'Till 29 Dec 2026',title:'Lakshadweep offer — ₹20,000 discount',detail:'Promo code listed for ₹20,000 off per adult and child on specific departures.',code:'LK20000',url:'https://www.thomascook.in/offers-and-deals',note:'Only specific departures; verify package eligibility and final price with Thomas Cook.'},
+    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale spans flights, hotels, buses, trains, cabs, tours, attractions, forex and visa services.',url:'https://www.makemytrip.com/holidays-india/'}
+  ]);
   const featuredKerala = `
     <article class="card" style="overflow:hidden;margin-bottom:22px;border:2px solid var(--saffron)">
       <div style="background:linear-gradient(120deg,#0F3460,#0D7377);color:#fff;padding:22px">
@@ -2164,36 +2216,8 @@ function sectionHoliday(){
         <div style="font-size:10px;color:var(--muted);margin-top:12px">Information displayed from Via's promotional email dated 13 Nov 2026. DigiTravel does not process visa applications or guarantee visa approval. Visa decisions are made by the relevant government authorities. Confirm all terms and current service details directly with Via.</div>
       </div>
     </article>`;
-  const airAsiaPromo = `
-    <article class="card" style="overflow:hidden;margin:0 0 22px;border:2px solid var(--saffron)">
-      <div style="background:linear-gradient(120deg,#8B1538,#D91E36);color:#fff;padding:22px">
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-          <span class="badge" style="background:#fff;color:#B5122B">Limited-period airline offer</span>
-          <span class="badge" style="background:rgba(255,255,255,.16);color:#fff">Via.com × AirAsia</span>
-        </div>
-        <div style="font-family:var(--font-d);font-size:clamp(24px,4vw,35px);font-weight:900">Fly Further, Save More</div>
-        <div style="font-size:16px;font-weight:800;margin-top:5px">Enjoy up to 10% OFF on AirAsia bookings</div>
-        <div style="font-size:13px;opacity:.9;margin-top:7px">Explore Kuala Lumpur, Bangkok, Bali and more destinations</div>
-      </div>
-      <div style="padding:20px">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:15px">
-          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase">Booking / sale period</div><strong>Until 22 Nov 2026</strong></div>
-          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase">Travel period</div><strong>Until 30 Sep 2027</strong></div>
-        </div>
-        <div style="font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:15px">Via's promotional email announces savings of up to 10% on AirAsia bookings. The actual discount, eligible routes, flights, fare classes, promo code (if applicable), payment conditions and seat availability must be confirmed on the booking portal before payment.</div>
-        <div style="background:rgba(217,119,6,.09);border:1px solid rgba(217,119,6,.28);border-radius:10px;padding:13px 15px;margin-bottom:14px">
-          <strong style="font-size:13px;color:var(--ink)">Important offer conditions</strong>
-          <div style="font-size:12px;color:var(--slate);margin-top:5px">Offer period stated in Via's email: immediate effect until 22 November 2026. Travel must be completed by 30 September 2027. Terms and conditions apply. "Up to 10%" is the maximum advertised saving, not a guaranteed discount on every booking.</div>
-        </div>
-        <div style="display:flex;gap:9px;flex-wrap:wrap">
-          <a href="https://www.via.com/" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:180px"><button class="btn-wa" style="width:100%">Visit Via.com to check offer ↗</button></a>
-          <a href="https://www.airasia.com/" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:170px"><button class="btn-outline" style="width:100%">Visit AirAsia ↗</button></a>
-        </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:12px">Offer information reproduced from a Via.com promotional email received on 17 November 2026. DigiTravel is displaying the promotion for information only and does not issue or guarantee the discount. Confirm eligibility and final fare directly with Via.com before booking.</div>
-      </div>
-    </article>`;
   return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
-    + airAsiaPromo
+    + currentHolidayOffers
     + featuredKerala
     + viaVisaCard
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
