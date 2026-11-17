@@ -975,7 +975,7 @@ function nav(id){
     buses:()=>{document.getElementById("buses-content").innerHTML=sectionBus();},
     hotels:()=>{document.getElementById("hotels-content").innerHTML=sectionHotels();},
     holidays:()=>{document.getElementById("holidays-content").innerHTML=sectionHoliday();},
-    visa:()=>{document.getElementById("visa-content").innerHTML="<div class=card style=padding:22px><h2>Visa & e-Visa Services</h2><p>Check current visa requirements and fees with the relevant government authority or authorised provider before payment.</p><a href=https://www.viaworld.in/ target=_blank rel=noopener>Via visa services</a></div>";}};
+    visa:()=>{document.getElementById("visa-content").innerHTML=sectionVisa();}};
   if(inits[id]) inits[id]();
 }
 function toggleMenu(){const m=document.getElementById('mob-menu');m.style.display=m.style.display==='block'?'none':'block';}
@@ -2197,6 +2197,32 @@ function sectionHoliday(){
         <div style="font-size:10px;color:var(--muted);margin-top:12px">Package details displayed by DigiTravel from supplier information. Booking, payment, final price, availability and confirmation should be handled directly with Via.com (Via Holidays) and are subject to the supplier's terms.</div>
       </div>
     </article>`;
+
+  return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
+    + currentHolidayOffers
+    + featuredKerala
+    + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+    ${BKPLAT.packages.map(p=>`
+      <div style="background:var(--white);border:1.5px solid ${p.wa?'#25D366':'var(--steel)'};border-radius:14px;padding:20px;box-shadow:var(--shadow)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:28px">${p.lo}</span><div><div style="font-weight:900;font-size:16px">${p.n}</div><div style="font-size:12px;color:var(--muted)">${p.ft}</div></div></div>
+        <div style="font-size:13px;color:var(--slate);margin-bottom:14px">${p.nt}</div>
+        <a href="${p.u}" target="_blank" rel="noopener">
+          <button style="width:100%;background:${p.wa?'#25D366':'transparent'};color:${p.wa?'#fff':'var(--saffron)'};border:2px solid ${p.wa?'#25D366':'var(--saffron)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.wa?'Open WhatsApp Catalog →':'View Packages →'}</button>
+        </a>
+      </div>`).join('')}
+  </div>`;
+}
+
+/* Patch nav() to init compare page */
+const _origNav = nav;
+nav = function(id){
+  _origNav(id);
+  if(id==='compare') setTimeout(nav_compare_init, 50);
+};
+
+
+/* ═══════════════════════ DAILY TRAVEL POPUPS ═══════════════════════ */
+function sectionVisa(){
   const viaVisaCard = `
     <article class="card" style="overflow:hidden;margin:24px 0;border:1.5px solid rgba(13,115,119,.35)">
       <div style="background:linear-gradient(120deg,#0F3460,#0D7377);color:#fff;padding:22px">
@@ -2226,31 +2252,10 @@ function sectionHoliday(){
         <div style="font-size:10px;color:var(--muted);margin-top:12px">Information displayed from Via's promotional email dated 13 Nov 2026. DigiTravel does not process visa applications or guarantee visa approval. Visa decisions are made by the relevant government authorities. Confirm all terms and current service details directly with Via.</div>
       </div>
     </article>`;
-  return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
-    + currentHolidayOffers
-    + featuredKerala
-    + viaVisaCard
-    + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
-    ${BKPLAT.packages.map(p=>`
-      <div style="background:var(--white);border:1.5px solid ${p.wa?'#25D366':'var(--steel)'};border-radius:14px;padding:20px;box-shadow:var(--shadow)">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:28px">${p.lo}</span><div><div style="font-weight:900;font-size:16px">${p.n}</div><div style="font-size:12px;color:var(--muted)">${p.ft}</div></div></div>
-        <div style="font-size:13px;color:var(--slate);margin-bottom:14px">${p.nt}</div>
-        <a href="${p.u}" target="_blank" rel="noopener">
-          <button style="width:100%;background:${p.wa?'#25D366':'transparent'};color:${p.wa?'#fff':'var(--saffron)'};border:2px solid ${p.wa?'#25D366':'var(--saffron)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.wa?'Open WhatsApp Catalog →':'View Packages →'}</button>
-        </a>
-      </div>`).join('')}
-  </div>`;
+  return sectionHeader('cmp-visa','🛂','Visa & e-Visa','Visa information, digital application support and official resources.')
+    + viaVisaCard;
 }
 
-/* Patch nav() to init compare page */
-const _origNav = nav;
-nav = function(id){
-  _origNav(id);
-  if(id==='compare') setTimeout(nav_compare_init, 50);
-};
-
-
-/* ═══════════════════════ DAILY TRAVEL POPUPS ═══════════════════════ */
 function travelLocalDateKey(date=new Date()){
   return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
 }
