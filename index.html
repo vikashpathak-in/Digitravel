@@ -352,6 +352,18 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 @keyframes dtPopupIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
 @media(max-width:420px){.dt-popup-title{font-size:25px}.dt-popup-body{padding:18px}}
 
+
+/* DigiTravel offer popups */
+.dt-popup-overlay{position:fixed;inset:0;background:rgba(8,20,38,.68);z-index:99999;display:none;align-items:center;justify-content:center;padding:16px}
+.dt-popup-overlay.dt-open{display:flex}
+.dt-popup{background:var(--white,#fff);color:var(--ink,#14213d);width:min(560px,100%);max-height:85vh;overflow:auto;border-radius:18px;padding:24px;box-shadow:0 24px 80px rgba(0,0,0,.28);position:relative}
+.dt-popup h2{font-family:var(--font-d,inherit);font-size:24px;margin:0 34px 12px 0}
+.dt-popup p{font-size:14px;line-height:1.7;color:var(--slate,#526174);margin:9px 0}
+.dt-popup-close{position:absolute;right:14px;top:12px;border:0;background:var(--ice,#eef3f7);border-radius:50%;width:36px;height:36px;font-size:22px;cursor:pointer}
+.dt-popup-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.dt-popup-actions a,.dt-popup-actions button{flex:1;min-width:150px;text-align:center}
+@media(max-width:520px){.dt-popup{padding:20px;border-radius:14px}.dt-popup h2{font-size:21px}}
+
 </style>
 <link rel="canonical" href="https://vikashpathak-in.github.io/Digitravel/">
 <meta name="robots" content="index,follow,max-image-preview:large">
@@ -1909,13 +1921,15 @@ function sectionHeader(id,icon,title,sub){
 
 function copyTravelCoupon(code){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(()=>toast('Coupon copied: '+code)).catch(()=>toast('Please copy '+code));}else{const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();try{document.execCommand('copy');toast('Coupon copied: '+code);}catch(e){toast('Please copy '+code);}t.remove();}}
 function travelOfferCard(o){
+  window.DIGITRAVEL_OFFER_DATA=window.DIGITRAVEL_OFFER_DATA||{};
+  const offerId='dt-offer-'+(++window.DIGITRAVEL_OFFER_SEQ|| (window.DIGITRAVEL_OFFER_SEQ=1));
+  window.DIGITRAVEL_OFFER_DATA[offerId]=o;
   return `<article class="card" style="padding:16px;border:1.5px solid var(--steel);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px">
     <div style="display:flex;gap:7px;flex-wrap:wrap">${o.best?'<span class="badge" style="background:var(--saffron);color:#fff">⭐ BEST PICK · IF ELIGIBLE</span>':''}<span class="badge" style="background:var(--ice);color:var(--navy)">${o.tag}</span><span style="font-size:11px;color:var(--muted);font-weight:800">${o.valid}</span></div>
     <div style="font-size:17px;font-weight:900;color:var(--ink)">${o.title}</div>
     <div style="font-size:13px;color:var(--slate);line-height:1.6">${o.detail}</div>
-    ${o.code?`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span>Coupon: <strong>${o.code}</strong></span><button type="button" class="btn-outline" style="padding:5px 9px;font-size:11px" onclick="copyTravelCoupon('${o.code}')">Copy Coupon</button></div>`:''}
-    <div style="font-size:11px;color:var(--muted);line-height:1.5;margin-top:auto">${o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.'}</div>
-    <a href="${o.url}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-outline" style="width:100%">View offer / Book ↗</button></a>
+    ${o.code?`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span>Coupon: <strong>${o.code}</strong></span><button type="button" class="btn-outline" style="padding:5px 9px;font-size:11px" onclick="event.stopPropagation();copyTravelCoupon('${o.code}')">Copy Coupon</button></div>`:''}
+    <button type="button" class="btn-primary" style="width:100%;margin-top:auto" onclick="openOfferDetails('${offerId}')">View full offer details ↗</button>
   </article>`;
 }
 function travelOffersBlock(title, subtitle, offers){
@@ -2349,6 +2363,70 @@ async function submitRailPlan(e){
  if(!shown&&outcomes[0].status==='rejected')status.textContent='No route data received. '+outcomes[0].reason.message;
 }
 
+
+/* DigiTravel announcement and offer detail popups */
+function dtEscape(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function showDigiPopup(html){
+  const overlay=document.getElementById('dt-popup-overlay');
+  const content=document.getElementById('dt-popup-content');
+  if(!overlay||!content)return;
+  content.innerHTML=html;
+  overlay.classList.add('dt-open');
+  document.body.style.overflow='hidden';
+}
+function closeDigiPopup(){
+  const overlay=document.getElementById('dt-popup-overlay');
+  if(overlay)overlay.classList.remove('dt-open');
+  document.body.style.overflow='';
+}
+function openOfferDetails(id){
+  const o=window.DIGITRAVEL_OFFER_DATA?.[id];
+  if(!o)return;
+  showDigiPopup(`<span class="badge" style="background:var(--ice);color:var(--navy)">${dtEscape(o.tag)}</span>
+    <h2 id="dt-popup-title">${dtEscape(o.title)}</h2>
+    <p><strong>Offer validity:</strong> ${dtEscape(o.valid||'Check provider terms')}</p>
+    <p>${dtEscape(o.detail)}</p>
+    ${o.code?`<p><strong>Coupon code:</strong> <span style="font-weight:900;letter-spacing:1px">${dtEscape(o.code)}</span></p>`:''}
+    <p>${dtEscape(o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.')}</p>
+    <div class="dt-popup-actions">
+      ${o.code?`<button type="button" class="btn-outline" onclick="copyTravelCoupon('${dtEscape(o.code)}')">Copy coupon</button>`:''}
+      <a href="${dtEscape(o.url||'#')}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary">Open official offer ↗</button></a>
+    </div>`);
+}
+function showDailyDigiAnnouncement(){
+  let today=new Date().toLocaleDateString('en-CA');
+  try{if(localStorage.getItem('digitravel-announcement-date')===today)return;}catch(e){}
+  showDigiPopup(`<span class="badge" style="background:var(--saffron);color:#fff">DAILY TRAVEL UPDATE</span>
+    <h2 id="dt-popup-title">Today's travel offers</h2>
+    <p>Check the latest listed deals by category. Offer availability, coupon eligibility and final prices must be confirmed on the provider's official booking page.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px">
+      <button class="btn-outline" onclick="closeDigiPopup();nav('flights')">✈️ Flights</button>
+      <button class="btn-outline" onclick="closeDigiPopup();nav('trains')">🚆 Railway</button>
+      <button class="btn-outline" onclick="closeDigiPopup();nav('buses')">🚌 Bus</button>
+      <button class="btn-outline" onclick="closeDigiPopup();nav('hotels')">🏨 Hotels</button>
+      <button class="btn-outline" onclick="closeDigiPopup();nav('holidays')">🎒 Holidays</button>
+      <button class="btn-outline" onclick="closeDigiPopup();nav('visa')">🛂 Visa</button>
+    </div>
+    <p style="font-size:11px;margin-top:14px">Dismiss this notice; it will appear again on your next visit day.</p>
+    <div class="dt-popup-actions"><button type="button" class="btn-primary" onclick="dismissDailyDigiAnnouncement()">Continue to DigiTravel</button></div>`);
+}
+function dismissDailyDigiAnnouncement(){
+  try{localStorage.setItem('digitravel-announcement-date',new Date().toLocaleDateString('en-CA'));}catch(e){}
+  closeDigiPopup();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDigiPopup();});
+setTimeout(showDailyDigiAnnouncement,900);
+
 </script>
+
+<div id="dt-popup-overlay" class="dt-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="dt-popup-title" onclick="if(event.target===this)closeDigiPopup()">
+  <div class="dt-popup">
+    <button class="dt-popup-close" type="button" aria-label="Close popup" onclick="closeDigiPopup()">×</button>
+    <div id="dt-popup-content"></div>
+  </div>
+</div>
+
 </body>
 </html>
