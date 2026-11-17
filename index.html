@@ -68,11 +68,6 @@ img { max-width:100%; display:block; }
 .page.active { display:block; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
-/* Compare-only homepage */
-#topnav,#bnav,#wa-float,#dt-popup-backdrop,#search-overlay,#page-compare { display:none !important; }
-body { padding-bottom:0 !important; }
-#page-home { display:block; }
-
 /* ── TOP NAV ── */
 #topnav {
   position:sticky; top:0; z-index:300;
@@ -385,13 +380,33 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
       <span class="logo-tag">2.0</span>
     </button>
     <div class="nav-links">
-      <button class="nav-btn act" onclick="nav('compare')">🔗 Compare</button>
+      <button class="nav-btn" onclick="nav('states')">States & UTs</button>
+      <button class="nav-btn" onclick="nav('destinations')">Destinations</button>
+      <button class="nav-btn" onclick="nav('templates')">Trip Templates</button>
+      <button class="nav-btn" onclick="nav('group')">Group Planner</button>
+      <button class="nav-btn" onclick="nav('budget')">Budget</button>
+      <button class="nav-btn" onclick="nav('pilgrimage')">Pilgrimage</button>
+      <button class="nav-btn" onclick="nav('tips')">Travel Tips</button>
+      <button class="nav-btn" onclick="nav('compare')">🔗 Compare</button>
       <button class="btn-dark" onclick="toggleDark()" id="dkBtn">🌙</button>
+      <button class="nav-btn-cta" onclick="openSearch()">🔍 Search</button>
     </div>
     <button class="ham" onclick="toggleMenu()">☰</button>
   </div>
   <div id="mob-menu">
-    <button onclick="nav('compare');closeMob()">🔗 Compare</button>
+    <button onclick="nav('home');closeMob()">🏠 Home</button>
+    <button onclick="nav('states');closeMob()">🗺️ States & UTs</button>
+    <button onclick="nav('destinations');closeMob()">📍 Destinations</button>
+    <button onclick="nav('templates');closeMob()">📋 Trip Templates</button>
+    <button onclick="nav('group');closeMob()">👥 Group Planner</button>
+    <button onclick="nav('budget');closeMob()">💰 Budget Planner</button>
+    <button onclick="nav('pilgrimage');closeMob()">🛕 Pilgrimage</button>
+    <button onclick="nav('daytrips');closeMob()">🌅 Day Trips</button>
+    <button onclick="nav('hidden');closeMob()">💎 Hidden Gems</button>
+    <button onclick="nav('festivals');closeMob()">🎉 Festivals</button>
+    <button onclick="nav('tips');closeMob()">💡 Travel Tips</button>
+    <button onclick="nav('compare');closeMob()">🔗 Compare Booking</button>
+    <button onclick="openSearch();closeMob()">🔍 Search India</button>
     <button onclick="toggleDark();closeMob()">🌙 Dark/Light Mode</button>
   </div>
 </nav>
@@ -411,16 +426,199 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
      PAGE: HOME
 ════════════════════════════════════ -->
 <div id="page-home" class="page active">
-  <section style="background:linear-gradient(135deg,#0a1628,#0F3460 55%,#0d7377);padding:34px 20px 28px;color:#fff;text-align:center">
-    <div style="font-size:11px;font-weight:800;letter-spacing:2.5px;color:#FCD34D;margin-bottom:8px">DIGITRAVEL</div>
-    <h1 style="font-family:var(--font-d);font-size:clamp(27px,5vw,42px);font-weight:900;margin-bottom:8px">Compare Travel Options</h1>
-    <p style="font-size:14px;opacity:.82;max-width:620px;margin:0 auto">Search flights, trains, buses, hotels and holiday packages in one place.</p>
-  </section>
-  <div class="wrap" style="padding:24px 22px 50px;max-width:1100px">
-    <input id="home-compare-search" class="field" type="search" placeholder="Search flights, trains, buses, hotels or holiday providers…" oninput="filterHomeCompare(this.value)" style="font-size:16px;padding:15px 17px;border-radius:13px;box-shadow:var(--shadow);margin-bottom:8px"/>
-    <div id="home-compare-count" style="font-size:12px;color:var(--muted);margin:0 3px 14px">Showing all comparison options</div>
-    <div id="home-compare-content"></div>
+
+  <!-- Hero — ViaWorld style -->
+  <div id="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">✦ India's #1 Travel Knowledge & Planning Hub</div>
+      <h1 class="hero-title">
+        Explore India<br/>
+        <span class="hl">Like Never Before</span>
+      </h1>
+      <p class="hero-sub">Plan smarter with AI itineraries, pilgrimage guides, hidden gems, group trip planner and trusted booking comparisons — all free.</p>
+
+      <!-- ViaWorld-style floating search card -->
+      <div class="hero-search-card">
+        <div class="hsc-tabs">
+          <button class="hsc-tab act" onclick="switchHeroTab('planner',this)">🗺️ Trip Planner</button>
+          <button class="hsc-tab" onclick="switchHeroTab('search',this)">🔍 Search Destination</button>
+          <button class="hsc-tab" onclick="nav('group')">👥 Group Trip</button>
+          <button class="hsc-tab" onclick="nav('pilgrimage')">🛕 Pilgrimage</button>
+        </div>
+        <div id="hsc-content">
+          <!-- Trip Planner tab -->
+          <div id="hsc-planner">
+            <div class="hsc-fields">
+              <div class="hsc-field">
+                <div class="hsc-label">📍 From</div>
+                <span class="hsc-icon">🏠</span>
+                <input class="hsc-input" id="hsc-from" placeholder="Bengaluru" value="Bengaluru"/>
+              </div>
+              <div class="hsc-field">
+                <div class="hsc-label">🎯 Destination</div>
+                <span class="hsc-icon">📌</span>
+                <input class="hsc-input" id="hsc-dest" placeholder="e.g. Coorg, Goa, Tirupati, Nandi Hills…"/>
+              </div>
+              <button class="hsc-btn" onclick="launchPlanner()">Plan My Trip →</button>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+              <span style="font-size:11px;color:var(--slate);font-weight:600;align-self:center">Popular:</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Coorg')">☕ Coorg</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Goa')">🏖️ Goa</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Tirupati')">🛕 Tirupati</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Nandi Hills')">⛰️ Nandi Hills</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Leh Ladakh')">🏔️ Leh-Ladakh</span>
+              <span class="pill" style="font-size:11px;padding:4px 12px;cursor:pointer" onclick="quickPlan('Munnar')">🌿 Munnar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-pills">
+        <span class="hero-pill" onclick="nav('states')">🗺️ 36 States & UTs</span>
+        <span class="hero-pill" onclick="filterDest('pilgrimage')">🛕 Pilgrimage</span>
+        <span class="hero-pill" onclick="filterDest('hill')">🏔️ Hill Stations</span>
+        <span class="hero-pill" onclick="nav('hidden')">💎 Hidden Gems</span>
+        <span class="hero-pill" onclick="nav('templates')">📋 Trip Templates</span>
+        <span class="hero-pill" onclick="nav('compare')">🔗 Compare Booking</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Stats bar -->
+  <div style="background:var(--navy);color:#fff;padding:18px 24px">
+    <div class="wrap" style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-family:var(--font-d);font-size:24px;font-weight:900;color:#F9A825">36</div><div style="font-size:11px;opacity:.7">States & UTs</div></div>
+      <div style="text-align:center"><div style="font-family:var(--font-d);font-size:24px;font-weight:900;color:#F9A825">200+</div><div style="font-size:11px;opacity:.7">Destinations</div></div>
+      <div style="text-align:center"><div style="font-family:var(--font-d);font-size:24px;font-weight:900;color:#F9A825">50+</div><div style="font-size:11px;opacity:.7">Trip Templates</div></div>
+      <div style="text-align:center"><div style="font-family:var(--font-d);font-size:24px;font-weight:900;color:#F9A825">AI</div><div style="font-size:11px;opacity:.7">Group Planner</div></div>
+      <div style="text-align:center"><div style="font-family:var(--font-d);font-size:24px;font-weight:900;color:#F9A825">Free</div><div style="font-size:11px;opacity:.7">No Booking Fees</div></div>
+    </div>
+  </div>
+
+  <!-- Quick Categories -->
+  <div style="padding:36px 0 28px">
+    <div class="wrap">
+      <div class="sec-eyebrow">Browse by Theme</div>
+      <h2 class="sec-title mb16">What kind of trip are you planning?</h2>
+      <div class="cat-scroll" id="home-cats"></div>
+    </div>
+  </div>
+
+  <!-- Featured Destinations -->
+  <div style="padding:20px 0 44px">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <div><div class="sec-eyebrow">Editor's Picks</div><h2 class="sec-title">Featured Destinations</h2></div>
+        <button class="btn-outline btn-sm" onclick="nav('destinations')">Explore All →</button>
+      </div>
+      <div class="dest-grid" id="home-featured"></div>
+    </div>
+  </div>
+
+  <!-- States Preview -->
+  <div style="background:var(--navy2);padding:48px 24px">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:12px">
+        <div><div class="sec-eyebrow" style="color:#F9A825">All of India</div><h2 class="sec-title" style="color:#fff">Explore by State</h2></div>
+        <button class="btn-outline btn-sm" style="color:#F9A825;border-color:#F9A825" onclick="nav('states')">All 36 States →</button>
+      </div>
+      <div class="state-grid" id="home-states"></div>
+    </div>
+  </div>
+
+  <!-- Trip Templates Preview -->
+  <div style="padding:52px 0">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:12px">
+        <div>
+          <div class="sec-eyebrow">Ready to Go</div>
+          <h2 class="sec-title">Trip Templates</h2>
+          <p class="sec-sub">Duplicate, customise, and share with your group. No research needed.</p>
+        </div>
+        <button class="btn-outline btn-sm" onclick="nav('templates')">All Templates →</button>
+      </div>
+      <div class="grid-3" id="home-templates"></div>
+    </div>
+  </div>
+
+  <!-- Hidden Gems -->
+  <div style="background:var(--ice);padding:48px 0">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <div><div class="sec-eyebrow">Off the Map</div><h2 class="sec-title">Hidden Gems of India</h2></div>
+        <button class="btn-outline btn-sm" onclick="nav('hidden')">See All →</button>
+      </div>
+      <div class="grid-3" id="home-gems"></div>
+    </div>
+  </div>
+
+  <!-- How DigiTravel Works -->
+  <div style="padding:52px 0">
+    <div class="wrap" style="text-align:center">
+      <div class="sec-eyebrow">Why DigiTravel?</div>
+      <h2 class="sec-title mb8">Your Trusted Travel Planning Companion</h2>
+      <p class="sec-sub mb32">We don't sell flights or rooms. We help you plan, budget, and travel with confidence.</p>
+      <div class="grid-4">
+        <div class="card" style="padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:12px">🔍</div>
+          <div style="font-weight:800;font-size:15px;margin-bottom:6px">Discover</div>
+          <div style="font-size:13px;color:var(--slate)">Explore all 36 states, 200+ destinations with in-depth travel guides</div>
+        </div>
+        <div class="card" style="padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:12px">📋</div>
+          <div style="font-weight:800;font-size:15px;margin-bottom:6px">Plan</div>
+          <div style="font-size:13px;color:var(--slate)">Build day-wise itineraries or use ready-made templates instantly</div>
+        </div>
+        <div class="card" style="padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:12px">💰</div>
+          <div style="font-weight:800;font-size:15px;margin-bottom:6px">Budget</div>
+          <div style="font-size:13px;color:var(--slate)">Estimate total costs for transport, stay, food, and sightseeing</div>
+        </div>
+        <div class="card" style="padding:24px;text-align:center">
+          <div style="font-size:36px;margin-bottom:12px">✅</div>
+          <div style="font-weight:800;font-size:15px;margin-bottom:6px">Travel</div>
+          <div style="font-size:13px;color:var(--slate)">Go confident with packing guides, safety tips and local advice</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Digi<span>Travel</span></div>
+        <p style="font-size:13px;line-height:1.75;opacity:.72">India's most complete travel knowledge and itinerary platform. Not a booking site — a planning companion trusted by lakhs of travelers.</p>
+        <button class="btn-wa btn-sm" style="margin-top:16px" onclick="waOpen()">💬 WhatsApp Us</button>
+      </div>
+      <div>
+        <div style="font-weight:800;color:#fff;margin-bottom:12px">Explore India</div>
+        <div class="footer-link" onclick="nav('states')">All 36 States & UTs</div>
+        <div class="footer-link" onclick="nav('destinations')">All Destinations</div>
+        <div class="footer-link" onclick="nav('hidden')">Hidden Gems</div>
+        <div class="footer-link" onclick="nav('festivals')">Festivals & Events</div>
+      </div>
+      <div>
+        <div style="font-weight:800;color:#fff;margin-bottom:12px">Plan Your Trip</div>
+        <div class="footer-link" onclick="nav('templates')">Trip Templates</div>
+        <div class="footer-link" onclick="nav('group')">AI Group Planner</div>
+        <div class="footer-link" onclick="nav('budget')">Budget Planner</div>
+        <div class="footer-link" onclick="nav('pilgrimage')">Pilgrimage Guide</div>
+        <div class="footer-link" onclick="nav('daytrips')">Day Trips — Bengaluru</div>
+      </div>
+      <div>
+        <div style="font-weight:800;color:#fff;margin-bottom:12px">Coming Soon</div>
+        <div class="footer-link">Nepal &amp; Bhutan</div>
+        <div class="footer-link">Sri Lanka &amp; Maldives</div>
+        <div class="footer-link">Thailand &amp; Bali</div>
+        <div class="footer-link">Dubai &amp; Singapore</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 DigiTravel. Explore India. Plan Better. Travel Smarter.</div>
+      <div>Powered by Claude AI · Firebase Ready · Free to Use · GitHub Pages Compatible</div>
+    </div>
+  </footer>
 </div>
 
 <!-- ════════════ PAGE: STATES ════════════ -->
@@ -590,7 +788,13 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 <p style="font-size:12px;color:var(--muted);margin-top:18px;line-height:1.6">Railway search is powered by a third-party data provider when configured. Results may be delayed or incomplete and do not guarantee seats, fares or reservations. Verify all details on IRCTC/NTES before booking.</p></div></div>
 <!-- ════════════ BOTTOM NAV ════════════ -->
 <div id="bnav">
-  <button class="bnav-btn act" onclick="nav('compare')" data-p="compare"><span class="bi">🔗</span>Compare</button>
+  <button class="bnav-btn act" onclick="nav('home')" data-p="home"><span class="bi">🏠</span>Home</button>
+  <button class="bnav-btn" onclick="nav('states')" data-p="states"><span class="bi">🗺️</span>States</button>
+  <button class="bnav-btn" onclick="nav('rail')" data-p="rail"><span class="bi">🚆</span>Railway</button>
+  <button class="bnav-btn" onclick="nav('templates')" data-p="templates"><span class="bi">📋</span>Templates</button>
+  <button class="bnav-btn" onclick="nav('group')" data-p="group"><span class="bi">👥</span>Group</button>
+  <button class="bnav-btn" onclick="nav('budget')" data-p="budget"><span class="bi">💰</span>Budget</button>
+  <button class="bnav-btn" onclick="openSearch()" data-p=""><span class="bi">🔍</span>Search</button>
 </div>
 
 <button id="wa-float" onclick="waOpen()">💬</button>
@@ -1626,7 +1830,7 @@ function quickPlan(dest){
 
 /* ═══════════ COMPARE PAGE ═══════════ */
 function nav_compare_init(){
-  const el = document.getElementById('home-compare-content') || document.getElementById('compare-content');
+  const el = document.getElementById('compare-content');
   if(!el) return;
   const note=`<div style="background:rgba(249,115,22,.07);border:1.5px solid rgba(249,115,22,.2);border-radius:12px;padding:14px 18px;margin-bottom:28px;font-size:13px;color:var(--saffron2);font-weight:600">
     ⚠️ DigiTravel guides you to official platforms. We never sell tickets or claim lowest prices. Always verify current rates before booking.
@@ -2028,32 +2232,7 @@ function travelPopupNavigate(page){
   nav(page);
 }
 
-function filterHomeCompare(query){
-  const root=document.getElementById('home-compare-content');
-  if(!root)return;
-  const q=String(query||'').trim().toLowerCase();
-  const cards=[...root.querySelectorAll('.card, [style*="border:1.5px solid"]')];
-  let shown=0;
-  cards.forEach(card=>{
-    const match=!q||card.innerText.toLowerCase().includes(q);
-    card.style.display=match?'':'none';
-    if(match)shown++;
-  });
-  const count=document.getElementById('home-compare-count');
-  if(count)count.textContent=q?(shown+' matching options found'):'Showing all comparison options';
-}
-function setupCompareHomepage(){
-  const target=document.getElementById('home-compare-content');
-  if(!target)return;
-  try {
-    nav_compare_init();
-    filterHomeCompare('');
-  } catch(error) {
-    console.error('DigiTravel compare page failed to initialise:',error);
-    target.innerHTML='<div class="card" style="padding:18px">Comparison options could not be loaded. Please refresh the page. If this continues, contact DigiTravel support.</div>';
-  }
-}
-window.addEventListener('DOMContentLoaded',setupCompareHomepage);
+initDailyTravelPopup();
 function railResolveStation(value){
  const text=String(value||'').trim();
  const match=text.match(/\(([A-Za-z0-9]{2,6})\)\s*$/);
