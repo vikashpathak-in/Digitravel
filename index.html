@@ -1928,7 +1928,7 @@ function travelOffersBlock(title, subtitle, offers){
 
 function sectionAir(){
   const currentAirOffers = travelOffersBlock('✈️ Current Flight Offers','Promotions from airline and booking platforms; confirm route, fare and card eligibility.',[
-    {best:true,tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
+    {tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
     {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/',note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
     {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale coverage includes 35 airlines and participating banks. Check flight-specific daily Lightning Drops and bank offers.',url:'https://www.makemytrip.com/flights/'}
   ]);
@@ -2044,7 +2044,7 @@ function railAssistantHTML(){
 }
 function sectionRail(){
   const currentRailOffers = travelOffersBlock('🚄 Current Railway Booking Offers','Partner booking promotions; check whether the offer applies to your train, class and passenger type.',[
-    {tag:'redBus Train',valid:'Till 22 Nov 2026',title:'₹350 OFF train tickets',detail:'Chhath offer listed on redBus train offers.',code:'CHHATH',url:'https://www.redbus.in/offers'},
+    {best:true,tag:'redBus Train',valid:'Till 22 Nov 2026',title:'₹350 OFF train tickets',detail:'Chhath offer listed on redBus train offers.',code:'CHHATH',url:'https://www.redbus.in/offers'},
     {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'₹300 OFF AC ticket bookings',detail:'AC ticket booking discount listed on the redBus train offers page.',code:'ACRAIL',url:'https://www.redbus.in/offers'},
     {tag:'redBus Train',valid:'Till 30 Jun (year shown on offer page)',title:'₹100 OFF train tickets',detail:'Festive train booking discount listed on redBus.',code:'FESTIVE',url:'https://www.redbus.in/offers'},
     {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'Zero convenience fee',detail:'No convenience fee offer listed for eligible train bookings.',code:'NOFEE',url:'https://www.redbus.in/offers'}
@@ -2066,9 +2066,9 @@ function sectionRail(){
 function sectionBus(){
   const currentBusOffers = travelOffersBlock('🚌 Current Bus Booking Offers','redBus promotions listed for November 2026; codes may be route-, bank- or user-specific.',[
     {best:true,tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'General bus booking offer shown on the redBus offers page.',code:'FIRST',url:'https://www.redbus.in/offers'},
-    {tag:'Karnataka / TN / Kerala',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF selected routes',detail:'Regional route offer covering Karnataka, Tamil Nadu and Kerala routes.',code:'CASH300',url:'https://www.redbus.in/offers'},
-    {tag:'KSRTC',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF KSRTC bus tickets',detail:'Listed for eligible KSRTC bus bookings.',code:'KSRTC',url:'https://www.redbus.in/offers'},
-    {tag:'Bank offer',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with Axis Bank cards',detail:'Credit-card offer on eligible redBus bus bookings.',code:'AXIS500',url:'https://www.redbus.in/offers'}
+    {tag:'redBus · IDFC FIRST Bank',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with IDFC FIRST Bank cards',detail:'Eligible IDFC FIRST Bank credit-card offer.',code:'IDFC500',url:'https://www.redbus.in/offers'},
+    {tag:'redBus · AU Bank',valid:'Till 31 Dec 2026',title:'Up to ₹200 OFF with AU Bank cards',detail:'Eligible AU Bank credit-card offer.',code:'AU200',url:'https://www.redbus.in/offers'},
+    {best:true,tag:'Bank offer · Axis Bank',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with Axis Bank cards',detail:'Credit-card offer on eligible redBus bus bookings.',code:'AXIS500',url:'https://www.redbus.in/offers'}
   ]);
   const govBuses=BKPLAT.buses.filter(p=>p.ty==='Govt');
   const pvtBuses=BKPLAT.buses.filter(p=>p.ty==='Private');
@@ -2091,7 +2091,7 @@ function sectionBus(){
 }
 function sectionHotels(){
   const currentHotelOffers = travelOffersBlock('🏨 Current Hotel Offers','Hotel discounts from booking platforms; compare total price, taxes and cancellation terms.',[
-    {tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 65% OFF hotels',detail:'Amazon Pay advertises up to 45% instant discount, extra 5% for Prime members, cashback up to ₹10,000 and eligible card benefits.',url:'https://www.amazon.in/',note:'From 14 Nov, flight and hotel cashback offers are stated to be for first-time Amazon Pay travel customers. Hotel, account and payment eligibility applies.'},
+    {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 65% OFF hotels',detail:'Amazon Pay advertises up to 45% instant discount, extra 5% for Prime members, cashback up to ₹10,000 and eligible card benefits.',url:'https://www.amazon.in/',note:'From 14 Nov, flight and hotel cashback offers are stated to be for first-time Amazon Pay travel customers. Hotel, account and payment eligibility applies.'},
     {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Deals across 33,500+ hotels and homestays',detail:'Reported coverage includes 30,000+ domestic and 3,500 international properties, participating hotel brands and bank offers.',url:'https://www.makemytrip.com/hotels/'},
     {tag:'Thomas Cook',valid:'Till 30 Nov 2026',title:'Taj hotel additional 10% OFF',detail:'Thomas Cook lists an online stay offer for eligible Taj bookings.',code:'TCTAJ10',url:'https://www.thomascook.in/offers-and-deals'}
   ]);
@@ -2108,7 +2108,7 @@ function sectionHotels(){
 }
 function sectionHoliday(){
   const currentHolidayOffers = travelOffersBlock('🎒 Current Holiday Package Offers','Published tour-operator offers. Check departure dates, inclusions, group size and cancellation rules.',[
-    {tag:'Thomas Cook',valid:'Till 31 Dec 2026',title:'Asia Buy 1 Get 1 offer',detail:'Pay for one traveller and a companion travels free on selected eligible departures.',url:'https://www.thomascook.in/offers-and-deals',note:'Selected departures and package-specific terms apply. Confirm inclusions, taxes and availability with Thomas Cook.'},
+    {best:true,tag:'Thomas Cook',valid:'Till 31 Dec 2026',title:'Asia Buy 1 Get 1 offer',detail:'Pay for one traveller and a companion travels free on selected eligible departures.',url:'https://www.thomascook.in/offers-and-deals',note:'Selected departures and package-specific terms apply. Confirm inclusions, taxes and availability with Thomas Cook.'},
     {tag:'Thomas Cook',valid:'Till 29 Dec 2026',title:'Lakshadweep offer — ₹20,000 discount',detail:'Promo code listed for ₹20,000 off per adult and child on specific departures.',code:'LK20000',url:'https://www.thomascook.in/offers-and-deals',note:'Only specific departures; verify package eligibility and final price with Thomas Cook.'},
     {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale spans flights, hotels, buses, trains, cabs, tours, attractions, forex and visa services.',url:'https://www.makemytrip.com/holidays-india/'}
   ]);
