@@ -1905,12 +1905,13 @@ function sectionHeader(id,icon,title,sub){
   </div>`;
 }
 
+function copyTravelCoupon(code){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(()=>toast('Coupon copied: '+code)).catch(()=>toast('Please copy '+code));}else{const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();try{document.execCommand('copy');toast('Coupon copied: '+code);}catch(e){toast('Please copy '+code);}t.remove();}}
 function travelOfferCard(o){
   return `<article class="card" style="padding:16px;border:1.5px solid var(--steel);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px">
-    <div style="display:flex;gap:7px;flex-wrap:wrap"><span class="badge" style="background:var(--ice);color:var(--navy)">${o.tag}</span><span style="font-size:11px;color:var(--muted);font-weight:800">${o.valid}</span></div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">${o.best?'<span class="badge" style="background:var(--saffron);color:#fff">⭐ BEST PICK · IF ELIGIBLE</span>':''}<span class="badge" style="background:var(--ice);color:var(--navy)">${o.tag}</span><span style="font-size:11px;color:var(--muted);font-weight:800">${o.valid}</span></div>
     <div style="font-size:17px;font-weight:900;color:var(--ink)">${o.title}</div>
     <div style="font-size:13px;color:var(--slate);line-height:1.6">${o.detail}</div>
-    ${o.code?`<div style="background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span style="color:var(--muted)">Promo code:</span> <strong>${o.code}</strong></div>`:''}
+    ${o.code?`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--ice);border-radius:8px;padding:9px;font-size:13px"><span>Coupon: <strong>${o.code}</strong></span><button type="button" class="btn-outline" style="padding:5px 9px;font-size:11px" onclick=copyTravelCoupon(${o.code})>Copy Coupon</button></div>`:''}
     <div style="font-size:11px;color:var(--muted);line-height:1.5;margin-top:auto">${o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.'}</div>
     <a href="${o.url}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-outline" style="width:100%">View offer / Book ↗</button></a>
   </article>`;
@@ -1927,8 +1928,8 @@ function travelOffersBlock(title, subtitle, offers){
 
 function sectionAir(){
   const currentAirOffers = travelOffersBlock('✈️ Current Flight Offers','Promotions from airline and booking platforms; confirm route, fare and card eligibility.',[
-    {tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
-    {tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/',note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
+    {best:true,tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
+    {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/',note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
     {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale coverage includes 35 airlines and participating banks. Check flight-specific daily Lightning Drops and bank offers.',url:'https://www.makemytrip.com/flights/'}
   ]);
   return sectionHeader('cmp-air','✈️','Air','Compare official airline sites and trusted aggregators.')
@@ -2064,7 +2065,7 @@ function sectionRail(){
 }
 function sectionBus(){
   const currentBusOffers = travelOffersBlock('🚌 Current Bus Booking Offers','redBus promotions listed for November 2026; codes may be route-, bank- or user-specific.',[
-    {tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'General bus booking offer shown on the redBus offers page.',code:'FIRST',url:'https://www.redbus.in/offers'},
+    {best:true,tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'General bus booking offer shown on the redBus offers page.',code:'FIRST',url:'https://www.redbus.in/offers'},
     {tag:'Karnataka / TN / Kerala',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF selected routes',detail:'Regional route offer covering Karnataka, Tamil Nadu and Kerala routes.',code:'CASH300',url:'https://www.redbus.in/offers'},
     {tag:'KSRTC',valid:'Till 30 Nov 2026',title:'Up to ₹300 OFF KSRTC bus tickets',detail:'Listed for eligible KSRTC bus bookings.',code:'KSRTC',url:'https://www.redbus.in/offers'},
     {tag:'Bank offer',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with Axis Bank cards',detail:'Credit-card offer on eligible redBus bus bookings.',code:'AXIS500',url:'https://www.redbus.in/offers'}
