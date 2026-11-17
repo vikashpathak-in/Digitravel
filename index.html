@@ -1578,7 +1578,7 @@ function gpItinHTML(){
       <h2 style="font-family:var(--font-d);font-size:24px;margin-bottom:6px">${it.title}</h2>
       <p style="opacity:.8;font-size:14px;line-height:1.65;margin-bottom:14px">${it.summary}</p>
       <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;opacity:.85">
-        <span>📍 ${it.destination}</span><span>🛣️ ${it.totalDist}</span><span>⏱️ ${it.driveTime}</span><span>🏠 Return: ${it.returnETA}</span>
+        <span>📍 ${it.destination}</span><span>${GP.transport==='hired'?'🛣️':'🧭'} ${it.totalDist}</span><span>⏱️ ${GP.transport==='hired'?'Drive time':'Transit timing'}: ${it.driveTime}</span><span>🏠 Return: ${it.returnETA}</span>
       </div>
     </div>
     <div style="position:relative;margin-bottom:28px">
