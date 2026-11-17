@@ -1451,6 +1451,32 @@ function demoGPItin(){
   const catLabel  = catLabels[GP.cat] || GP.cat || 'Day';
   const catIcon   = catIcons[GP.cat]  || '📍';
 
+  if (GP.transport === 'train' || GP.transport === 'publicbus') {
+    const isTrain = GP.transport === 'train';
+    const mode = isTrain ? 'Train' : 'Scheduled public bus';
+    const modeIcon = isTrain ? '🚆' : '🚌';
+    const fare = Math.max(0, Number(GP.farePerPerson) || 0);
+    const groupFare = fare * Math.max(1, Number(GP.pax) || 1);
+    return {
+      title: catLabel + ' Trip — ' + dest,
+      destination: dest,
+      summary: 'A ' + catLabel.toLowerCase() + ' trip for ' + GP.pax + ' people from ' + from + ' to ' + dest + ' using regular ' + mode.toLowerCase() + ' services. Confirm the actual service, timetable, seats and fare with the official operator before travel.',
+      totalDist: 'Public transport route — confirm stops',
+      driveTime: mode + ' timings — verify live timetable',
+      returnETA: GP.returnBy || '20:30',
+      stops: [
+        {name:'Reach departure terminal',type:'depart',icon:isTrain?'🚉':'🚏',time:GP.time||'05:30',duration:'Allow station access time',desc:'Arrange local transport to the exact departure station or bus stand shown by the operator.',tip:'Do not assume the nearest terminal is the correct departure point.',map:'https://maps.google.com/?q='+encodeURIComponent(from+(isTrain?' railway station':' bus stand'))},
+        {name:'Board regular '+mode.toLowerCase()+' service',type:'waypoint',icon:modeIcon,time:'As per confirmed ticket',duration:'As per operator timetable',desc:'Use individual passenger tickets on a scheduled service. No private vehicle or full-bus charter is included.',tip:isTrain?'Verify train number, boarding station, coach and platform.':'Verify operator, boarding point, seat and departure time.',map:'https://www.google.com/search?q='+encodeURIComponent(isTrain?'IRCTC train booking':'KSRTC bus booking')},
+        {name:'Arrive at destination terminal',type:'waypoint',icon:isTrain?'🚉':'🚌',time:'As per confirmed ticket',duration:'Allow for arrival and exit',desc:'Arrive at the station or terminal printed on the ticket.',tip:'Keep return ticket and local contact details accessible.',map:'https://maps.google.com/?q='+encodeURIComponent(dest+(isTrain?' railway station':' bus stand'))},
+        {name:'Last-mile transfer to '+dest,type:'waypoint',icon:'🚕',time:'After arrival',duration:'Check local travel time',desc:'Use local public transport, an auto or taxi. This cost is not included in the ticket estimate.',tip:'Confirm the destination address and local fare before starting.',map:'https://maps.google.com/?q='+encodeURIComponent(dest)},
+        {name:dest+' — Main Attraction',type:'attraction',icon:mainIcon,time:'After local transfer',duration:'Check opening hours',desc:'Visit the main attraction. Check entry rules and any advance booking requirements.',tip:'Confirm local timings before departure.',map:'https://maps.google.com/?q='+encodeURIComponent(dest)},
+        {name:'Return to departure terminal',type:'return',icon:modeIcon,time:'Before booked return service',duration:'Keep a safe boarding buffer',desc:'Return to the station or bus stand printed on the return ticket.',tip:'Do not rely on an unverified return departure time.',map:'https://maps.google.com/?q='+encodeURIComponent(from+(isTrain?' railway station':' bus stand'))},
+        {name:'Arrive back in '+from,type:'return',icon:'✅',time:GP.returnBy||'20:30',duration:'As per confirmed return service',desc:'Arrival time depends on the actual service booked. Update group expenses after returning.',tip:'Keep ticket and local-transfer receipts for settlement.',map:'https://maps.google.com/?q='+encodeURIComponent(from)}
+      ],
+      expenseEstimate:{vehicle:0,transit:groupFare,fuel:0,toll:0,parking:0,driver:0,tickets:GP.pax*(isPilgrimage?50:80),food:GP.pax*290,misc:250}
+    };
+  }
+
   // Smart stops based on trip category
   const isBike = GP.vehicle === 'car' && GP.cat === 'nature';
   const isPilgrimage = GP.cat === 'temple';
