@@ -2164,7 +2164,36 @@ function sectionHoliday(){
         <div style="font-size:10px;color:var(--muted);margin-top:12px">Information displayed from Via's promotional email dated 13 Nov 2026. DigiTravel does not process visa applications or guarantee visa approval. Visa decisions are made by the relevant government authorities. Confirm all terms and current service details directly with Via.</div>
       </div>
     </article>`;
+  const airAsiaPromo = `
+    <article class="card" style="overflow:hidden;margin:0 0 22px;border:2px solid var(--saffron)">
+      <div style="background:linear-gradient(120deg,#8B1538,#D91E36);color:#fff;padding:22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <span class="badge" style="background:#fff;color:#B5122B">Limited-period airline offer</span>
+          <span class="badge" style="background:rgba(255,255,255,.16);color:#fff">Via.com × AirAsia</span>
+        </div>
+        <div style="font-family:var(--font-d);font-size:clamp(24px,4vw,35px);font-weight:900">Fly Further, Save More</div>
+        <div style="font-size:16px;font-weight:800;margin-top:5px">Enjoy up to 10% OFF on AirAsia bookings</div>
+        <div style="font-size:13px;opacity:.9;margin-top:7px">Explore Kuala Lumpur, Bangkok, Bali and more destinations</div>
+      </div>
+      <div style="padding:20px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:15px">
+          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase">Booking / sale period</div><strong>Until 22 Nov 2026</strong></div>
+          <div style="background:var(--ice);border-radius:10px;padding:13px"><div style="font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase">Travel period</div><strong>Until 30 Sep 2027</strong></div>
+        </div>
+        <div style="font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:15px">Via's promotional email announces savings of up to 10% on AirAsia bookings. The actual discount, eligible routes, flights, fare classes, promo code (if applicable), payment conditions and seat availability must be confirmed on the booking portal before payment.</div>
+        <div style="background:rgba(217,119,6,.09);border:1px solid rgba(217,119,6,.28);border-radius:10px;padding:13px 15px;margin-bottom:14px">
+          <strong style="font-size:13px;color:var(--ink)">Important offer conditions</strong>
+          <div style="font-size:12px;color:var(--slate);margin-top:5px">Offer period stated in Via's email: immediate effect until 22 November 2026. Travel must be completed by 30 September 2027. Terms and conditions apply. "Up to 10%" is the maximum advertised saving, not a guaranteed discount on every booking.</div>
+        </div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap">
+          <a href="https://www.via.com/" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:180px"><button class="btn-wa" style="width:100%">Visit Via.com to check offer ↗</button></a>
+          <a href="https://www.airasia.com/" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:170px"><button class="btn-outline" style="width:100%">Visit AirAsia ↗</button></a>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:12px">Offer information reproduced from a Via.com promotional email received on 17 November 2026. DigiTravel is displaying the promotion for information only and does not issue or guarantee the discount. Confirm eligibility and final fare directly with Via.com before booking.</div>
+      </div>
+    </article>`;
   return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
+    + airAsiaPromo
     + featuredKerala
     + viaVisaCard
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
