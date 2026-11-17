@@ -2053,6 +2053,97 @@ function sectionHotels(){
   </div>`;
 }
 function sectionHoliday(){
+  const featuredKerala = `
+    <article class="card" style="overflow:hidden;margin-bottom:22px;border:2px solid var(--saffron)">
+      <div style="background:linear-gradient(120deg,#0F3460,#0D7377);color:#fff;padding:22px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <span class="badge" style="background:#F97316;color:#fff">Featured package</span>
+          <span class="badge" style="background:rgba(255,255,255,.16);color:#fff">Via.com · Code 95015</span>
+        </div>
+        <div style="font-family:var(--font-d);font-size:clamp(23px,4vw,34px);font-weight:900">Kerala 3-Star Holiday</div>
+        <div style="font-size:14px;opacity:.9;margin-top:5px">8 Days / 7 Nights · Cochin – Munnar – Thekkady – Alleppey – Kovalam</div>
+        <div style="font-size:12px;opacity:.8;margin-top:8px">Travel validity: 1 Oct 2026 – 31 Mar 2027</div>
+      </div>
+      <div style="padding:20px">
+        <div style="display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+          <div><div style="font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase">Listed package price</div><div style="font-size:30px;font-weight:900;color:var(--saffron)">₹24,890</div></div>
+          <div style="font-size:11px;color:var(--muted);max-width:290px">Price basis / occupancy not specified in the source. Confirm final quote, taxes and availability before booking.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:16px">
+          <div style="background:var(--ice);border-radius:9px;padding:11px"><div style="font-size:11px;color:var(--muted)">Cochin</div><strong>1 night</strong></div>
+          <div style="background:var(--ice);border-radius:9px;padding:11px"><div style="font-size:11px;color:var(--muted)">Munnar</div><strong>2 nights</strong></div>
+          <div style="background:var(--ice);border-radius:9px;padding:11px"><div style="font-size:11px;color:var(--muted)">Thekkady</div><strong>1 night</strong></div>
+          <div style="background:var(--ice);border-radius:9px;padding:11px"><div style="font-size:11px;color:var(--muted)">Alleppey</div><strong>1 night</strong></div>
+          <div style="background:var(--ice);border-radius:9px;padding:11px"><div style="font-size:11px;color:var(--muted)">Kovalam</div><strong>2 nights</strong></div>
+        </div>
+        <div style="font-size:13px;color:var(--slate);line-height:1.7;margin-bottom:14px">
+          <strong style="color:var(--ink)">Package includes</strong>
+          <ul style="padding-left:19px;margin-top:5px">
+            <li>7 nights' accommodation in listed or similar hotels</li>
+            <li>Daily breakfast at all destinations</li>
+            <li>AC vehicle transfers and sightseeing as per itinerary, 8:00 AM–7:00 PM (AC switched off in hill areas)</li>
+            <li>Toll tax, parking fees and driver allowances</li>
+            <li>Vehicle: sedan for minimum 2 passengers; Innova for 4–6 passengers, as stated by supplier</li>
+          </ul>
+        </div>
+        <details style="border-top:1px solid var(--steel);padding-top:12px;margin-top:8px">
+          <summary style="cursor:pointer;font-weight:800;color:var(--navy)">View full 8-day itinerary, hotels & important conditions</summary>
+          <div style="font-size:13px;line-height:1.7;color:var(--slate);padding-top:12px">
+            <strong style="color:var(--ink)">Day-wise plan</strong>
+            <ol style="padding-left:20px;margin:5px 0 14px">
+              <li><strong>Day 1 – Cochin:</strong> Arrival, Dutch Palace, Jewish Synagogue, St. Francis Church, Santa Cruz Basilica and Marine Drive.</li>
+              <li><strong>Day 2 – Cochin to Munnar:</strong> Cheeyappara and Valara waterfalls, tea gardens; overnight in Munnar.</li>
+              <li><strong>Day 3 – Munnar:</strong> Mattupetty Dam, Kundala Dam, Echo Point and Tea Museum.</li>
+              <li><strong>Day 4 – Munnar to Thekkady:</strong> Spice plantation visit and Periyar Lake boat ride opportunity; local spice market.</li>
+              <li><strong>Day 5 – Thekkady to Alleppey:</strong> Check in and enjoy the backwaters; Shikara cruise is suggested for hotel guests.</li>
+              <li><strong>Day 6 – Alleppey to Kovalam:</strong> Transfer to Kovalam and beach time.</li>
+              <li><strong>Day 7 – Kovalam / Trivandrum:</strong> Padmanabha Swamy Temple, Napier Museum, Zoo and Sri Chithira Art Gallery.</li>
+              <li><strong>Day 8 – Departure:</strong> Transfer to Cochin Airport / Railway Station.</li>
+            </ol>
+            <strong style="color:var(--ink)">Hotel options supplied</strong>
+            <ul style="padding-left:19px;margin:5px 0 14px">
+              <li>Cochin: Classik Fort Inn and Suites or Broad Bean</li>
+              <li>Munnar: The Arbour Resort Munnar, At Wood Resort or The Whispering Meadows</li>
+              <li>Thekkady: Tiger Trails Thekkady</li>
+              <li>Alleppey: Pagoda Resort</li>
+              <li>Kovalam: Ocean Bay Ayurvedic Beach Resort or Jasmine Palace</li>
+            </ul>
+            <strong style="color:var(--ink)">Surcharge dates</strong>
+            <ul style="padding-left:19px;margin:5px 0 14px">
+              <li>17–22 Nov 2026: ₹3,000 per person per night</li>
+              <li>20 Dec 2026 – 7 Jan 2027: ₹3,000 per person per night</li>
+            </ul>
+            <strong style="color:var(--ink)">Important conditions</strong>
+            <ul style="padding-left:19px;margin:5px 0">
+              <li>Hotel taxes (GST) are extra. Air tickets and hotels are subject to availability.</li>
+              <li>Personal expenses, laundry, room service, optional tours and extra meals are not included.</li>
+              <li>Standard hotel check-in 2:00 PM; check-out 10:00 AM. Early check-in / late check-out may be chargeable.</li>
+              <li>Valid photo ID required at hotel check-in; PAN card is not accepted as ID under the supplier terms.</li>
+              <li>Similar-category hotels may be substituted if listed hotels are unavailable. Rates may change or be withdrawn.</li>
+              <li>Entry fees, boat-ride charges and other optional activity costs are not clearly itemised as included; confirm before payment.</li>
+            </ul>
+          </div>
+        </details>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:18px">
+          <a href="https://www.via.com/holidays" target="_blank" rel="noopener noreferrer" style="flex:1;min-width:150px"><button class="btn-outline" style="width:100%">Supplier website ↗</button></a>
+          <button class="btn-wa" style="flex:1;min-width:190px" onclick="window.open('https://wa.me/918539979271?text='+encodeURIComponent('Hello DigiTravel, I am interested in Kerala 3-Star Holiday Package (Code 95015), 8 Days / 7 Nights, listed price ₹24,890. Please confirm price basis, availability, hotel, taxes and total quote.'))">Enquire on WhatsApp</button>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:12px">Package details transcribed from supplier information provided to DigiTravel. DigiTravel is displaying the offer for enquiry; final price, availability, inclusions and booking terms must be reconfirmed with the supplier.</div>
+      </div>
+    </article>`;
+  return sectionHeader('cmp-holiday','🎒','Holiday Packages','Explore curated packages and compare established tour operators.')
+    + featuredKerala
+    + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+    ${BKPLAT.packages.map(p=>`
+      <div style="background:var(--white);border:1.5px solid ${p.wa?'#25D366':'var(--steel)'};border-radius:14px;padding:20px;box-shadow:var(--shadow)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:28px">${p.lo}</span><div><div style="font-weight:900;font-size:16px">${p.n}</div><div style="font-size:12px;color:var(--muted)">${p.ft}</div></div></div>
+        <div style="font-size:13px;color:var(--slate);margin-bottom:14px">${p.nt}</div>
+        <a href="${p.u}" target="_blank" rel="noopener">
+          <button style="width:100%;background:${p.wa?'#25D366':'transparent'};color:${p.wa?'#fff':'var(--saffron)'};border:2px solid ${p.wa?'#25D366':'var(--saffron)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.wa?'Open WhatsApp Catalog →':'View Packages →'}</button>
+        </a>
+      </div>`).join('')}
+  </div>`;
+}
   return sectionHeader('cmp-holiday','🎒','Holiday Packages','Chat directly with package operators on WhatsApp, or browse established tour companies.')
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
     ${BKPLAT.packages.map(p=>`
