@@ -1342,7 +1342,7 @@ function showTemplateDetail(t){
 }
 
 /* ═══════════════════════ GROUP PLANNER ═══════════════════════ */
-const GP={from:'Bengaluru',dest:'',date:'',time:'05:30',returnBy:'21:00',pax:12,children:0,cat:'temple',vehicle:'tempo',budget:1000,notes:'',step:0,itin:null,expenses:[],loading:false};
+const GP={from:'Bengaluru',dest:'',date:'',time:'05:30',returnBy:'21:00',pax:12,children:0,cat:'temple',transport:'train',vehicle:'tempo',farePerPerson:500,budget:1000,notes:'',step:0,itin:null,expenses:[],loading:false};
 function renderGroup(){
   const el=document.getElementById('group-content');
   el.innerHTML=`
@@ -1394,10 +1394,12 @@ function gpSetupHTML(){
       </div>
     </div>
     <div class="mb24">
-      <label class="field-lbl">Vehicle</label>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-top:8px">
-        ${veh.map(v=>`<button onclick="GP.vehicle='${v.id}';renderGPStep()" style="background:${GP.vehicle===v.id?'#FFF7ED':'var(--ice)'};border:2px solid ${GP.vehicle===v.id?'var(--saffron)':'var(--steel)'};border-radius:10px;padding:12px;text-align:left;cursor:pointer;font-family:var(--font-b);display:flex;align-items:center;gap:10px"><span style="font-size:26px">${v.i}</span><div><div style="font-weight:800;font-size:13px;color:${GP.vehicle===v.id?'var(--saffron2)':'var(--ink)'}">${v.n}</div><div style="font-size:11px;color:var(--muted)">Up to ${v.s} · ₹${v.r.toLocaleString()}</div></div></button>`).join('')}
+      <label class="field-lbl">Transport Preference</label>
+      <p style="font-size:12px;color:var(--muted);margin:4px 0 10px">Choose shared/public transport. Train and scheduled public buses do not require hiring an entire vehicle.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">
+        ${[{id:'train',n:'Train (Railway)',i:'🚆',d:'Reserved or general train tickets'},{id:'publicbus',n:'Public / Scheduled Bus',i:'🚌',d:'KSRTC, state transport or private bus tickets'},{id:'hired',n:'Hire a Vehicle',i:'🚐',d:'Only if you want a private vehicle'}].map(v=>`<button onclick="GP.transport='${v.id}';renderGPStep()" style="background:${GP.transport===v.id?'#FFF7ED':'var(--ice)'};border:2px solid ${GP.transport===v.id?'var(--saffron)':'var(--steel)'};border-radius:10px;padding:13px;text-align:left"><div style="font-size:25px">${v.i}</div><div style="font-weight:800;font-size:13px;margin-top:5px">${v.n}</div><div style="font-size:11px;color:var(--muted)">${v.d}</div></button>`).join('')}
       </div>
+      ${GP.transport==='hired'?`<div style="margin-top:14px"><label class="field-lbl">Private vehicle type</label><select class="field" onchange="GP.vehicle=this.value;renderGPStep()"><option value="car" ${GP.vehicle==='car'?'selected':''}>Car / SUV</option><option value="innova" ${GP.vehicle==='innova'?'selected':''}>Innova (7 seats)</option><option value="tempo" ${GP.vehicle==='tempo'?'selected':''}>Tempo Traveller (12 seats)</option><option value="mini" ${GP.vehicle==='mini'?'selected':''}>Mini Coach (20 seats)</option><option value="bus" ${GP.vehicle==='bus'?'selected':''}>Full Bus (35 seats)</option></select></div>`:`<div style="margin-top:14px"><label class="field-lbl">Estimated ticket fare per person (₹)</label><input class="field" type="number" min="0" value="${GP.farePerPerson}" onchange="GP.farePerPerson=Number(this.value)"/><p style="font-size:11px;color:var(--muted);margin-top:5px">Enter an approximate return fare. The planner will estimate total group ticket cost; verify actual fares and availability with the operator.</p></div>`}
     </div>
     <div style="text-align:right"><button class="btn-primary" style="padding:12px 32px;font-size:15px" onclick="runGPAI()">Generate AI Itinerary →</button></div>
   </div>`;
@@ -1405,11 +1407,11 @@ function gpSetupHTML(){
 
 async function runGPAI(){
   GP.step=1; GP.loading=true; renderGroup();
-  const veh={car:{n:'Car/SUV',seats:5,rate:2500,fuel:12},innova:{n:'Innova Crysta',seats:7,rate:3500,fuel:8},tempo:{n:'Tempo Traveller',seats:12,rate:5500,fuel:6},mini:{n:'Mini Coach',seats:20,rate:8500,fuel:4.5},bus:{n:'Full Bus',seats:35,rate:12000,fuel:3.5}}[GP.vehicle];
+  const hiredVeh={car:{n:'Car/SUV',seats:5,rate:2500,fuel:12},innova:{n:'Innova Crysta',seats:7,rate:3500,fuel:8},tempo:{n:'Tempo Traveller',seats:12,rate:5500,fuel:6},mini:{n:'Mini Coach',seats:20,rate:8500,fuel:4.5},bus:{n:'Full Bus',seats:35,rate:12000,fuel:3.5}}[GP.vehicle];\n  const veh=GP.transport==='train'?{n:'Public train (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:GP.transport==='publicbus'?{n:'Scheduled public bus (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:hiredVeh;
   // ── REPLACE WITH YOUR CLAUDE API KEY ──
   // Get free at: https://console.anthropic.com
   const KEY='YOUR_CLAUDE_API_KEY';
-  const prompt=`Plan a group day trip from ${GP.from} for ${GP.pax} people (${GP.children} children). Category: ${GP.cat}. Vehicle: ${veh.n}. Start: ${GP.time}. Return by: ${GP.returnBy}. Budget/person: ₹${GP.budget}. Destination: "${GP.dest||'suggest best'}".
+  const prompt=`Plan a group trip from ${GP.from} for ${GP.pax} people (${GP.children} children). Category: ${GP.cat}. Transport: ${veh.n}. IMPORTANT: If transport is train or scheduled public bus, plan individual passenger tickets on regular services; NEVER recommend hiring/chartering a full bus or private vehicle. Include suitable station/bus-stand access, departure/arrival time windows, transfers, last-mile local transport, and official booking/search links (IRCTC/Indian Railways or KSRTC/operator). Do not invent live schedules, fares or seat availability. Start: ${GP.time}. Return by: ${GP.returnBy}. Budget/person: ₹${GP.budget}. Destination: "${GP.dest||'suggest best'}".
 Return ONLY JSON: {"title":"","destination":"","summary":"","totalDist":"","driveTime":"","returnETA":"","stops":[{"name":"","type":"depart|attraction|meal|waypoint|return","icon":"","time":"","duration":"","desc":"","tip":"","map":"https://maps.google.com/?q=NAME"}],"expenseEstimate":{"vehicle":${veh.rate},"fuel":0,"toll":350,"parking":100,"driver":300,"tickets":0,"food":${GP.pax*200},"misc":200}}`;
   if(KEY==='YOUR_CLAUDE_API_KEY'){
     await new Promise(r=>setTimeout(r,1800));
@@ -1424,11 +1426,11 @@ Return ONLY JSON: {"title":"","destination":"","summary":"","totalDist":"","driv
   // init expenses
   const exp=GP.itin.expenseEstimate||{};
   GP.expenses=[
-    {l:'Vehicle Hire',i:'🚐',k:'vehicle',amt:exp.vehicle||0,actual:0},
-    {l:'Fuel (est.)',i:'⛽',k:'fuel',amt:exp.fuel||500,actual:0},
-    {l:'Toll (return)',i:'🛣️',k:'toll',amt:exp.toll||350,actual:0},
-    {l:'Parking',i:'🅿️',k:'parking',amt:exp.parking||100,actual:0},
-    {l:'Driver Allowance',i:'👨‍✈️',k:'driver',amt:exp.driver||300,actual:0},
+    {l:GP.transport==='hired'?'Vehicle Hire':'Public Transport Tickets',i:GP.transport==='train'?'🚆':GP.transport==='publicbus'?'🚌':'🚐',k:GP.transport==='hired'?'vehicle':'transit',amt:GP.transport==='hired'?(exp.vehicle||0):(exp.transit||GP.pax*GP.farePerPerson),actual:0},
+    ...(GP.transport==='hired'?[{l:'Fuel (est.)',i:'⛽',k:'fuel',amt:exp.fuel||500,actual:0}]:[]),
+    ...(GP.transport==='hired'?[{l:'Toll (return)',i:'🛣️',k:'toll',amt:exp.toll||350,actual:0}]:[]),
+    ...(GP.transport==='hired'?[{l:'Parking',i:'🅿️',k:'parking',amt:exp.parking||100,actual:0}]:[]),
+    ...(GP.transport==='hired'?[{l:'Driver Allowance',i:'👨‍✈️',k:'driver',amt:exp.driver||300,actual:0}]:[]),
     {l:'Temple Tickets',i:'🎟️',k:'tickets',amt:exp.tickets||0,actual:0},
     {l:'Donations',i:'🙏',k:'donation',amt:200,actual:0},
     {l:'Puja Materials',i:'🪔',k:'puja',amt:150,actual:0},
