@@ -2388,7 +2388,7 @@ function openOfferDetails(id){
   const o=window.DIGITRAVEL_OFFER_DATA?.[id];
   if(!o)return;
   showDigiPopup(`<span class="badge" style="background:var(--ice);color:var(--navy)">${dtEscape(o.tag)}</span>
-    <h2 id="dt-digi-popup-title">${dtEscape(o.title)}</h2>
+    <h2 id="dt-offer-popup-title">${dtEscape(o.title)}</h2>
     <p><strong>Offer validity:</strong> ${dtEscape(o.valid||'Check provider terms')}</p>
     <p>${dtEscape(o.detail)}</p>
     ${o.code?`<p><strong>Coupon code:</strong> <span style="font-weight:900;letter-spacing:1px">${dtEscape(o.code)}</span></p>`:''}
@@ -2402,7 +2402,7 @@ function showDailyDigiAnnouncement(){
   let today=new Date().toLocaleDateString('en-CA');
   try{if(localStorage.getItem('digitravel-announcement-date')===today)return;}catch(e){}
   showDigiPopup(`<span class="badge" style="background:var(--saffron);color:#fff">DAILY TRAVEL UPDATE</span>
-    <h2 id="dt-digi-popup-title">Today's travel offers</h2>
+    <h2 id="dt-announcement-popup-title">Today's travel offers</h2>
     <p>Check the latest listed deals by category. Offer availability, coupon eligibility and final prices must be confirmed on the provider's official booking page.</p>
     <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px">
       <button class="btn-outline" onclick="closeDigiPopup();nav('flights')">✈️ Flights</button>
