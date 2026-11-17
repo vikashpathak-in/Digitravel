@@ -2148,18 +2148,6 @@ function sectionHoliday(){
       </div>`).join('')}
   </div>`;
 }
-  return sectionHeader('cmp-holiday','🎒','Holiday Packages','Chat directly with package operators on WhatsApp, or browse established tour companies.')
-    + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
-    ${BKPLAT.packages.map(p=>`
-      <div style="background:var(--white);border:1.5px solid ${p.wa?'#25D366':'var(--steel)'};border-radius:14px;padding:20px;box-shadow:var(--shadow)">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px"><span style="font-size:28px">${p.lo}</span><div><div style="font-weight:900;font-size:16px">${p.n}</div><div style="font-size:12px;color:var(--muted)">${p.ft}</div></div></div>
-        <div style="font-size:13px;color:var(--slate);margin-bottom:14px">${p.nt}</div>
-        <a href="${p.u}" target="_blank" rel="noopener">
-          <button style="width:100%;background:${p.wa?'#25D366':'transparent'};color:${p.wa?'#fff':'var(--saffron)'};border:2px solid ${p.wa?'#25D366':'var(--saffron)'};border-radius:9px;padding:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:var(--font-b)">${p.wa?'Open WhatsApp Catalog →':'View Packages →'}</button>
-        </a>
-      </div>`).join('')}
-  </div>`;
-}
 
 /* Patch nav() to init compare page */
 const _origNav = nav;
