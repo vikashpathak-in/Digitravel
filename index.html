@@ -380,33 +380,13 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
       <span class="logo-tag">2.0</span>
     </button>
     <div class="nav-links">
-      <button class="nav-btn" onclick="nav('states')">States & UTs</button>
-      <button class="nav-btn" onclick="nav('destinations')">Destinations</button>
-      <button class="nav-btn" onclick="nav('templates')">Trip Templates</button>
-      <button class="nav-btn" onclick="nav('group')">Group Planner</button>
-      <button class="nav-btn" onclick="nav('budget')">Budget</button>
-      <button class="nav-btn" onclick="nav('pilgrimage')">Pilgrimage</button>
-      <button class="nav-btn" onclick="nav('tips')">Travel Tips</button>
-      <button class="nav-btn" onclick="nav('compare')">🔗 Compare</button>
+      <button class="nav-btn act" onclick="nav('compare')">🔗 Compare</button>
       <button class="btn-dark" onclick="toggleDark()" id="dkBtn">🌙</button>
-      <button class="nav-btn-cta" onclick="openSearch()">🔍 Search</button>
     </div>
     <button class="ham" onclick="toggleMenu()">☰</button>
   </div>
   <div id="mob-menu">
-    <button onclick="nav('home');closeMob()">🏠 Home</button>
-    <button onclick="nav('states');closeMob()">🗺️ States & UTs</button>
-    <button onclick="nav('destinations');closeMob()">📍 Destinations</button>
-    <button onclick="nav('templates');closeMob()">📋 Trip Templates</button>
-    <button onclick="nav('group');closeMob()">👥 Group Planner</button>
-    <button onclick="nav('budget');closeMob()">💰 Budget Planner</button>
-    <button onclick="nav('pilgrimage');closeMob()">🛕 Pilgrimage</button>
-    <button onclick="nav('daytrips');closeMob()">🌅 Day Trips</button>
-    <button onclick="nav('hidden');closeMob()">💎 Hidden Gems</button>
-    <button onclick="nav('festivals');closeMob()">🎉 Festivals</button>
-    <button onclick="nav('tips');closeMob()">💡 Travel Tips</button>
-    <button onclick="nav('compare');closeMob()">🔗 Compare Booking</button>
-    <button onclick="openSearch();closeMob()">🔍 Search India</button>
+    <button onclick="nav('compare');closeMob()">🔗 Compare</button>
     <button onclick="toggleDark();closeMob()">🌙 Dark/Light Mode</button>
   </div>
 </nav>
@@ -788,13 +768,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 <p style="font-size:12px;color:var(--muted);margin-top:18px;line-height:1.6">Railway search is powered by a third-party data provider when configured. Results may be delayed or incomplete and do not guarantee seats, fares or reservations. Verify all details on IRCTC/NTES before booking.</p></div></div>
 <!-- ════════════ BOTTOM NAV ════════════ -->
 <div id="bnav">
-  <button class="bnav-btn act" onclick="nav('home')" data-p="home"><span class="bi">🏠</span>Home</button>
-  <button class="bnav-btn" onclick="nav('states')" data-p="states"><span class="bi">🗺️</span>States</button>
-  <button class="bnav-btn" onclick="nav('rail')" data-p="rail"><span class="bi">🚆</span>Railway</button>
-  <button class="bnav-btn" onclick="nav('templates')" data-p="templates"><span class="bi">📋</span>Templates</button>
-  <button class="bnav-btn" onclick="nav('group')" data-p="group"><span class="bi">👥</span>Group</button>
-  <button class="bnav-btn" onclick="nav('budget')" data-p="budget"><span class="bi">💰</span>Budget</button>
-  <button class="bnav-btn" onclick="openSearch()" data-p=""><span class="bi">🔍</span>Search</button>
+  <button class="bnav-btn act" onclick="nav('compare')" data-p="compare"><span class="bi">🔗</span>Compare</button>
 </div>
 
 <button id="wa-float" onclick="waOpen()">💬</button>
