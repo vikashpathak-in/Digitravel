@@ -2428,7 +2428,7 @@ function openOfferDetails(id){
 function showDailyDigiAnnouncement(){
   let today=new Date().toLocaleDateString('en-CA');
   try{if(localStorage.getItem('digitravel-announcement-date')===today)return;}catch(e){}
-  showDigiPopup(\`<span class="badge" style="background:var(--saffron);color:#fff">DIGITRAVEL · WEBSITE UPDATE</span>
+  showDigiPopup(`<span class="badge" style="background:var(--saffron);color:#fff">DIGITRAVEL · WEBSITE UPDATE</span>
     <h2 id="dt-announcement-popup-title">What's new, what's working & what's coming</h2>
     <p style="font-size:12px;color:var(--muted)">Release information · 17 November 2026</p>
     <p><strong>Recent fixes completed</strong></p>
@@ -2467,7 +2467,7 @@ function showDailyDigiAnnouncement(){
       <div class="dt-popup-item"><span>◷</span><span><strong>Next quality checks:</strong> complete real-device testing of every tab, form, popup, mobile layout and external link.</span></div>
     </div>
     <p style="font-size:11px;color:var(--muted)">Important: DigiTravel is a trip-planning and comparison website. It does not confirm bookings, live inventory or final prices unless a provider connection explicitly supplies that information. Always verify details with the official operator.</p>
-    <div class="dt-popup-actions"><button type="button" class="btn-primary" onclick="dismissDailyDigiAnnouncement()">Got it — Explore DigiTravel</button></div>\`);
+    <div class="dt-popup-actions"><button type="button" class="btn-primary" onclick="dismissDailyDigiAnnouncement()">Got it — Explore DigiTravel</button></div>`);
 }
 function dismissDailyDigiAnnouncement(){
   try{localStorage.setItem('digitravel-announcement-date',new Date().toLocaleDateString('en-CA'));}catch(e){}
