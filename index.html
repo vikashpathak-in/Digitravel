@@ -414,13 +414,11 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
   <section style="background:linear-gradient(135deg,#0a1628,#0F3460 55%,#0d7377);padding:34px 20px 28px;color:#fff;text-align:center">
     <div style="font-size:11px;font-weight:800;letter-spacing:2.5px;color:#FCD34D;margin-bottom:8px">DIGITRAVEL</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(27px,5vw,42px);font-weight:900;margin-bottom:8px">Compare Travel Options</h1>
-    <p style="font-size:14px;opacity:.82;max-width:620px;margin:0 auto">Search flights, trains, buses, hotels and holiday packages in one place. Compare providers and continue to their platforms.</p>
+    <p style="font-size:14px;opacity:.82;max-width:620px;margin:0 auto">Search flights, trains, buses, hotels and holiday packages in one place.</p>
   </section>
   <div class="wrap" style="padding:24px 22px 50px;max-width:1100px">
-    <div style="position:sticky;top:10px;z-index:20;background:var(--cream);padding:8px 0 14px">
-      <input id="home-compare-search" class="field" type="search" placeholder="Search flights, trains, buses, hotels, holiday providers…" oninput="filterHomeCompare(this.value)" style="font-size:16px;padding:15px 17px;border-radius:13px;box-shadow:var(--shadow)"/>
-      <div id="home-compare-count" style="font-size:12px;color:var(--muted);margin:8px 3px 0">Showing all comparison options</div>
-    </div>
+    <input id="home-compare-search" class="field" type="search" placeholder="Search flights, trains, buses, hotels or holiday providers…" oninput="filterHomeCompare(this.value)" style="font-size:16px;padding:15px 17px;border-radius:13px;box-shadow:var(--shadow);margin-bottom:8px"/>
+    <div id="home-compare-count" style="font-size:12px;color:var(--muted);margin:0 3px 14px">Showing all comparison options</div>
     <div id="home-compare-content"></div>
   </div>
 </div>
@@ -2047,10 +2045,15 @@ function filterHomeCompare(query){
 function setupCompareHomepage(){
   const target=document.getElementById('home-compare-content');
   if(!target)return;
-  nav_compare_init();
-  filterHomeCompare('');
+  try {
+    nav_compare_init();
+    filterHomeCompare('');
+  } catch(error) {
+    console.error('DigiTravel compare page failed to initialise:',error);
+    target.innerHTML='<div class="card" style="padding:18px">Comparison options could not be loaded. Please refresh the page. If this continues, contact DigiTravel support.</div>';
+  }
 }
-setupCompareHomepage();
+window.addEventListener('DOMContentLoaded',setupCompareHomepage);
 function railResolveStation(value){
  const text=String(value||'').trim();
  const match=text.match(/\(([A-Za-z0-9]{2,6})\)\s*$/);
