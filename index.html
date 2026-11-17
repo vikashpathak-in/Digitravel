@@ -1407,7 +1407,8 @@ function gpSetupHTML(){
 
 async function runGPAI(){
   GP.step=1; GP.loading=true; renderGroup();
-  const hiredVeh={car:{n:'Car/SUV',seats:5,rate:2500,fuel:12},innova:{n:'Innova Crysta',seats:7,rate:3500,fuel:8},tempo:{n:'Tempo Traveller',seats:12,rate:5500,fuel:6},mini:{n:'Mini Coach',seats:20,rate:8500,fuel:4.5},bus:{n:'Full Bus',seats:35,rate:12000,fuel:3.5}}[GP.vehicle];\n  const veh=GP.transport==='train'?{n:'Public train (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:GP.transport==='publicbus'?{n:'Scheduled public bus (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:hiredVeh;
+  const hiredVeh={car:{n:'Car/SUV',seats:5,rate:2500,fuel:12},innova:{n:'Innova Crysta',seats:7,rate:3500,fuel:8},tempo:{n:'Tempo Traveller',seats:12,rate:5500,fuel:6},mini:{n:'Mini Coach',seats:20,rate:8500,fuel:4.5},bus:{n:'Full Bus',seats:35,rate:12000,fuel:3.5}}[GP.vehicle];
+  const veh=GP.transport==='train'?{n:'Public train (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:GP.transport==='publicbus'?{n:'Scheduled public bus (individual tickets)',seats:GP.pax,rate:GP.pax*GP.farePerPerson,fuel:0}:hiredVeh;
   // ── REPLACE WITH YOUR CLAUDE API KEY ──
   // Get free at: https://console.anthropic.com
   const KEY='YOUR_CLAUDE_API_KEY';
@@ -2068,7 +2069,7 @@ function sectionRail(){
     {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'Zero convenience fee',detail:'No convenience fee offer listed for eligible train bookings.',code:'NOFEE',url:'https://www.redbus.in/offers'}
   ]);
   return sectionHeader('cmp-rail','🚄','Railway','Find train tools, compare booking services and check current railway offers.')
-    + '<div style="margin:12px 0 18px"><button class="btn-primary" onclick="nav(\'rail\')">Open Train Route Search & Journey Planner</button></div>'
+    + '<div style="margin:12px 0 18px"><button class="btn-primary" onclick="nav(this.dataset.page)" data-page="rail">Open Train Route Search & Journey Planner</button></div>'
     + railAssistantHTML()
     + currentRailOffers
     + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:44px">
@@ -2387,7 +2388,7 @@ function openOfferDetails(id){
   const o=window.DIGITRAVEL_OFFER_DATA?.[id];
   if(!o)return;
   showDigiPopup(`<span class="badge" style="background:var(--ice);color:var(--navy)">${dtEscape(o.tag)}</span>
-    <h2 id="dt-popup-title">${dtEscape(o.title)}</h2>
+    <h2 id="dt-digi-popup-title">${dtEscape(o.title)}</h2>
     <p><strong>Offer validity:</strong> ${dtEscape(o.valid||'Check provider terms')}</p>
     <p>${dtEscape(o.detail)}</p>
     ${o.code?`<p><strong>Coupon code:</strong> <span style="font-weight:900;letter-spacing:1px">${dtEscape(o.code)}</span></p>`:''}
