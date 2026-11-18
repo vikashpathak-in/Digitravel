@@ -2419,7 +2419,7 @@ function openOfferDetails(id){
   if(!o)return;
   const terms=(Array.isArray(o.terms)?o.terms:[]).map(item=>'<div style="padding:10px 0;border-bottom:1px solid var(--steel)"><strong style="display:block;color:var(--ink);font-size:13px;margin-bottom:3px">'+dtEscape(item.label)+'</strong><div style="font-size:13px;color:var(--slate);line-height:1.65">'+dtEscape(item.value)+'</div></div>').join('');
   let actions='';
-  if(o.code)actions+='<button type="button" class="btn-outline" onclick="copyTravelCoupon(\\''+dtEscape(o.code)+'\\')">Copy coupon</button>';
+  if(o.code)actions+='<button type="button" class="btn-outline" onclick="copyTravelCoupon(&quot;'+dtEscape(o.code)+'&quot;)">Copy coupon</button>';
   if(o.url)actions+='<a href="'+dtEscape(o.url)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary">Open official booking ↗</button></a>';
   if(o.sourceUrl&&o.sourceUrl!==o.url)actions+='<a href="'+dtEscape(o.sourceUrl)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-ghost">Official offer source ↗</button></a>';
   if(o.termsUrl)actions+='<a href="'+dtEscape(o.termsUrl)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-ghost">Detailed policy terms ↗</button></a>';
