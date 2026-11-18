@@ -1966,17 +1966,16 @@ function travelOffersBlock(title, subtitle, offers){
   return `<section style="margin:8px 0 28px">
     <div style="display:flex;align-items:end;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px">
       <div><h3 style="font-family:var(--font-d);font-size:20px;font-weight:900;margin:0">${title}</h3><div style="font-size:12px;color:var(--muted);margin-top:4px">${subtitle}</div></div>
-      <span class="badge" style="background:rgba(13,115,119,.1);color:var(--jade)">Offers checked 17 Nov 2026</span>
+      <span class="badge" style="background:rgba(13,115,119,.1);color:var(--jade)">Offers checked 18 Nov 2026</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:12px">${offers.map(travelOfferCard).join('')}</div>
   </section>`;
 }
 
 function sectionAir(){
-  const currentAirOffers = travelOffersBlock('✈️ Current Flight Offers','Promotions from airline and booking platforms; confirm route, fare and card eligibility.',[
-    {tag:'Via.com × AirAsia',valid:'Book by 22 Nov 2026',title:'Up to 10% OFF AirAsia',detail:'Via’s email promotion names Kuala Lumpur, Bangkok, Bali and more. Travel period runs through 30 Sep 2027.',url:'https://www.via.com/',note:'Based on Via promotional email received 17 Nov 2026. Actual discount, eligible routes and fare conditions must be confirmed with Via.'},
-    {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 30% savings on flights',detail:'Amazon Pay advertises up to 15% instant discount, up to ₹500 cashback and an additional 5% for eligible Amazon Pay ICICI Bank Credit Card holders. Bengaluru–Kochi was listed from ₹4,199.',url:'https://www.amazon.in/',note:'From 14 Nov, flight cashback is stated to be for first-time Amazon Pay travel customers. Route fares are indicative and can change.'},
-    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale coverage includes 35 airlines and participating banks. Check flight-specific daily Lightning Drops and bank offers.',url:'https://www.makemytrip.com/flights/'}
+  const currentAirOffers = travelOffersBlock('✈️ Current Flight Offers','General UPI savings plus a senior-citizen-only Air India offer. Check route and passenger eligibility.',[
+    {best:true,tag:'Via.com · Domestic Flights',valid:'Book by 31 Dec 2026',title:'Up to ₹5,000 OFF with UPI',detail:'Use VIAUPI on domestic flight bookings. UPI payment is required; no blackout dates are listed.',code:'VIAUPI',url:'https://in.via.com/offers/viaupi',sourceUrl:'https://in.via.com/offers/viaupi',checked:'18 Nov 2026',note:'Via’s banner shows a 9 Jan 2026 start date, while its terms say 8 Sep 2025. Both state 31 Dec 2026 as the end date.',terms:[{label:'Benefit',value:'Up to ₹5,000 off domestic flight bookings.'},{label:'Eligibility / payment',value:'UPI payment only. Applicable on Via.com website, app and mobile site.'},{label:'Minimum booking value',value:'Not stated on the official offer page.'},{label:'Booking validity',value:'Banner: 9 Jan–31 Dec 2026. Terms: 8 Sep 2025–31 Dec 2026. The published start dates differ; the end date is 31 Dec 2026.'},{label:'Travel validity',value:'Anytime. No blackout dates are listed.'},{label:'Exclusions / conditions',value:'Full payment required; part payments excluded. Partial or full cancellation voids the discount. Normal cancellation and rescheduling fees and fare differences apply. Multiple uses are allowed during the offer period.'}]},
+    {tag:'Air India · Senior Citizens',valid:'Book by 31 Dec 2026',title:'UPIPROMO: UPI savings up to ₹2,000 per passenger',detail:'For travellers aged 60+ on the travel date. Domestic and international base-fare concessions also apply when eligibility conditions are met.',code:'UPIPROMO',url:'https://www.airindia.com/en-in/book-flights/',sourceUrl:'https://www.airindia.com/content/air-india/language-masters/en/book/exclusive-deals/senior-citizen-flight-offer.html',checked:'18 Nov 2026',note:'International travel validity runs through 31 Mar 2027. The page does not separately state a domestic travel end date. Valid age proof is required.',terms:[{label:'Benefit',value:'Senior-citizen base-fare discount: up to 25% on domestic flights for eligible Indian nationals and flat 10% on international flights in the listed regions. UPIPROMO with UPI adds up to ₹2,000 per passenger internationally; the FAQ states at least ₹200 per passenger domestically. One free date change and additional baggage are also advertised, subject to conditions.'},{label:'Eligibility',value:'Passenger must be at least 60 on the travel date. All nationalities are eligible for international travel; domestic travel is for Indian nationals only. Adult passengers only; children and infants cannot be booked with a senior citizen. Valid photo ID with date of birth is required.'},{label:'Payment method',value:'UPI is required for the additional UPIPROMO discount. Select Senior Citizen under Concession Type for the base-fare concession.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'Until 31 Dec 2026, 23:59 IST.'},{label:'Travel validity',value:'International offer until 31 Mar 2027. Domestic travel validity is not separately stated.'},{label:'Exclusions / conditions',value:'Air India-operated flights only; codeshares excluded. One-way and round-trip only; group and multi-city bookings excluded. Cannot combine with other promotions; Maharaja Club Points and Cash + Points excluded. Limited inventory. Non-transferable, non-refundable, non-reroutable; no name changes. Fare difference applies to the free date change. International blackout dates vary by region and are listed on the official terms page.'}]}
   ]);
   return sectionHeader('cmp-air','✈️','Flights','Search flights, compare airlines and booking platforms.')
     + currentAirOffers
@@ -2089,11 +2088,9 @@ function railAssistantHTML(){
   </div>`;
 }
 function sectionRail(){
-  const currentRailOffers = travelOffersBlock('🚄 Current Railway Booking Offers','Partner booking promotions; check whether the offer applies to your train, class and passenger type.',[
-    {best:true,tag:'redBus Train',valid:'Till 22 Nov 2026',title:'₹350 OFF train tickets',detail:'Chhath offer listed on redBus train offers.',code:'CHHATH',url:'https://www.redbus.in/offers'},
-    {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'₹300 OFF AC ticket bookings',detail:'AC ticket booking discount listed on the redBus train offers page.',code:'ACRAIL',url:'https://www.redbus.in/offers'},
-    {tag:'redBus Train',valid:'Till 30 Jun (year shown on offer page)',title:'₹100 OFF train tickets',detail:'Festive train booking discount listed on redBus.',code:'FESTIVE',url:'https://www.redbus.in/offers'},
-    {tag:'redBus Train',valid:'Till 31 Mar (year shown on offer page)',title:'Zero convenience fee',detail:'No convenience fee offer listed for eligible train bookings.',code:'NOFEE',url:'https://www.redbus.in/offers'}
+  const currentRailOffers = travelOffersBlock('🚄 Current Railway Booking Offers','Current redBus train offers. The public listing does not expose every checkout restriction, so missing conditions are stated explicitly.',[
+    {best:true,tag:'redBus Train',valid:'Till 22 Nov · year not printed',title:'₹350 OFF train tickets',detail:'CHHATH offer listed on the official redBus train offers page.',code:'CHHATH',url:'https://mpp.redbus.in/railways',sourceUrl:'https://www.redbus.in/offers',checked:'18 Nov 2026',note:'The live redBus listing showed this offer on 18 Nov 2026, but its expiry label omits the year. Confirm that the code is accepted for your train before payment.',terms:[{label:'Benefit',value:'₹350 off train tickets, as stated on the current redBus offer listing.'},{label:'Eligible customers / payment',value:'The public listing does not specify a customer segment or payment method.'},{label:'Minimum booking value',value:'Not stated on the public listing.'},{label:'Booking validity',value:'Listed as valid till 22 Nov; the year is not printed on the page.'},{label:'Travel validity',value:'Not separately stated. Confirm journey-date eligibility at checkout.'},{label:'Exclusions / conditions',value:'The public offer listing does not disclose route, class, passenger, cancellation or combination exclusions. Verify the final discount before paying.'}]},
+    {tag:'redBus Train · AC tickets',valid:'Till 31 Mar · year not printed',title:'₹300 OFF AC ticket bookings',detail:'ACRAIL is listed for AC train-ticket bookings on redBus.',code:'ACRAIL',url:'https://mpp.redbus.in/railways',sourceUrl:'https://www.redbus.in/offers',checked:'18 Nov 2026',note:'The expiry label on the public redBus listing does not show a year. Treat the offer as subject to checkout confirmation.',terms:[{label:'Benefit',value:'Flat ₹300 off AC ticket bookings, as stated on the redBus listing.'},{label:'Eligible customers / payment',value:'AC ticket bookings; payment method and customer segment are not specified.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'Listed as valid till 31 Mar; the year is not printed.'},{label:'Travel validity',value:'Not separately stated.'},{label:'Exclusions / conditions',value:'Other route, class, passenger and cancellation restrictions are not published on the listing. Confirm code acceptance and final fare at checkout.'}]}
   ]);
   return sectionHeader('cmp-rail','🚄','Railway','Find train tools, compare booking services and check current railway offers.')
     + '<div style="margin:12px 0 18px"><button class="btn-primary" onclick="nav(this.dataset.page)" data-page="rail">Open Train Route Search & Journey Planner</button></div>'
@@ -2111,11 +2108,9 @@ function sectionRail(){
   </div>`;
 }
 function sectionBus(){
-  const currentBusOffers = travelOffersBlock('🚌 Current Bus Booking Offers','redBus promotions listed for November 2026; codes may be route-, bank- or user-specific.',[
-    {best:true,tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'General bus booking offer shown on the redBus offers page.',code:'FIRST',url:'https://www.redbus.in/offers'},
-    {tag:'redBus · IDFC FIRST Bank',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with IDFC FIRST Bank cards',detail:'Eligible IDFC FIRST Bank credit-card offer.',code:'IDFC500',url:'https://www.redbus.in/offers'},
-    {tag:'redBus · AU Bank',valid:'Till 31 Dec 2026',title:'Up to ₹200 OFF with AU Bank cards',detail:'Eligible AU Bank credit-card offer.',code:'AU200',url:'https://www.redbus.in/offers'},
-    {best:true,tag:'Bank offer · Axis Bank',valid:'Till 30 Nov 2026',title:'Up to ₹500 OFF with Axis Bank cards',detail:'Credit-card offer on eligible redBus bus bookings.',code:'AXIS500',url:'https://www.redbus.in/offers'}
+  const currentBusOffers = travelOffersBlock('🚌 Current Bus Booking Offers','Via.com and redBus promotions. Review the provider terms and final checkout amount before payment.',[
+    {best:true,tag:'Via.com · Bus',valid:'Book by 31 Dec 2026',title:'VIABUS: 7% offer up to ₹500',detail:'Via lists a 7% bus-booking offer capped at ₹500 for bookings in India.',code:'VIABUS',url:'https://in.via.com/offers/viabus',sourceUrl:'https://in.via.com/offers/viabus',checked:'18 Nov 2026',note:'Via’s offer line contains a 7%% typo. Its terms call the ₹500 cap cashback, while its FAQ calls it a maximum discount. Confirm the exact deduction or credit shown at checkout.',terms:[{label:'Benefit',value:'The offer page says flat 7%; maximum benefit is ₹500. Via’s terms call the cap cashback, while the FAQ calls it a maximum discount.'},{label:'Eligible customers / payment',value:'Bus bookings in India. No specific payment method restriction is stated. Full payment is required. Credit, debit and charge-card payments incur a non-refundable processing fee.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'16 Mar 2026–31 Dec 2026.'},{label:'Travel validity',value:'Anytime.'},{label:'Exclusions / conditions',value:'No specific route or operator exclusions are published. Respective bus-operator terms and Via bus terms also apply. The offer may be changed by Via.'}]},
+    {tag:'redBus',valid:'Till 30 Nov 2026',title:'Up to ₹250 OFF bus tickets',detail:'FIRST is shown on the current redBus offers page. Customer, payment and minimum-value conditions are not disclosed in the listing.',code:'FIRST',url:'https://www.redbus.in/bus-tickets',sourceUrl:'https://www.redbus.in/offers',checked:'18 Nov 2026',note:'Only the benefit and expiry are visible in the public listing. Do not assume that FIRST is restricted to new users unless redBus confirms it at checkout.',terms:[{label:'Benefit',value:'Up to ₹250 off bus tickets, as shown on the redBus offers page.'},{label:'Eligible customers / payment',value:'Not specified on the public listing.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'Till 30 Nov 2026, as displayed on the current listing.'},{label:'Travel validity',value:'Not separately stated.'},{label:'Exclusions / conditions',value:'Route, operator, payment, customer and cancellation exclusions are not published on the listing. Verify the final discount at checkout.'}]}
   ]);
   const govBuses=BKPLAT.buses.filter(p=>p.ty==='Govt');
   const pvtBuses=BKPLAT.buses.filter(p=>p.ty==='Private');
@@ -2137,10 +2132,9 @@ function sectionBus(){
     </div>`;
 }
 function sectionHotels(){
-  const currentHotelOffers = travelOffersBlock('🏨 Current Hotel Offers','Hotel discounts from booking platforms; compare total price, taxes and cancellation terms.',[
-    {best:true,tag:'Amazon Pay',valid:'12–26 Nov 2026',title:'Up to 65% OFF hotels',detail:'Amazon Pay advertises up to 45% instant discount, extra 5% for Prime members, cashback up to ₹10,000 and eligible card benefits.',url:'https://www.amazon.in/',note:'From 14 Nov, flight and hotel cashback offers are stated to be for first-time Amazon Pay travel customers. Hotel, account and payment eligibility applies.'},
-    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Deals across 33,500+ hotels and homestays',detail:'Reported coverage includes 30,000+ domestic and 3,500 international properties, participating hotel brands and bank offers.',url:'https://www.makemytrip.com/hotels/'},
-    {tag:'Thomas Cook',valid:'Till 30 Nov 2026',title:'Taj hotel additional 10% OFF',detail:'Thomas Cook lists an online stay offer for eligible Taj bookings.',code:'TCTAJ10',url:'https://www.thomascook.in/offers-and-deals'}
+  const currentHotelOffers = travelOffersBlock('🏨 Current Hotel Offers','Pilgrimage stays and Taj hotel promotions. Compare the final price, taxes and cancellation terms.',[
+    {best:true,tag:'MakeMyTrip · Pilgrimage Stays',valid:'Book by 30 Nov · stay by 31 Dec 2026',title:'Up to 30% OFF with MMTDARSHAN',detail:'Up to 30% off hotels, homestays and villas in listed pilgrimage destinations.',code:'MMTDARSHAN',url:'https://www.makemytrip.com/hotels/',sourceUrl:'https://www.makemytrip.com/promos/pilgrimage-stays-offer-271124.html',checked:'18 Nov 2026',note:'The same page separately lists card-specific offers up to 45%; this card describes the MMTDARSHAN code, not those bank offers.',terms:[{label:'Benefit',value:'Up to 30% off hotels, homestays and villas.'},{label:'Eligible customers / payment',value:'Use code MMTDARSHAN. No card or payment-method restriction is stated for this code; separate card-specific promotions are listed independently.'},{label:'Minimum booking value',value:'Not stated on the offer page.'},{label:'Booking validity',value:'Through 30 Nov 2026.'},{label:'Stay validity',value:'Through 31 Dec 2026.'},{label:'Exclusions / conditions',value:'Promotion is for pilgrimage stays and listed destinations/property inventory. The landing page does not publish a full property-level exclusion list, blackout dates or cancellation rules. Confirm the property and discount before payment.'}]},
+    {tag:'Thomas Cook · Taj Stay',valid:'Till 30 Nov 2026',title:'Additional 10% OFF online Taj bookings',detail:'Thomas Cook lists an additional 10% discount for eligible online Taj bookings.',code:'TCTAJ10',url:'https://www.thomascook.in/hotels',sourceUrl:'https://www.thomascook.in/holiday-offers',checked:'18 Nov 2026',note:'The current public offer listing confirms the code, benefit and expiry but does not expose full property, minimum-spend or payment terms.',terms:[{label:'Benefit',value:'Additional 10% off, using code TCTAJ10.'},{label:'Eligible customers / payment',value:'Online Taj hotel bookings, as stated on the Thomas Cook offer listing. Payment method and customer segment are not specified.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'Till 30 Nov 2026.'},{label:'Stay validity',value:'Not stated on the offer listing.'},{label:'Exclusions / conditions',value:'The listing does not detail eligible Taj properties, blackout dates, minimum nights, cancellation rules or offer-clubbing restrictions. Confirm with Thomas Cook before payment.'}]}
   ]);
   return sectionHeader('cmp-hotels','🏨','Hotels','Compare across major hotel booking platforms.')
     + currentHotelOffers
@@ -2154,10 +2148,9 @@ function sectionHotels(){
   </div>`;
 }
 function sectionHoliday(){
-  const currentHolidayOffers = travelOffersBlock('🎒 Current Holiday Package Offers','Published tour-operator offers. Check departure dates, inclusions, group size and cancellation rules.',[
-    {best:true,tag:'Thomas Cook',valid:'Till 31 Dec 2026',title:'Asia Buy 1 Get 1 offer',detail:'Pay for one traveller and a companion travels free on selected eligible departures.',url:'https://www.thomascook.in/offers-and-deals',note:'Selected departures and package-specific terms apply. Confirm inclusions, taxes and availability with Thomas Cook.'},
-    {tag:'Thomas Cook',valid:'Till 29 Dec 2026',title:'Lakshadweep offer — ₹20,000 discount',detail:'Promo code listed for ₹20,000 off per adult and child on specific departures.',code:'LK20000',url:'https://www.thomascook.in/offers-and-deals',note:'Only specific departures; verify package eligibility and final price with Thomas Cook.'},
-    {tag:'MakeMyTrip sale',valid:'Sale live from 14 Nov 2026',title:'Travel Ka Muhurat Sale',detail:'Sale spans flights, hotels, buses, trains, cabs, tours, attractions, forex and visa services.',url:'https://www.makemytrip.com/holidays-india/'}
+  const currentHolidayOffers = travelOffersBlock('🎒 Current Holiday Package Offers','Selected Thomas Cook package promotions. Package-specific travel dates, inclusions and final pricing must be confirmed.',[
+    {best:true,tag:'Thomas Cook · Asia BOGO',valid:'Offer validity shown through 31 Dec 2026',title:'Buy 1 Get 1 Free on selected holiday packages',detail:'Pay for one traveller and the eligible companion travels free on selected Asia packages. Two paying adults must travel together under one booking.',url:'https://www.thomascook.in/holidays/bogo-tour-packages',sourceUrl:'https://www.thomascook.in/holiday-offers',checked:'18 Nov 2026',note:'No coupon code is shown. The offer listing gives 31 Dec 2026 as the validity date; the selected package page controls the actual booking window and departure availability.',terms:[{label:'Benefit',value:'One eligible companion travels free under the selected Buy 1 Get 1 package offer.'},{label:'Eligibility',value:'Two paying adults travelling together on the same dates under one booking. Solo bookings do not qualify. Both travellers generally share a room unless a single supplement is paid.'},{label:'Payment method',value:'No specific payment method is stated.'},{label:'Minimum booking',value:'Two paying adults in one booking.'},{label:'Booking validity',value:'Thomas Cook’s holiday-offers listing shows validity through 31 Dec 2026. The selected package page controls the booking window.'},{label:'Travel validity',value:'Package-specific. Thomas Cook’s BOGO information says travel may take place after the promotion period if the booking is made within the package’s promotion window.'},{label:'Exclusions / conditions',value:'Airfare, visa fees, travel insurance and personal expenses are generally chargeable for both travellers unless the selected package says otherwise. Blackout dates apply on major festivals and long weekends. Taxes, inclusions, cancellation rules and the effect of cancelling one traveller vary by package; verify before paying.'}]},
+    {tag:'Thomas Cook · Lakshadweep',valid:'Till 29 Dec 2026',title:'₹20,000 OFF per adult and child',detail:'Use LK20000 for the stated ₹20,000 discount on specific Lakshadweep departures.',code:'LK20000',url:'https://www.thomascook.in/holiday-offers',sourceUrl:'https://www.thomascook.in/holiday-offers',checked:'18 Nov 2026',note:'The official listing restricts this offer to specific departures. It does not publish the qualifying departure list or full checkout conditions.',terms:[{label:'Benefit',value:'₹20,000 discount per adult and per child on specific Lakshadweep departures.'},{label:'Eligible customers',value:'Customers booking a qualifying Lakshadweep departure; the offer is limited to specific departures.'},{label:'Payment method',value:'Not stated on the offer listing.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking / travel validity',value:'Offer listing shows validity through 29 Dec 2026. It does not clarify whether this is the booking deadline or departure deadline; confirm with Thomas Cook.'},{label:'Exclusions / conditions',value:'Qualifying departure dates, passenger age slabs, package inclusions, blackout dates, taxes and cancellation terms are not published on the listing. Confirm the exact package and final price before payment.'}]}
   ]);
   const featuredKerala = `
     <article class="card" style="overflow:hidden;margin-bottom:22px;border:2px solid var(--saffron)">
@@ -2267,6 +2260,9 @@ nav = function(id){
 
 /* ═══════════════════════ DAILY TRAVEL POPUPS ═══════════════════════ */
 function sectionVisa(){
+  const currentVisaOffers = travelOffersBlock('🛂 Current Visa-related Offers','Visa-linked protection add-ons. Read the policy scope carefully; these offers do not guarantee visa approval.',[
+    {best:true,tag:'MakeMyTrip · Luxembourg Flights',valid:'Till 30 Nov 2026',title:'Visa Rejection Refund feature for ₹1',detail:'MakeMyTrip lists the feature at ₹1 for flights to Luxembourg. The linked policy covers qualifying e-Visa rejection only, not the cost of the trip.',url:'https://www.makemytrip.com/flights/',sourceUrl:'https://www.makemytrip.com/promos/etihad-airways-sale-051126.html',termsUrl:'https://promos.makemytrip.com/visa-rejection-refund-tncs-270325.html',checked:'18 Nov 2026',note:'This is a visa-related add-on attached to a Luxembourg flight offer, not a visa fee waiver or a guarantee of visa approval. The policy page limits coverage to qualifying e-Visa application fees and service fees.',terms:[{label:'Benefit',value:'Visa Rejection Refund feature priced at ₹1 for flights to Luxembourg.'},{label:'Eligibility',value:'The offer listing is tied to Luxembourg flight bookings. The linked MMT policy applies only to visa applications made through MakeMyTrip and only to e-Visa rejections.'},{label:'Payment method',value:'No eligible payment method is stated.'},{label:'Minimum booking value',value:'Not stated.'},{label:'Booking validity',value:'Till 30 Nov 2026.'},{label:'Travel validity',value:'Not stated on the offer page.'},{label:'Policy coverage',value:'Maximum refund is ₹5,000 per passenger, limited to the visa application service fee and visa fee. It does not cover flights, hotels, forex, holidays or other travel costs. Required claim documents must be submitted within 72 hours of rejection; refund processing usually takes 7 days after valid documents are submitted.'},{label:'Exclusions / conditions',value:'Visa delay and transit-visa rejection are excluded. The policy covers e-Visa rejection only; an active application already pending with an embassy is excluded. Full cancellation voids the offer. Partial cancellation may void or reduce it. The offer cannot be combined with other MMT offers. Travel agents booking for customers are not eligible. Claims submitted more than 3 days after travel start are not processed.'}]}
+  ]);
   const viaVisaCard = `
     <article class="card" style="overflow:hidden;margin:24px 0;border:1.5px solid rgba(13,115,119,.35)">
       <div style="background:linear-gradient(120deg,#0F3460,#0D7377);color:#fff;padding:22px">
@@ -2297,6 +2293,7 @@ function sectionVisa(){
       </div>
     </article>`;
   return sectionHeader('cmp-visa','🛂','Visa & e-Visa','Visa information, digital application support and official resources.')
+    + currentVisaOffers
     + viaVisaCard;
 }
 
@@ -2398,15 +2395,21 @@ async function submitRailPlan(e){
 function dtEscape(value){
   return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
-function showDigiPopup(html){
+window.DIGITRAVEL_OFFERS_VERSION = '2026-11-18-offers-v1';
+function showDigiPopup(html,type='generic'){
   const overlay=document.getElementById('dt-popup-overlay');
   const content=document.getElementById('dt-popup-content');
   if(!overlay||!content)return;
+  window.DIGITRAVEL_POPUP_TYPE=type;
   content.innerHTML=html;
   overlay.classList.add('dt-open');
   document.body.style.overflow='hidden';
 }
 function closeDigiPopup(){
+  if(window.DIGITRAVEL_POPUP_TYPE==='announcement'){
+    try{localStorage.setItem('digitravel-announcement-version',window.DIGITRAVEL_OFFERS_VERSION);}catch(e){}
+  }
+  window.DIGITRAVEL_POPUP_TYPE='';
   const overlay=document.getElementById('dt-popup-overlay');
   if(overlay)overlay.classList.remove('dt-open');
   document.body.style.overflow='';
@@ -2414,65 +2417,43 @@ function closeDigiPopup(){
 function openOfferDetails(id){
   const o=window.DIGITRAVEL_OFFER_DATA?.[id];
   if(!o)return;
-  showDigiPopup(`<span class="badge" style="background:var(--ice);color:var(--navy)">${dtEscape(o.tag)}</span>
-    <h2 id="dt-offer-popup-title">${dtEscape(o.title)}</h2>
-    <p><strong>Offer validity:</strong> ${dtEscape(o.valid||'Check provider terms')}</p>
-    <p>${dtEscape(o.detail)}</p>
-    ${o.code?`<p><strong>Coupon code:</strong> <span style="font-weight:900;letter-spacing:1px">${dtEscape(o.code)}</span></p>`:''}
-    <p>${dtEscape(o.note||'Subject to operator/platform terms, eligible bookings and availability. Verify the final payable amount before payment.')}</p>
-    <div class="dt-popup-actions">
-      ${o.code?`<button type="button" class="btn-outline" onclick="copyTravelCoupon('${dtEscape(o.code)}')">Copy coupon</button>`:''}
-      <a href="${dtEscape(o.url||'#')}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary">Open official offer ↗</button></a>
-    </div>`);
+  const terms=(Array.isArray(o.terms)?o.terms:[]).map(item=>'<div style="padding:10px 0;border-bottom:1px solid var(--steel)"><strong style="display:block;color:var(--ink);font-size:13px;margin-bottom:3px">'+dtEscape(item.label)+'</strong><div style="font-size:13px;color:var(--slate);line-height:1.65">'+dtEscape(item.value)+'</div></div>').join('');
+  let actions='';
+  if(o.code)actions+='<button type="button" class="btn-outline" onclick="copyTravelCoupon(\\''+dtEscape(o.code)+'\\')">Copy coupon</button>';
+  if(o.url)actions+='<a href="'+dtEscape(o.url)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-primary">Open official booking ↗</button></a>';
+  if(o.sourceUrl&&o.sourceUrl!==o.url)actions+='<a href="'+dtEscape(o.sourceUrl)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-ghost">Official offer source ↗</button></a>';
+  if(o.termsUrl)actions+='<a href="'+dtEscape(o.termsUrl)+'" target="_blank" rel="noopener noreferrer"><button type="button" class="btn-ghost">Detailed policy terms ↗</button></a>';
+  const html='<span class="badge" style="background:var(--ice);color:var(--navy)">'+dtEscape(o.tag)+'</span>'+
+    '<h2 id="dt-offer-popup-title">'+dtEscape(o.title)+'</h2>'+
+    '<p><strong>Offer expiry / validity:</strong> '+dtEscape(o.valid||'Not stated')+'</p>'+
+    '<p style="font-size:13px;color:var(--slate);line-height:1.65">'+dtEscape(o.detail)+'</p>'+
+    (o.code?'<p><strong>Coupon code:</strong> <span style="font-weight:900;letter-spacing:1px">'+dtEscape(o.code)+'</span></p>':'')+
+    '<div style="margin:14px 0">'+terms+'</div>'+
+    (o.note?'<p style="font-size:12px;color:var(--slate);line-height:1.65;margin-top:12px"><strong>Important:</strong> '+dtEscape(o.note)+'</p>':'')+
+    '<p style="font-size:10px;color:var(--muted);margin-top:10px">Official source checked: '+dtEscape(o.checked||'18 Nov 2026')+'. Provider terms and checkout eligibility can change.</p>'+
+    '<div class="dt-popup-actions">'+actions+'</div>';
+  showDigiPopup(html,'offer');
 }
 function showDailyDigiAnnouncement(){
-  let today=new Date().toLocaleDateString('en-CA');
-  try{if(localStorage.getItem('digitravel-announcement-date')===today)return;}catch(e){}
-  showDigiPopup(`<span class="badge" style="background:var(--saffron);color:#fff">DIGITRAVEL · WEBSITE UPDATE</span>
-    <h2 id="dt-announcement-popup-title">What's new, what's working & what's coming</h2>
-    <p style="font-size:12px;color:var(--muted)">Release information · 17 November 2026</p>
-    <p><strong>Recent fixes completed</strong></p>
-    <div class="dt-popup-list">
-      <div class="dt-popup-item"><span>✓</span><span><strong>Navigation:</strong> repaired menu links and Compare-page category buttons.</span></div>
-      <div class="dt-popup-item"><span>✓</span><span><strong>Railway page:</strong> corrected duplicate search-field IDs and improved the journey-search interface.</span></div>
-      <div class="dt-popup-item"><span>✓</span><span><strong>Group Planner:</strong> added Train, Scheduled Public Bus and optional Hired Vehicle choices. Public transport plans use individual tickets, not a chartered full bus.</span></div>
-      <div class="dt-popup-item"><span>✓</span><span><strong>Popup and page code:</strong> corrected duplicate popup heading IDs and a JavaScript syntax issue. Code-level checks passed.</span></div>
-    </div>
-    <p><strong>Explore all DigiTravel sections</strong></p>
-    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 16px">
-      <button class="btn-outline" onclick="closeDigiPopup();nav('states')">States & UTs</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('destinations')">Destinations</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('templates')">Trip Templates</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('group')">Group Planner</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('budget')">Budget Planner</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('pilgrimage')">Pilgrimage</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('daytrips')">Day Trips</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('hidden')">Hidden Gems</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('festivals')">Festivals</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('tips')">Travel Tips</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('flights')">Flights & Offers</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('trains')">Railway</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('buses')">Bus & Offers</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('hotels')">Hotels & Offers</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('holidays')">Holiday Packages</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('visa')">Visa & e-Visa</button>
-      <button class="btn-outline" onclick="closeDigiPopup();nav('compare')">Compare Platforms</button>
-    </div>
-    <p><strong>Pending improvements — not live yet</strong></p>
-    <div class="dt-popup-list">
-      <div class="dt-popup-item"><span>◷</span><span><strong>Live railway data:</strong> requires the Railway Cloudflare Worker URL and a working data source. Until configured, live train availability is not guaranteed.</span></div>
-      <div class="dt-popup-item"><span>◷</span><span><strong>Live AI Group Planner:</strong> requires a secure server-side AI API connection. The current fallback creates a sample itinerary; it does not verify live train or bus timetables.</span></div>
-      <div class="dt-popup-item"><span>◷</span><span><strong>Live transport and booking data:</strong> flight, bus, hotel and holiday prices, seats and availability need authorised provider/API connections. Use provider websites to confirm before paying.</span></div>
-      <div class="dt-popup-item"><span>◷</span><span><strong>Offer refresh:</strong> coupons and expiry dates need regular source checks. A displayed offer is not a guaranteed discount.</span></div>
-      <div class="dt-popup-item"><span>◷</span><span><strong>Next quality checks:</strong> complete real-device testing of every tab, form, popup, mobile layout and external link.</span></div>
-    </div>
-    <p style="font-size:11px;color:var(--muted)">Important: DigiTravel is a trip-planning and comparison website. It does not confirm bookings, live inventory or final prices unless a provider connection explicitly supplies that information. Always verify details with the official operator.</p>
-    <div class="dt-popup-actions"><button type="button" class="btn-primary" onclick="dismissDailyDigiAnnouncement()">Got it — Explore DigiTravel</button></div>`);
+  try{if(localStorage.getItem('digitravel-announcement-version')===window.DIGITRAVEL_OFFERS_VERSION)return;}catch(e){}
+  const html="<span class='badge' style='background:var(--saffron);color:#fff'>DIGITRAVEL · VERIFIED OFFERS</span>"+
+    "<h2 id='dt-announcement-popup-title'>New travel offers checked on 18 November 2026</h2>"+
+    "<p style='font-size:13px;color:var(--slate)'>The category pages now show current offers from official provider pages. Compare remains a separate search area; offers have not been moved into Compare.</p>"+
+    "<div class='dt-popup-list'>"+
+      "<div class='dt-popup-item'><span>✈️</span><span><strong>Flights:</strong> Via.com VIAUPI up to ₹5,000 on domestic UPI bookings; Air India UPIPROMO for eligible senior citizens.</span></div>"+
+      "<div class='dt-popup-item'><span>🚄</span><span><strong>Railway:</strong> redBus CHHATH ₹350 off and ACRAIL ₹300 off AC tickets. redBus does not publish all checkout restrictions, and the expiry labels omit the year.</span></div>"+
+      "<div class='dt-popup-item'><span>🚌</span><span><strong>Bus:</strong> Via.com VIABUS 7% offer capped at ₹500; redBus FIRST up to ₹250 off.</span></div>"+
+      "<div class='dt-popup-item'><span>🏨</span><span><strong>Hotels:</strong> MakeMyTrip MMTDARSHAN up to 30% off pilgrimage stays; Thomas Cook TCTAJ10 additional 10% off eligible Taj bookings.</span></div>"+
+      "<div class='dt-popup-item'><span>🎒</span><span><strong>Holiday packages:</strong> Thomas Cook selected-package Buy 1 Get 1 and Lakshadweep code LK20000 for ₹20,000 off per adult and child on specific departures.</span></div>"+
+      "<div class='dt-popup-item'><span>🛂</span><span><strong>Visa:</strong> MakeMyTrip lists a ₹1 Visa Rejection Refund feature for Luxembourg flights. The policy covers qualifying e-Visa rejection only and is capped at ₹5,000 per passenger for visa fees and service fees.</span></div>"+
+    "</div>"+
+    "<p><strong>Offer clean-up</strong></p>"+
+    "<p style='font-size:13px;color:var(--slate);line-height:1.65'>Amazon Pay flight and hotel promotions and the Via × AirAsia email-only promotion were removed from the public offer cards because current official public terms could not be verified. No savings or payment eligibility have been inferred where a provider page does not publish them.</p>"+
+    "<p style='font-size:11px;color:var(--muted);line-height:1.6'>Offer details now show benefit, eligibility/payment, minimum booking value, booking and travel validity, exclusions, expiry and official links. Where a provider does not publish a condition, DigiTravel says so explicitly. Always check the final payable amount on the provider website.</p>"+
+    "<div class='dt-popup-actions'><button type='button' class='btn-primary' onclick='dismissDailyDigiAnnouncement()'>Got it — Explore offers</button></div>";
+  showDigiPopup(html,'announcement');
 }
-function dismissDailyDigiAnnouncement(){
-  try{localStorage.setItem('digitravel-announcement-date',new Date().toLocaleDateString('en-CA'));}catch(e){}
-  closeDigiPopup();
-}
+function dismissDailyDigiAnnouncement(){closeDigiPopup();}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDigiPopup();});
 setTimeout(showDailyDigiAnnouncement,900);
 
