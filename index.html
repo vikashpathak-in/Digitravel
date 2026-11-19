@@ -402,6 +402,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
       <button class="nav-btn" onclick="nav('budget')">Budget</button>
       <button class="nav-btn" onclick="nav('pilgrimage')">Pilgrimage</button>
       <button class="nav-btn" onclick="nav('tips')">Travel Tips</button><button class="nav-btn" onclick="nav('flights')">Flights</button><button class="nav-btn" onclick="nav('trains')">Railway</button><button class="nav-btn" onclick="nav('buses')">Bus</button><button class="nav-btn" onclick="nav('hotels')">Hotels</button><button class="nav-btn" onclick="nav('holidays')">Holidays</button><button class="nav-btn" onclick="nav('visa')">Visa</button>
+      <button class="nav-btn" onclick="nav('calendar')">📅 Travel Calendar</button>
       <button class="nav-btn" onclick="nav('compare')">🔗 Compare</button>
       <button class="btn-dark" onclick="toggleDark()" id="dkBtn">🌙</button>
       <button class="nav-btn-cta" onclick="openSearch()">🔍 Search</button>
@@ -420,6 +421,7 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
     <button onclick="nav('hidden');closeMob()">💎 Hidden Gems</button>
     <button onclick="nav('festivals');closeMob()">🎉 Festivals</button>
     <button onclick="nav('tips');closeMob()">💡 Travel Tips</button><button onclick="nav('flights');closeMob()">Flights & Offers</button><button onclick="nav('trains');closeMob()">Railway & Offers</button><button onclick="nav('buses');closeMob()">Bus & Offers</button><button onclick="nav('hotels');closeMob()">Hotels & Offers</button><button onclick="nav('holidays');closeMob()">Holiday Packages</button><button onclick="nav('visa');closeMob()">Visa Services</button>
+    <button onclick="nav('calendar');closeMob()">📅 Travel Calendar — Best places by month</button>
     <button onclick="nav('compare');closeMob()">🔗 Compare Booking</button>
     <button onclick="openSearch();closeMob()">🔍 Search India</button>
     <button onclick="toggleDark();closeMob()">🌙 Dark/Light Mode</button>
@@ -781,6 +783,37 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
   <div class="wrap" style="padding:36px 22px" id="compare-content"></div>
 </div>
 
+<div id="page-calendar" class="page">
+<section style="background:linear-gradient(135deg,#123b4b,#087e8b);padding:38px 22px;color:#fff;text-align:center">
+<p style="letter-spacing:2px;font-size:11px;font-weight:800">DIGITRAVEL · INDIA SEASONAL GUIDE</p>
+<h1 style="font-size:clamp(28px,4vw,44px);font-weight:900">📅 India Travel Calendar</h1>
+<p style="max-width:700px;margin:10px auto;opacity:.92">Discover where to travel in every month. Today's destination recommendation updates automatically each day.</p>
+</section>
+<div class="wrap" style="padding:24px 22px;max-width:1050px">
+<section class="card" style="padding:20px;margin-bottom:18px;border-left:4px solid var(--teal)">
+<div style="font-size:10px;letter-spacing:1.5px;font-weight:800;color:var(--teal)">TODAY'S TRAVEL PICK</div>
+<div id="dt-calendar-today" aria-live="polite"></div>
+</section>
+<section class="card" style="padding:20px;margin-bottom:18px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div><h2 style="font-size:22px;margin:0">Explore the year</h2><p style="font-size:12px;color:var(--muted);margin-top:4px">Select any month to see recommended destinations and seasonal notes.</p></div>
+<div style="display:flex;gap:8px;align-items:center">
+<button class="btn-outline" type="button" onclick="changeTravelCalendarMonth(-1)" aria-label="Previous month">←</button>
+<strong id="dt-calendar-month-label" style="min-width:115px;text-align:center"></strong>
+<button class="btn-outline" type="button" onclick="changeTravelCalendarMonth(1)" aria-label="Next month">→</button>
+</div></div>
+<div id="dt-calendar-month-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:18px"></div>
+</section>
+<section class="card" style="padding:20px;margin-bottom:18px">
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+<div><h2 id="dt-calendar-detail-title" style="font-size:21px;margin:0">Best places this month</h2><p id="dt-calendar-detail-subtitle" style="font-size:12px;color:var(--muted);margin-top:5px"></p></div>
+<a href="https://www.incredibleindia.gov.in/" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:800;color:var(--teal)">Incredible India ↗</a>
+</div>
+<div id="dt-calendar-destinations" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px"></div>
+</section>
+<p style="font-size:11px;color:var(--muted);line-height:1.6">Seasonal guidance is indicative, based on typical weather patterns—not a live weather forecast. Monsoon intensity, heatwaves, snowfall, road closures, permits and local advisories vary by year and location. Check official local advisories and forecasts before booking.</p>
+</div></div>
+
 <div id="page-rail" class="page">
 <section style="background:linear-gradient(135deg,#092f4f,#087e8b);padding:42px 22px;color:#fff;text-align:center">
 <p style="letter-spacing:2px;font-size:11px;font-weight:800">DIGITRAVEL · RAILWAY</p><h1 style="font-size:clamp(27px,4vw,44px);font-weight:900">Train Search, Journey Plan & Booking</h1>
@@ -995,6 +1028,41 @@ const TRAVEL_TIPS=[
   {icon:"📜",title:"Documents & Permits",body:"Carry original government ID (Aadhaar/Passport) always. Northeast states (Arunachal, Manipur, Mizoram, Nagaland, Sikkim) require Inner Line Permits. Ladakh requires district permits for restricted areas. Wildlife sanctuaries need advance booking. Foreign nationals must carry passport for all hotel check-ins."},
 ];
 
+/* ═══════════════════════ INDIA TRAVEL CALENDAR ═══════════════════════ */
+const DT_TRAVEL_MONTHS=[
+ {name:'January',season:'Cool, mostly dry winter across much of India.',places:[['Rann of Kutch, Gujarat','Cool desert days; check the official Rann Utsav dates and tent availability.','Culture · desert'],['Jaipur & Udaipur, Rajasthan','Pleasant winter sightseeing; carry a light layer for cool evenings.','Heritage · cities'],['Andaman Islands','Generally favourable beach and water-activity season; check sea conditions.','Islands · beaches']]},
+ {name:'February',season:'A strong month for winter sightseeing in many regions.',places:[['Agra & Varanasi, Uttar Pradesh','Comfortable season for heritage sites and riverfront visits.','Heritage · culture'],['Jaisalmer, Rajasthan','Good conditions for desert landscapes and forts before summer heat.','Desert · heritage'],['Kaziranga, Assam','Wildlife safari season; book authorised safaris and check park notices.','Wildlife · nature']]},
+ {name:'March',season:'Late winter in the north; pleasant in several hill and coastal areas.',places:[['Sikkim','Spring flowers and mountain views; check road and permit conditions.','Mountains · nature'],['Coorg, Karnataka','Coffee country and green hills before the main monsoon.','Hills · coffee'],['Hampi, Karnataka','Explore the ruins early in the day as temperatures rise.','Heritage · archaeology']]},
+ {name:'April',season:'Warmer plains; consider higher-altitude destinations and early starts.',places:[['Shimla & Manali, Himachal Pradesh','A popular spring escape; check snow and road conditions at altitude.','Mountains · family'],['Ooty & Coonoor, Tamil Nadu','Cooler hill-station weather than nearby plains.','Hills · gardens'],['Tawang, Arunachal Pradesh','A scenic high-altitude trip; verify permits and road access.','Mountains · culture']]},
+ {name:'May',season:'Hot across much of India; prioritise hills and cooler highlands.',places:[['Ladakh','Popular summer access begins, subject to road opening and acclimatisation advice.','High altitude · adventure'],['Kashmir Valley','Spring-to-summer landscapes; check local advisories and accommodation.','Valleys · lakes'],['Meghalaya','A lush pre/early-monsoon landscape; expect showers and flexible plans.','Nature · waterfalls']]},
+ {name:'June',season:'Southwest monsoon begins in many regions; choose destinations carefully.',places:[['Spiti Valley, Himachal Pradesh','A high-altitude road-trip season as access improves; check current road status.','High altitude · road trip'],['Ladakh','Long daylight and generally drier conditions; acclimatise and check permits.','High altitude · adventure'],['Mysuru, Karnataka','City heritage and indoor attractions can suit a flexible short break.','Heritage · city']]},
+ {name:'July',season:'Monsoon month in much of India; expect rain-related disruption.',places:[['Valley of Flowers, Uttarakhand','The alpine bloom season typically begins; trekking access depends on official opening and weather.','Trekking · flowers'],['Udaipur, Rajasthan','Lakes and monsoon scenery; check local rainfall and access.','Lakes · heritage'],['Pondicherry, Tamil Nadu','A quieter coastal break; monitor rough-sea and rain advisories.','Coast · culture']]},
+ {name:'August',season:'Peak monsoon in many states; plan buffer days and verify road conditions.',places:[['Valley of Flowers, Uttarakhand','Usually within the flowering season; trek only when authorities permit.','Trekking · flowers'],['Cherrapunji & Shillong, Meghalaya','Dramatic monsoon waterfalls; heavy rain can affect roads and trails.','Waterfalls · nature'],['Mahabaleshwar, Maharashtra','Green hill scenery in monsoon; check landslide and road alerts.','Hills · viewpoints']]},
+ {name:'September',season:'Monsoon starts retreating in some regions; shoulder-season travel.',places:[['Ziro, Arunachal Pradesh','Festival period varies by year; confirm dates, permits and travel access.','Culture · music'],['Kochi & Alleppey, Kerala','Lush backwaters; check rainfall and local water conditions.','Backwaters · culture'],['Amritsar, Punjab','Good time to plan heritage and food visits as extreme summer heat eases.','Heritage · food']]},
+ {name:'October',season:'Post-monsoon travel opens up across many parts of India.',places:[['Mysuru, Karnataka','Dasara celebrations are date-specific; verify the official programme.','Festival · heritage'],['Jodhpur & Jaipur, Rajasthan','Pleasant season begins for forts, markets and desert circuits.','Heritage · desert'],['Hampi, Karnataka','A favourable period for exploring the archaeological landscape.','Heritage · outdoors']]},
+ {name:'November',season:'A strong month for many north, west and south Indian itineraries.',places:[['Goa','Typically the start of the drier beach season; check beach safety flags.','Beaches · food'],['Varanasi, Uttar Pradesh','Comfortable weather for ghats and heritage; festival dates vary yearly.','Spiritual · culture'],['Kutch, Gujarat','Rann season may begin around this period; confirm official festival dates.','Desert · culture']]},
+ {name:'December',season:'Peak winter holiday period; book transport and stays early.',places:[['Goa','Dry-season beach holiday conditions; popular dates sell out early.','Beaches · nightlife'],['Andaman Islands','Generally favourable island-holiday season; confirm ferry and sea conditions.','Islands · beaches'],['Rajasthan circuit','Cooler weather for Jaipur, Jodhpur, Jaisalmer and Udaipur sightseeing.','Heritage · desert']]}
+];
+let dtCalendarMonth=new Date().getMonth();
+function renderTravelCalendar(){
+ const now=new Date(),todayKey=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
+ const daily=DT_TRAVEL_MONTHS[now.getMonth()].places[(now.getDate()-1)%DT_TRAVEL_MONTHS[now.getMonth()].places.length];
+ const today=document.getElementById('dt-calendar-today');
+ if(today)today.innerHTML='<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:9px"><div style="font-size:34px">🌤️</div><div style="flex:1;min-width:190px"><div style="font-size:11px;color:var(--muted)">'+now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</div><h2 style="font-size:23px;margin:3px 0">'+daily[0]+'</h2><p style="font-size:13px;color:var(--muted)">'+daily[1]+'</p><span style="display:inline-block;margin-top:6px;padding:4px 9px;border-radius:20px;background:var(--surface-2);font-size:10px;font-weight:800">'+daily[2]+'</span></div><span style="font-size:10px;color:var(--muted)">Daily pick · '+todayKey+'</span></div>';
+ renderTravelCalendarMonth();
+}
+function changeTravelCalendarMonth(delta){dtCalendarMonth=(dtCalendarMonth+delta+12)%12;renderTravelCalendarMonth();}
+function selectTravelCalendarMonth(month){dtCalendarMonth=month;renderTravelCalendarMonth();}
+function renderTravelCalendarMonth(){
+ const m=DT_TRAVEL_MONTHS[dtCalendarMonth],label=document.getElementById('dt-calendar-month-label'),grid=document.getElementById('dt-calendar-month-grid');
+ if(label)label.textContent=m.name+' · '+new Date().getFullYear();
+ if(grid)grid.innerHTML=DT_TRAVEL_MONTHS.map((x,i)=>'<button type="button" onclick="selectTravelCalendarMonth('+i+')" aria-pressed="'+(i===dtCalendarMonth)+'" style="border:1px solid '+(i===dtCalendarMonth?'var(--teal)':'var(--border)')+';background:'+(i===dtCalendarMonth?'var(--surface-2)':'var(--surface)')+';color:var(--text);border-radius:10px;padding:12px 5px;font-weight:800;cursor:pointer;font-size:12px">'+x.name.slice(0,3)+'<span style="display:block;font-size:9px;font-weight:500;color:var(--muted);margin-top:3px">'+x.places.length+' ideas</span></button>').join('');
+ const title=document.getElementById('dt-calendar-detail-title'),sub=document.getElementById('dt-calendar-detail-subtitle'),cards=document.getElementById('dt-calendar-destinations');
+ if(title)title.textContent='Where to go in '+m.name;
+ if(sub)sub.textContent=m.season;
+ if(cards)cards.innerHTML=m.places.map((p,i)=>'<article style="border:1px solid var(--border);border-radius:12px;padding:15px;background:var(--surface)"><div style="font-size:10px;font-weight:800;color:var(--teal)">SEASONAL PICK '+(i+1)+'</div><h3 style="font-size:16px;margin:7px 0">'+p[0]+'</h3><p style="font-size:12px;color:var(--muted);line-height:1.6">'+p[1]+'</p><span style="display:inline-block;margin-top:9px;padding:4px 8px;border-radius:20px;background:var(--surface-2);font-size:10px">'+p[2]+'</span></article>').join('');
+}
+
 /* ═══════════════════════ NAVIGATION ═══════════════════════ */
 function nav(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1003,7 +1071,7 @@ function nav(id){
   pg.classList.add('active');
   document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.toggle('act',b.dataset.p===id));
   window.scrollTo(0,0);
-  const inits={states:renderStates,destinations:renderDests,templates:renderTemplates,
+  const inits={states:renderStates,destinations:renderDests,calendar:renderTravelCalendar,templates:renderTemplates,
     group:renderGroup,budget:renderBudget,pilgrimage:renderPilgrimage,
     daytrips:renderDaytrips,hidden:renderHidden,festivals:renderFestivals,tips:renderTips,
     compare:nav_compare_init,
