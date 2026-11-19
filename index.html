@@ -784,10 +784,15 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 </div>
 
 <div id="page-calendar" class="page">
-<section style="background:linear-gradient(135deg,#123b4b,#087e8b);padding:38px 22px;color:#fff;text-align:center">
-<p style="letter-spacing:2px;font-size:11px;font-weight:800">DIGITRAVEL · INDIA SEASONAL GUIDE</p>
-<h1 style="font-size:clamp(28px,4vw,44px);font-weight:900">📅 India Travel Calendar</h1>
-<p style="max-width:700px;margin:10px auto;opacity:.92">Discover where to travel in every month. Today's destination recommendation updates automatically each day.</p>
+<section style="position:relative;overflow:hidden;background:linear-gradient(115deg,#092f3d 0%,#087e8b 55%,#d18b46 100%);padding:44px 22px;color:#fff;text-align:left">
+<div style="position:absolute;right:5%;top:-42px;font-size:clamp(100px,19vw,210px);opacity:.16;line-height:1;pointer-events:none">🏞️</div>
+<div style="position:absolute;right:22%;bottom:-30px;font-size:clamp(54px,10vw,110px);opacity:.18;pointer-events:none">🌴</div>
+<div style="position:relative;max-width:1050px;margin:auto">
+<p style="letter-spacing:2px;font-size:11px;font-weight:900">DIGITRAVEL · INDIA SEASONAL GUIDE</p>
+<h1 style="font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.08;max-width:650px;margin:10px 0">India, one season at a time.</h1>
+<p style="max-width:620px;margin:12px 0 20px;opacity:.94;font-size:15px">Find the right places, festivals and experiences for every month. Your daily travel inspiration starts here.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><a href="#dt-calendar-month-grid" onclick="setTimeout(()=>document.getElementById('dt-calendar-month-grid')?.scrollIntoView({behavior:'smooth'}),80)" style="display:inline-block;background:#fff;color:#123b4b;padding:11px 17px;border-radius:24px;text-decoration:none;font-size:12px;font-weight:900">Explore the calendar ↓</a><span style="align-self:center;font-size:11px;font-weight:700;opacity:.9">12 months · seasonal picks · festival guide</span></div>
+</div>
 </section>
 <div class="wrap" style="padding:24px 22px;max-width:1050px">
 <section class="card" style="padding:20px;margin-bottom:18px;border-left:4px solid var(--teal)">
@@ -810,6 +815,12 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 <a href="https://www.incredibleindia.gov.in/" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:800;color:var(--teal)">Incredible India ↗</a>
 </div>
 <div id="dt-calendar-destinations" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px"></div>
+</section>
+<section class="card" style="padding:20px;margin-bottom:18px;border-left:4px solid #d18b46">
+<div style="font-size:10px;letter-spacing:1.5px;font-weight:900;color:#b8752e">FESTIVAL & CULTURE PLANNER</div>
+<h2 style="font-size:21px;margin:6px 0">Festivals to look out for in <span id="dt-calendar-festival-month">this month</span></h2>
+<p style="font-size:11px;color:var(--muted);margin:0 0 12px">Indicative seasonal guide. Festival dates change each year; verify dates with official organisers before booking.</p>
+<div id="dt-calendar-festivals" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px"></div>
 </section>
 <p style="font-size:11px;color:var(--muted);line-height:1.6">Seasonal guidance is indicative, based on typical weather patterns—not a live weather forecast. Monsoon intensity, heatwaves, snowfall, road closures, permits and local advisories vary by year and location. Check official local advisories and forecasts before booking.</p>
 </div></div>
@@ -1043,6 +1054,20 @@ const DT_TRAVEL_MONTHS=[
  {name:'November',season:'A strong month for many north, west and south Indian itineraries.',places:[['Goa','Typically the start of the drier beach season; check beach safety flags.','Beaches · food'],['Varanasi, Uttar Pradesh','Comfortable weather for ghats and heritage; festival dates vary yearly.','Spiritual · culture'],['Kutch, Gujarat','Rann season may begin around this period; confirm official festival dates.','Desert · culture']]},
  {name:'December',season:'Peak winter holiday period; book transport and stays early.',places:[['Goa','Dry-season beach holiday conditions; popular dates sell out early.','Beaches · nightlife'],['Andaman Islands','Generally favourable island-holiday season; confirm ferry and sea conditions.','Islands · beaches'],['Rajasthan circuit','Cooler weather for Jaipur, Jodhpur, Jaisalmer and Udaipur sightseeing.','Heritage · desert']]}
 ];
+const DT_TRAVEL_FESTIVALS=[
+ [['New Year celebrations','Across India'],['Rann Utsav','Kutch, Gujarat'],['Lohri & Makar Sankranti','North and West India']],
+ [['Desert Festival','Jaisalmer, Rajasthan'],['Surajkund Crafts Mela','Faridabad, Haryana'],['Taj Mahotsav','Agra, Uttar Pradesh']],
+ [['Holi','Across India'],['Jaipur Elephant Festival','Jaipur, Rajasthan'],['Chapchar Kut','Mizoram']],
+ [['Baisakhi','Punjab'],['Bohag Bihu','Assam'],['Easter','Across India']],
+ [['Buddha Purnima','Across India'],['Thrissur Pooram','Thrissur, Kerala'],['Moatsu','Nagaland']],
+ [['Rath Yatra (often late June/July)','Puri, Odisha'],['Sindhu Darshan','Ladakh'],['Saga Dawa','Sikkim and Himalayan regions']],
+ [['Hemis Festival','Ladakh'],['Bonalu','Telangana'],['Rath Yatra','Puri, Odisha']],
+ [['Onam season (often Aug/Sep)','Kerala'],['Teej','Rajasthan'],['Independence Day','Across India']],
+ [['Ziro Festival (dates vary)','Arunachal Pradesh'],['Ganesh Chaturthi','Maharashtra and other states'],['Nuakhai','Western Odisha']],
+ [['Mysuru Dasara','Mysuru, Karnataka'],['Durga Puja','West Bengal and East India'],['Navratri & Dussehra','Across India']],
+ [['Diwali','Across India'],['Pushkar Fair (dates vary)','Pushkar, Rajasthan'],['Kartik Purnima','Across India']],
+ [['Hornbill Festival (from 1 Dec)','Kisama, Nagaland'],['Rann Utsav season','Kutch, Gujarat'],['Christmas','Across India']]
+];
 let dtCalendarMonth=new Date().getMonth();
 function renderTravelCalendar(){
  const now=new Date(),todayKey=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
@@ -1061,6 +1086,9 @@ function renderTravelCalendarMonth(){
  if(title)title.textContent='Where to go in '+m.name;
  if(sub)sub.textContent=m.season;
  if(cards)cards.innerHTML=m.places.map((p,i)=>'<article style="border:1px solid var(--border);border-radius:12px;padding:15px;background:var(--surface)"><div style="font-size:10px;font-weight:800;color:var(--teal)">SEASONAL PICK '+(i+1)+'</div><h3 style="font-size:16px;margin:7px 0">'+p[0]+'</h3><p style="font-size:12px;color:var(--muted);line-height:1.6">'+p[1]+'</p><span style="display:inline-block;margin-top:9px;padding:4px 8px;border-radius:20px;background:var(--surface-2);font-size:10px">'+p[2]+'</span></article>').join('');
+ const festivalTitle=document.getElementById('dt-calendar-festival-month'),festivalBox=document.getElementById('dt-calendar-festivals');
+ if(festivalTitle)festivalTitle.textContent=m.name;
+ if(festivalBox)festivalBox.innerHTML=DT_TRAVEL_FESTIVALS[dtCalendarMonth].map((f,i)=>'<article style="border:1px solid var(--border);border-radius:10px;padding:12px;background:var(--surface)"><div style="font-size:10px;font-weight:900;color:#b8752e">FESTIVAL '+(i+1)+'</div><strong style="display:block;font-size:13px;margin:5px 0">'+f[0]+'</strong><span style="font-size:11px;color:var(--muted)">'+f[1]+'</span></article>').join('');
 }
 
 /* ═══════════════════════ NAVIGATION ═══════════════════════ */
