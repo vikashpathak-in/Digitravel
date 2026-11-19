@@ -785,6 +785,29 @@ footer { background:var(--navy2); color:rgba(255,255,255,.72); padding:44px 24px
 <section style="background:linear-gradient(135deg,#092f4f,#087e8b);padding:42px 22px;color:#fff;text-align:center">
 <p style="letter-spacing:2px;font-size:11px;font-weight:800">DIGITRAVEL · RAILWAY</p><h1 style="font-size:clamp(27px,4vw,44px);font-weight:900">Train Search, Journey Plan & Booking</h1>
 <p style="max-width:680px;margin:10px auto;opacity:.9">Search trains between stations, explore connecting routes, and continue to official booking.</p></section>
+<div class="wrap" style="padding:26px 22px 0;max-width:960px">
+<section class="card" aria-labelledby="live-train-status-title" style="padding:20px;border-left:4px solid var(--teal)">
+<div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+<div style="font-size:30px" aria-hidden="true">📍</div>
+<div style="flex:1;min-width:220px">
+<p style="font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--teal);text-transform:uppercase">Official Indian Railways enquiry</p>
+<h2 id="live-train-status-title" style="font-size:22px;margin:3px 0 6px">Live Train Running Status</h2>
+<p style="font-size:13px;color:var(--slate);line-height:1.6">Check a train's current position, delay, expected arrival/departure, route diversions and cancellations through NTES (National Train Enquiry System).</p>
+</div></div>
+<form onsubmit="openOfficialTrainStatus(event)" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;margin-top:15px">
+<label style="font-size:11px;font-weight:800;color:var(--slate)">TRAIN NUMBER
+<input id="dt-live-train-number" class="field" inputmode="numeric" autocomplete="off" maxlength="5" pattern="[0-9]{5}" placeholder="e.g. 13023" required style="display:block;margin-top:5px;font-size:16px;letter-spacing:1px">
+</label>
+<button type="submit" class="btn-teal" style="min-height:44px">Open live status ↗</button>
+</form>
+<p id="dt-live-train-note" role="status" style="font-size:11px;color:var(--muted);margin-top:9px">NTES opens in a new tab. Enter the train number there and select “Spot Your Train” to view the latest official update.</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px">
+<a href="https://enquiry.indianrail.gov.in/mntes/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);font-weight:800">Open NTES directly ↗</a>
+<a href="https://www.indianrail.gov.in/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);font-weight:800">Indian Railways enquiry ↗</a>
+<a href="tel:139" style="color:var(--teal);font-weight:800">Rail enquiry: 139</a>
+</div>
+<p style="font-size:10px;color:var(--muted);margin-top:10px;line-height:1.5">Live data is supplied by Indian Railways/NTES, not calculated or stored by DigiTravel. Running information is near real-time and can change; confirm critical journey details with railway authorities.</p>
+</section></div>
 <div class="wrap" style="padding:26px 22px;max-width:960px">
 <div class="card" style="padding:22px"><h2 style="margin-bottom:6px">Search your journey</h2><p style="font-size:13px;color:var(--muted)">Search and select a city from the suggestions, or enter a station code directly.</p>
 <form id="rail-plan-form" onsubmit="submitRailPlan(event)">
@@ -2317,6 +2340,17 @@ function travelPopupNavigate(page){
 }
 
 // Daily greeting popup is consolidated into the DigiTravel release announcement below.
+function openOfficialTrainStatus(event){
+ event.preventDefault();
+ const input=document.getElementById('dt-live-train-number');
+ const note=document.getElementById('dt-live-train-note');
+ const number=String(input?.value||'').trim();
+ if(!/^[0-9]{5}$/.test(number)){if(note)note.textContent='Enter a valid 5-digit Indian Railways train number.';return;}
+ try{navigator.clipboard?.writeText(number).then(()=>{if(note)note.textContent='Train number '+number+' copied. NTES is opening; enter the number in “Spot Your Train”.';}).catch(()=>{});}catch(e){}
+ if(note)note.textContent='Opening official NTES for train '+number+'. Enter the copied train number in “Spot Your Train” to view live running status.';
+ window.open('https://enquiry.indianrail.gov.in/mntes/','_blank','noopener,noreferrer');
+}
+
 function railResolveStation(value){
  const text=String(value||'').trim();
  const match=text.match(/\(([A-Za-z0-9]{2,6})\)\s*$/);
