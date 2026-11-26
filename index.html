@@ -2500,7 +2500,7 @@ async function submitRailPlan(e){
 function dtEscape(value){
   return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
-window.DIGITRAVEL_OFFERS_VERSION = '2026-11-19-offers-v1';
+window.DIGITRAVEL_OFFERS_VERSION = '2026-11-26-community-story-v1';
 function showDigiPopup(html,type='generic'){
   const overlay=document.getElementById('dt-popup-overlay');
   const content=document.getElementById('dt-popup-content');
@@ -2552,6 +2552,13 @@ function showDailyDigiAnnouncement(){
       "<div class='dt-popup-item'><span>🎒</span><span><strong>Holiday packages:</strong> Thomas Cook selected-package Buy 1 Get 1 and Lakshadweep code LK20000 for ₹20,000 off per adult and child on specific departures.</span></div>"+
       "<div class='dt-popup-item'><span>🛂</span><span><strong>Visa:</strong> MakeMyTrip lists a ₹1 Visa Rejection Refund feature for Luxembourg flights. The policy is limited to qualifying e-Visa rejection and capped at ₹5,000 per passenger for visa and service fees.</span></div>"+
     "</div>"+
+    "<section style='margin:18px 0;padding:16px;border:1px solid var(--steel);border-radius:14px;background:var(--ice)'>"+
+      "<span class='badge' style='background:var(--teal);color:#fff'>NEW · COMMUNITY TRAVEL STORY</span>"+
+      "<h3 style='margin:10px 0 6px;color:var(--ink)'>🚆 Kailasagiri Hills, Chintamani</h3>"+
+      "<p style='font-size:13px;color:var(--slate);line-height:1.65;margin:0 0 8px'>Explore this budget day-trip idea from Bengaluru, with train 66591 / 66592 references, local auto details and an estimated spend of ₹200 per person.</p>"+
+      "<p style='font-size:12px;color:var(--slate);margin:0 0 12px'>Shared with contributor credit to <a href='https://www.instagram.com/explorewithsravs07/' target='_blank' rel='noopener noreferrer' style='color:var(--teal);font-weight:800'>@explorewithsravs07</a>. Original photos and captions are not reproduced.</p>"+
+      "<div class='dt-popup-actions'><a href='community-kailasagiri-chintamani.html' class='btn-primary' style='display:inline-block;text-decoration:none'>View full travel plan ↗</a><a href='https://www.instagram.com/explorewithsravs07/' target='_blank' rel='noopener noreferrer' class='btn-ghost' style='display:inline-block;text-decoration:none'>Visit creator profile ↗</a></div>"+
+    "</section>"+
     "<p><strong>Offer clean-up and verification notes</strong></p>"+
     "<p style='font-size:13px;color:var(--slate);line-height:1.65'>No currently listed offer had expired as of 19 November. The Via Digital E-Visa service card was removed from the public-offer area because its source was a private promotional email, not a publicly verifiable offer page. Air India’s current USA sale was not added: its live page requires a promo code but does not expose the exact code in the current terms, while older cached information conflicts on the benefit and expiry. No Amazon Pay travel promotion was added without current public official terms.</p>"+
     "<p style='font-size:11px;color:var(--muted);line-height:1.6'>Offer detail popups show benefit, eligibility/payment, minimum booking value, booking and travel validity, exclusions, expiry and official links. Where a provider does not publish a condition, DigiTravel says so explicitly. Always check the final payable amount on the provider website.</p>"+
