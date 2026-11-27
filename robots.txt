@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vikashp23.github.io/Digitravel/sitemap.xml
+Sitemap: https://vikashpathak-in.github.io/Digitravel/sitemap.xml
